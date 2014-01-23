@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import com.siagabanjir.utility.JSONParser;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,14 +31,20 @@ public class HomeActivity extends ActionBarActivity implements TabListener {
 	private ArrayList<DataPintuAir> dataWaspada;
 	private ArrayList<DataPintuAir> dataNormal;
 	private Fragment fragment;
+	private ProgressDialog pd;
+	private Context context;
 	
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	private static final String url = "http://enreina.besaba.com/siaga-banjir/getdata.php";
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+        
+		context = this;
+        
         
         dataKritis = new ArrayList<DataPintuAir>();
         dataRawan = new ArrayList<DataPintuAir>();
@@ -112,12 +120,24 @@ public class HomeActivity extends ActionBarActivity implements TabListener {
 
 		protected void onPreExecute() {
 			Toast.makeText(HomeActivity.this, "Updating data...", Toast.LENGTH_LONG).show();
+			pd = new ProgressDialog(context);
+			pd.setTitle("Updating data...");
+			pd.setMessage("Please wait.");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
 		}
 		@Override
 		protected JSONObject doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			JSONParser jParser = new JSONParser();
-			JSONObject json = jParser.getJSONFromUrl(url);
+			JSONObject json = null;
+			try {
+				JSONParser jParser = new JSONParser();
+				json = jParser.getJSONFromUrl(url);
+				Thread.sleep(5000);
+			} catch(InterruptedException e) {
+				
+			}
 			return json;
 		}
 		
@@ -173,12 +193,21 @@ public class HomeActivity extends ActionBarActivity implements TabListener {
 				((TabFragment)getSupportFragmentManager().findFragmentByTag("CURRENT_FRAGMENT")).refresh();
 				
 				Toast.makeText(HomeActivity.this, "Done!", Toast.LENGTH_LONG).show();
+				if (pd != null) {
+					pd.dismiss();
+				}
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				Toast.makeText(HomeActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+				if (pd != null) {
+					pd.dismiss();
+				}
 			} catch (NullPointerException e) {
-				Toast.makeText(HomeActivity.this, "Error fetching data", Toast.LENGTH_LONG).show();
+				Toast.makeText(HomeActivity.this, "Error fetching data or no internet connection", Toast.LENGTH_LONG).show();
+				if (pd != null) {
+					pd.dismiss();
+				}
 			}
 			
 			
@@ -216,6 +245,13 @@ public class HomeActivity extends ActionBarActivity implements TabListener {
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	protected void onDestroy() {
+		if (pd != null) {
+			pd.dismiss();
+		}
+		super.onDestroy();
 	}
 
 }
