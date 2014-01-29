@@ -35,7 +35,7 @@ public class HomeActivity extends ActionBarActivity implements TabListener {
 	private Context context;
 	
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-	private static final String url = "http://enreina.besaba.com/siaga-banjir/getdata.php";
+	private static final String url = "http://labs.pandagostudio.com/siaga-banjir/";
 	
 	
 	@Override
