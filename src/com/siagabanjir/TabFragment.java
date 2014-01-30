@@ -42,15 +42,14 @@ public class TabFragment extends ListFragment {
 
 	@Override
 	public void onListItemClick(ListView list, View v, int position, long id) {
-		/* 	Temporarily disabled
-		 *  if (this.empty == false) {
+		if (this.empty == false) {
 			Intent i = new Intent(this.getActivity().getBaseContext(), DetailActivity.class);
 			
 			i.putParcelableArrayListExtra("pintuair", pintuAir);
 			i.putExtra("selected", position);
 			
 			startActivity(i);
-		} */
+		} 
 		
 	}
 	

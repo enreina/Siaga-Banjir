@@ -1,5 +1,8 @@
 package com.siagabanjir;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,6 +13,11 @@ public class DataPintuAir implements Parcelable {
 	private String[] status;
 	private int jumlahStatus;
 	private String tanggal;
+	private String tanggalShort;
+	private String hari;
+	
+	private final String[] hariArr = new String[]{"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
+	
 	public DataPintuAir(String nama) {
 		super();
 		this.nama = nama;
@@ -21,6 +29,8 @@ public class DataPintuAir implements Parcelable {
 		}
 		jumlahStatus = 0;
 		tanggal = "";
+		tanggalShort = "";
+		hari = "";
 	}
 	
 	public DataPintuAir(Parcel p) {
@@ -31,6 +41,8 @@ public class DataPintuAir implements Parcelable {
 			status[i] = "";
 		}
 		tanggal = "";
+		tanggalShort = "";
+		hari = "";
 		readFromParcel(p);
 	}
 	
@@ -39,6 +51,17 @@ public class DataPintuAir implements Parcelable {
 		int bulan = Integer.parseInt(tanggal.split("/")[1]) - 1;
 		String strBulan = arrbulan[bulan];
 		this.tanggal = tanggal.split("/")[2] + " " + strBulan + " " + tanggal.split("/")[0];
+		
+		int y = Integer.parseInt(tanggal.split("/")[0]);
+		int d = Integer.parseInt(tanggal.split("/")[2]);
+		Calendar calendar = Calendar.getInstance();
+		
+		calendar.set(y, bulan, d);
+		
+		int h = calendar.get(Calendar.DAY_OF_WEEK);
+		hari = hariArr[h-1];
+		
+		tanggalShort = tanggal.split("/")[2] + "/" + tanggal.split("/")[1];
 	}
 	public void addTinggiAir(int tinggi, String strStatus, int waktu) {
 		tinggiAir[jumlahStatus] = tinggi;
@@ -59,6 +82,10 @@ public class DataPintuAir implements Parcelable {
 
 	public void setNama(String nama) {
 		this.nama = nama;
+	}
+	
+	public int[] getWaktu() {
+		return waktu;
 	}
 
 	public int getWaktuTerakhir() {
@@ -108,6 +135,8 @@ public class DataPintuAir implements Parcelable {
 		dest.writeIntArray(tinggiAir);
 		dest.writeInt(jumlahStatus);
 		dest.writeString(tanggal);
+		dest.writeString(tanggalShort);
+		dest.writeString(hari);
 	}
 	
 	private void readFromParcel(Parcel in) {
@@ -117,6 +146,8 @@ public class DataPintuAir implements Parcelable {
 		in.readIntArray(this.tinggiAir);
 		this.jumlahStatus = in.readInt();
 		this.tanggal = in.readString();
+		this.tanggalShort = in.readString();
+		this.hari = in.readString();
 	}
 
 	public static final Parcelable.Creator<DataPintuAir> CREATOR = 
@@ -137,6 +168,13 @@ public class DataPintuAir implements Parcelable {
 		return tanggal;
 	}
 	
+	public String getHari() {
+		return hari;
+	}
+	
+	public String getTanggalShort() {
+		return tanggalShort;
+	}
 	
 	
 	

@@ -64,7 +64,8 @@ public class BinderData extends BaseAdapter {
 	     
 	      holder.tvPintuAir = (TextView)vi.findViewById(R.id.tvPintuAir);
 	      holder.tvTinggiAir = (TextView)vi.findViewById(R.id.tvTinggiAir);
-	 
+	      holder.ivStatusChange = (ImageView)vi.findViewById(R.id.ivStatusChange);
+	      
 	      vi.setTag(holder);
 	    }
 	    else{
@@ -88,6 +89,17 @@ public class BinderData extends BaseAdapter {
 	    	  holder.tvTinggiAir.setBackgroundColor(Color.parseColor("#A52728"));
 	      }
 	      
+	      int curTinggiAir = pintuAirCollection.get(position).getTinggiAir()[0];
+	      int prevTinggiAir = pintuAirCollection.get(position).getTinggiAir()[1];
+	      
+	      if (curTinggiAir < prevTinggiAir) {
+	    	  holder.ivStatusChange.setImageResource(R.drawable.status_turun);
+	      } else if (curTinggiAir > prevTinggiAir) {
+	    	  holder.ivStatusChange.setImageResource(R.drawable.status_naik);
+	      } else {
+	    	  holder.ivStatusChange.setImageResource(R.drawable.status_sama);
+	      }
+	      
 	      return vi;
 	}
 	
@@ -95,6 +107,7 @@ public class BinderData extends BaseAdapter {
 		
 		TextView tvTinggiAir;
 		TextView tvPintuAir;
+		ImageView ivStatusChange;
 	}
 	
 }

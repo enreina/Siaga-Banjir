@@ -12,6 +12,10 @@ if (date("a") == "pm") {
 	$current_ampm = 1;
 }
 
+$waktu = 12;
+$lastwaktu = 12;
+$num = 1;
+
 $url1 = "http://www.jakarta.go.id/web/data_pantauan/search/".$current_year."/".$current_month."/".$current_day."/".$current_ampm;
 $url2 = "";
 if ($current_ampm == 1) {
@@ -23,6 +27,7 @@ if ($current_ampm == 1) {
 	
 	$url2 = "http://www.jakarta.go.id/web/data_pantauan/search/".$yesterday_year."/".$yesterday_month."/".$yesterday_day."/1";
 }
+
 
 //fetch html from jakarta.go.id
 $html1 = file_get_html($url1);
@@ -60,11 +65,13 @@ while ($data != null && $data2 != null) {
 		$tinggi[0] = trim($tinggi[0]);
 	}
 	
+	
 	if ($tinggi[0] == "-") {
 		$waktu = ($current_ampm == 1) ? 12 : 24;
 		$cell = $data2->last_child();
 		$tinggi[0] = $cell->plaintext;
 		$tinggi[0] = trim($tinggi[0]);
+		
 		while ($tinggi[0] == "-" && $waktu > ($current_ampm == 1 ? 1 : 13)) {
 			$waktu--;
 			$cell = $cell->prev_sibling();
@@ -80,7 +87,7 @@ while ($data != null && $data2 != null) {
 			} else if ($font->color == "#FF2503") {
 				$status[0] = "KRITIS";
 			}
-			if ($currentampm == 0) {
+			if ($current_ampm == 0) {
 				$tanggal = $yesterday_year."/".$yesterday_month."/".$yesterday_day;
 			}
 		}
@@ -89,7 +96,7 @@ while ($data != null && $data2 != null) {
 		
 		$num = 1;
 		$lastwaktu = $waktu;
-		while ($num < 7  && $lastwaktu > ($current_ampm == 0 ? 1 : 13)) {
+		while ($num < 7  && $lastwaktu > ($current_ampm == 1 ? 1 : 13)) {
 			$lastwaktu--;
 			$cell = $cell->prev_sibling();
 			$tinggi[$num] = $cell->plaintext;
@@ -120,7 +127,9 @@ while ($data != null && $data2 != null) {
 		
 		$num = 1;
 		$lastwaktu = $waktu;
+		echo "num: $num, lastwaktu: $lastwaktu";
 		while ($num < 7  && $lastwaktu > ($current_ampm == 0 ? 1 : 13)) {
+			echo "loop..";
 			$lastwaktu--;
 			$cell = $cell->prev_sibling();
 			$tinggi[$num] = $cell->plaintext;

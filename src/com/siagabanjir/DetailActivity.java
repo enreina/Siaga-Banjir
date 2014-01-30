@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -29,14 +30,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class DetailActivity extends ActionBarActivity
 {
 	private ActionBar actionBar;
 	private LinearLayout viewGraph;
-	private TextView tvnama, tvtinggiair, tvstatus;
-	private DetailGraph graph;
+	private TextView tvnama;
+	private ListView listDetail;
+	
+	//private TextView tvnama, tvtinggiair, tvstatus;
+	//private DetailGraph graph;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,7 @@ public class DetailActivity extends ActionBarActivity
 		setContentView(R.layout.activity_detail);
 		
 		actionBar = getSupportActionBar();
+		actionBar.setTitle("");
 		
 		Intent i = getIntent();
 		
@@ -55,37 +61,40 @@ public class DetailActivity extends ActionBarActivity
 		String status = pintuair.getStatus()[0];
 		
 		tvnama = (TextView) findViewById(R.id.tvNamaPintuAir);
-		tvtinggiair = (TextView) findViewById(R.id.tvKetinggianAir);
-		tvstatus = (TextView) findViewById(R.id.tvStatus);
+		listDetail = (ListView) findViewById(R.id.listDetail);
+		listDetail.setAdapter(new BinderDataDetail((Activity)this, pintuair));
+		
+		/* tvtinggiair = (TextView) findViewById(R.id.tvKetinggianAir);
+		tvstatus = (TextView) findViewById(R.id.tvStatus); */
 		
 		tvnama.setText(nama);
-		tvtinggiair.setText(tinggiAir);
-		tvstatus.setText(status);
+		/* tvtinggiair.setText(tinggiAir);
+		tvstatus.setText(status); */
 		
 		if (status.equals("NORMAL")) {
 	    	  tvnama.setBackgroundColor(Color.parseColor("#B7CC54"));
-	    	  tvtinggiair.setTextColor(Color.parseColor("#B7CC54"));
-	    	  tvstatus.setTextColor(Color.parseColor("#B7CC54"));
+	    	  /* tvtinggiair.setTextColor(Color.parseColor("#B7CC54"));
+	    	  tvstatus.setTextColor(Color.parseColor("#B7CC54")); */
 	      } else if (status.equals("WASPADA")) {
 	    	  tvnama.setBackgroundColor(Color.parseColor("#FFB031"));
-	    	  tvtinggiair.setTextColor(Color.parseColor("#FFB031"));
-	    	  tvstatus.setTextColor(Color.parseColor("#FFB031"));
+//	    	  tvtinggiair.setTextColor(Color.parseColor("#FFB031"));
+//	    	  tvstatus.setTextColor(Color.parseColor("#FFB031"));
 	      } else if (status.equals("RAWAN")) {
 	    	  tvnama.setBackgroundColor(Color.parseColor("#F2571E"));
-	    	  tvtinggiair.setTextColor(Color.parseColor("#F2571E"));
-	    	  tvstatus.setTextColor(Color.parseColor("#F2571E"));
+//	    	  tvtinggiair.setTextColor(Color.parseColor("#F2571E"));
+//	    	  tvstatus.setTextColor(Color.parseColor("#F2571E"));
 	      } else if (status.equals("KRITIS")) {
 	    	  tvnama.setBackgroundColor(Color.parseColor("#A52728"));
-	    	  tvtinggiair.setTextColor(Color.parseColor("#A52728"));
-	    	  tvstatus.setTextColor(Color.parseColor("#A52728"));
+//	    	  tvtinggiair.setTextColor(Color.parseColor("#A52728"));
+//	    	  tvstatus.setTextColor(Color.parseColor("#A52728"));
 	      }
 		
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		viewGraph = (LinearLayout) findViewById(R.id.viewGraph);
-		graph = new DetailGraph(this, pintuair.getTinggiAir(), pintuair.getStatus(), pintuair.getTanggal(), pintuair.getRentangWaktu());
+//		viewGraph = (LinearLayout) findViewById(R.id.viewGraph);
+//		graph = new DetailGraph(this, pintuair.getTinggiAir(), pintuair.getStatus(), pintuair.getTanggal(), pintuair.getRentangWaktu());
 		
-		viewGraph.addView(graph);
+//		viewGraph.addView(graph);
 		
 		Button shareButton = (Button)findViewById(R.id.btnShare);
 		shareButton.setOnClickListener(new View.OnClickListener() {
@@ -94,13 +103,15 @@ public class DetailActivity extends ActionBarActivity
 			public void onClick(View v) {
 				Bitmap bitmap = takeScreenshot();
 				File img = saveBitmap(bitmap);
+				String text = "Status Tinggi Muka Air di Pintu " + pintuair.getNama() + ", " + pintuair.getHari() + " (" + pintuair.getTanggalShort() + ") " + String.format("%02d",pintuair.getWaktuTerakhir()) + ".00 WIB: " + pintuair.getTinggiAir()[0] + " cm (" + pintuair.getStatus()[0] + ") http://bit.ly/siagabanjir";
+				
 				
 				Intent shareIntent = new Intent();
 				shareIntent.setAction(Intent.ACTION_SEND);
 				shareIntent.setType("image/jpeg");
-				shareIntent.putExtra(Intent.EXTRA_TEXT, "Siaga Banjir: " + String.format("%02d:00 WIB ", pintuair.getWaktuTerakhir()) + pintuair.getNama() + ", " + pintuair.getTinggiAir()[0] + ", " + pintuair.getStatus()[0]);
+				shareIntent.putExtra(Intent.EXTRA_TEXT, text);
 				shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(img));
-				startActivity(shareIntent);
+				startActivity(Intent.createChooser(shareIntent, "Share via"));
 			}
 		});
 		
@@ -142,7 +153,7 @@ public class DetailActivity extends ActionBarActivity
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.home_actions, menu);
+		//inflater.inflate(R.menu.home_actions, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 	

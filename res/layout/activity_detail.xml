@@ -16,7 +16,7 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold" />
-
+<!--  
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -83,6 +83,19 @@
         android:orientation="vertical" >
 
     </LinearLayout>
+    -->
+    
+    <ListView
+        android:id="@+id/listDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnShare"
+        android:layout_below="@+id/tvNamaPintuAir"
+        android:layout_margin="10dp"
+        android:dividerHeight="10dp"
+        android:visibility="visible" >
+
+    </ListView>
 
     <Button
         android:id="@+id/btnShare"

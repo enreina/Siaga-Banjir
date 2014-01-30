@@ -54,6 +54,7 @@ public class HomeActivity extends ActionBarActivity implements TabListener {
 		actionBar = getSupportActionBar();
 		
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setTitle("");
 	    
 	    Tab tabKritis = actionBar.newTab();
 	    
