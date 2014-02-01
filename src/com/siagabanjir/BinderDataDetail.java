@@ -67,7 +67,7 @@ public class BinderDataDetail extends BaseAdapter {
 	      holder.tvWaktu.setText(String.format("%02d.00", pintuAir.getWaktu()[position]));
 	      holder.tvTinggiAirDetail.setText(pintuAir.getTinggiAir()[position] + "");
 	      holder.tvStatusDetail.setText(pintuAir.getStatus()[position]);
-	      String status = pintuAir.getStatus()[0];
+	      String status = pintuAir.getStatus()[position];
 	      
 	      if (status.equals("NORMAL")) {
 	    	  holder.tvTinggiAirDetail.setBackgroundColor(Color.parseColor("#B7CC54"));
