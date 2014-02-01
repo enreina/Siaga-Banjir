@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal" >
 
     <TextView
         android:id="@+id/tvNamaPintuAir"
@@ -99,16 +100,17 @@
 
     <Button
         android:id="@+id/btnShare"
-        android:layout_width="138dp"
-        android:layout_height="52dp"
+        android:layout_width="84dp"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="22dp"
         android:background="#ECECEC"
         android:drawableLeft="@drawable/ic_action_share"
+        android:paddingRight="2dp"
         android:text="SHARE"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
 </RelativeLayout>
