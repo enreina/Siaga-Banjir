@@ -1,0 +1,3 @@
+Geocoder data
+
+Address[addressLines=[0:"Jalan Cengkeh No.20",1:"Beji",2:"Depok, West Java 16424",3:"Indonesia"],feature=20,admin=West Java,sub-admin=Depok,locality=Beji,thoroughfare=Jalan Cengkeh,postalCode=16424,countryCode=ID,countryName=Indonesia,hasLatitude=true,latitude=-6.364351,hasLongitude=true,longitude=106.832257,phone=null,url=null,extras=null]
