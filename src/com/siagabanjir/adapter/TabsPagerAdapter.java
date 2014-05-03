@@ -24,7 +24,6 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
  
     @Override
     public Fragment getItem(int index) {
-    	
         switch (index) {
         case 0:
             // Home fragment activity

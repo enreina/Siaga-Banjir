@@ -48,13 +48,13 @@ public class MainActivity extends ActionBarActivity implements
 		dataKritis = new ArrayList<DataPintuAir>();
 		
 		//set up data
-		for(int i = 0; i < 5; i++) {
+		/* for(int i = 0; i < 5; i++) {
 			DataPintuAir dp = new DataPintuAir("Pintu air " + i);
 			dp.setTanggal("2014/05/01");
 			dp.addTinggiAir(528, "KRITIS", 7*i);
 			
 			dataKritis.add(dp);
-		}
+		} */
 
 		
 		// Initilization
