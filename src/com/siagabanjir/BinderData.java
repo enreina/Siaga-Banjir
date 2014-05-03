@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,29 +74,29 @@ public class BinderData extends BaseAdapter {
 
 	      // Setting all values in listview
 	      
-	      holder.tvPintuAir.setText(pintuAirCollection.get(position).getNama().toUpperCase());
+	      holder.tvPintuAir.setText(pintuAirCollection.get(position).getNama());
 	      holder.tvTinggiAir.setText(pintuAirCollection.get(position).getTinggiAir()[0] + "");
 	      String status = pintuAirCollection.get(position).getStatus()[0];
 	      
 	      if (status.equals("NORMAL")) {
-	    	  holder.tvTinggiAir.setBackgroundColor(Color.parseColor("#B7CC54"));
+	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#B7CC54"));
 	      } else if (status.equals("WASPADA")) {
-	    	  holder.tvTinggiAir.setBackgroundColor(Color.parseColor("#FFB031"));
+	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#FFB031"));
 	      } else if (status.equals("RAWAN")) {
-	    	  holder.tvTinggiAir.setBackgroundColor(Color.parseColor("#F2571E"));
+	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#F2571E"));
 	      } else if (status.equals("KRITIS")) {
-	    	  holder.tvTinggiAir.setBackgroundColor(Color.parseColor("#A52728"));
+	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#A52728"));
 	      }
 	      
 	      int curTinggiAir = pintuAirCollection.get(position).getTinggiAir()[0];
 	      int prevTinggiAir = pintuAirCollection.get(position).getTinggiAir()[1];
 	      
 	      if (curTinggiAir < prevTinggiAir) {
-	    	  holder.ivStatusChange.setImageResource(R.drawable.status_turun);
+	    	  holder.ivStatusChange.setImageResource(R.drawable.ic_status_turun);
 	      } else if (curTinggiAir > prevTinggiAir) {
-	    	  holder.ivStatusChange.setImageResource(R.drawable.status_naik);
+	    	  holder.ivStatusChange.setImageResource(R.drawable.ic_status_naik);
 	      } else {
-	    	  holder.ivStatusChange.setImageResource(R.drawable.status_sama);
+	    	  holder.ivStatusChange.setImageResource(R.drawable.ic_status_sama);
 	      }
 	      
 	      return vi;

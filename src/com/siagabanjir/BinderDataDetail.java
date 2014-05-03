@@ -50,10 +50,10 @@ public class BinderDataDetail extends BaseAdapter {
 	      vi = inflater.inflate(R.layout.list_row_detail, null);
 	      holder = new ViewHolderDetail();
 	     
-	      holder.tvWaktu = (TextView)vi.findViewById(R.id.tvWaktu);
-	      holder.tvTinggiAirDetail = (TextView)vi.findViewById(R.id.tvTinggiAirDetail);
-	      holder.tvStatusDetail = (TextView)vi.findViewById(R.id.tvStatusDetail);
-	      holder.ivStatusChangeDetail = (ImageView)vi.findViewById(R.id.ivStatusChangeDetail);
+//	      holder.tvWaktu = (TextView)vi.findViewById(R.id.tvWaktu);
+//	      holder.tvTinggiAirDetail = (TextView)vi.findViewById(R.id.tvTinggiAirDetail);
+//	      holder.tvStatusDetail = (TextView)vi.findViewById(R.id.tvStatusDetail);
+//	      holder.ivStatusChangeDetail = (ImageView)vi.findViewById(R.id.ivStatusChangeDetail);
 	      
 	      vi.setTag(holder);
 	    }

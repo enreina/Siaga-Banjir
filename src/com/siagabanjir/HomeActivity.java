@@ -1,19 +1,22 @@
 package com.siagabanjir;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.siagabanjir.utility.JSONParser;
-
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
@@ -24,7 +27,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class HomeActivity extends ActionBarActivity implements TabListener {
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.siagabanjir.utility.JSONParser;
+
+public class HomeActivity extends ActionBarActivity implements TabListener,ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
 	private ActionBar actionBar;
 	private ArrayList<DataPintuAir> dataKritis;
 	private ArrayList<DataPintuAir> dataRawan;
@@ -33,6 +44,10 @@ public class HomeActivity extends ActionBarActivity implements TabListener {
 	private Fragment fragment;
 	private ProgressDialog pd;
 	private Context context;
+	
+	private LocationClient locationClient;
+	private LocationRequest locationRequest;
+	private boolean locationEnabled;
 	
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	private static final String url = "http://labs.pandagostudio.com/siaga-banjir/";
@@ -79,6 +94,30 @@ public class HomeActivity extends ActionBarActivity implements TabListener {
         
         refreshHome();
         
+	}
+	
+	private void setupUserLocation() {
+		locationClient = new LocationClient(this, this, this);
+		locationRequest = new LocationRequest();
+		
+		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+		locationRequest.setInterval(5);
+		locationRequest.setFastestInterval(1);
+		
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+			locationEnabled = false;
+			Toast.makeText(this, "Enable location services for accurate data", Toast.LENGTH_SHORT).show();
+		}
+		
+		else  {
+			locationEnabled = true;
+		}
+		
+		locationClient.connect();
+		
+		
+		
 	}
 	
 	@Override
@@ -197,6 +236,8 @@ public class HomeActivity extends ActionBarActivity implements TabListener {
 				if (pd != null) {
 					pd.dismiss();
 				}
+
+		        setupUserLocation();
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -254,5 +295,48 @@ public class HomeActivity extends ActionBarActivity implements TabListener {
 		}
 		super.onDestroy();
 	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onConnected(Bundle arg0) {
+		// TODO Auto-generated method stub
+		locationClient.setMockMode(true);
+		Location location = locationClient.getLastLocation();
+		if (location != null) {
+			Geocoder geocoder = new Geocoder(this);
+			try {
+				List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+				address.get(0);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Toast.makeText(this, "Initial location: " + location.getLatitude() + ", " + location.getLongitude(), Toast.LENGTH_LONG).show();
+		}
+		else if (location == null && locationEnabled) {
+			locationClient.requestLocationUpdates(locationRequest, this);
+		} 
+	}
+
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		locationClient.removeLocationUpdates(this);
+		Toast.makeText(this, "Location: " + location.getLatitude() + ", " + location.getLongitude(), Toast.LENGTH_SHORT).show();
+		
+	}
+	
+	
 
 }

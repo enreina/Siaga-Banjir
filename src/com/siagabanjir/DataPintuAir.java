@@ -1,12 +1,17 @@
 package com.siagabanjir;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class DataPintuAir implements Parcelable {
+public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 	private String nama;
 	private int[] tinggiAir;
 	private int[] waktu;
@@ -16,8 +21,21 @@ public class DataPintuAir implements Parcelable {
 	private String tanggalShort;
 	private String hari;
 	
-	private final String[] hariArr = new String[]{"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
+	public static HashMap<String, LatLng> locationPintuAir;
 	
+	private final String[] hariArr = new String[]{"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
+	private final static HashMap<String, Integer> statusCode = new HashMap<String, Integer>();
+	static {
+
+		statusCode.put("NORMAL", 4);
+		statusCode.put("WASPADA", 3);
+		statusCode.put("RAWAN", 2);
+		statusCode.put("KRITIS", 1);
+		locationPintuAir = new HashMap<String, LatLng>();
+		locationPintuAir.put("Katulampa", new LatLng(-6.634091, 106.83718));
+		locationPintuAir.put("Pesanggrahan", new LatLng(-6.396231, 106.772043));
+		locationPintuAir.put("Depok", new LatLng(-6.400386, 106.831627));
+	}
 	public DataPintuAir(String nama) {
 		super();
 		this.nama = nama;
@@ -46,6 +64,35 @@ public class DataPintuAir implements Parcelable {
 		readFromParcel(p);
 	}
 	
+	public static void initLocation() {
+		
+	}
+	
+	public static HashMap<String, LatLng> checkLocation(LatLng location) {
+		HashMap<String, LatLng> listLoc = new HashMap<String, LatLng>();
+		
+		for (String strLoc : locationPintuAir.keySet()) {
+			LatLng cur = locationPintuAir.get(strLoc);
+			if (isInArea(cur, location)) {
+				listLoc.put(strLoc, cur);
+			}
+		}
+		
+		return listLoc;
+	}
+	
+	private static boolean isInArea(LatLng location, LatLng currentlocation) {
+		// TODO Auto-generated method stub
+		float radius = 4000.0f;
+		float[] results = new float[1];
+		Location.distanceBetween(location.latitude, 
+				location.longitude, currentlocation.latitude, currentlocation.longitude, results);
+		
+		float distance = results[0];
+		
+		return distance < radius;
+	}
+
 	public void setTanggal(String tanggal) {
 		String[] arrbulan = new String[] {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
 		int bulan = Integer.parseInt(tanggal.split("/")[1]) - 1;
@@ -174,6 +221,16 @@ public class DataPintuAir implements Parcelable {
 	
 	public String getTanggalShort() {
 		return tanggalShort;
+	}
+
+	@Override
+	public int compareTo(DataPintuAir another) {
+		// TODO Auto-generated method stub
+		if (statusCode.get(status[0]) == statusCode.get(another.status[0])) {
+			return this.getNama().compareTo(another.getNama());
+		} else {
+			return statusCode.get(status[0]) - statusCode.get(another.status[0]);
+		}
 	}
 	
 	

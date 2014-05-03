@@ -1,51 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:orientation="horizontal"
-    android:layout_margin="5dp"
-    android:paddingTop="5dip"
-    android:paddingBottom="5dip"
-    android:background="@drawable/list_selector">
-    <TextView
-        android:id="@+id/tvWaktu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5sp"
-        android:paddingBottom ="5dip"
-        android:fontFamily="sans-serif-light" 
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:textColor="#6F6F6F"
-        android:gravity="center"/>
-    <ImageView
-        android:id="@+id/ivStatusChangeDetail"
-        android:layout_width="30dp"
-     	android:layout_height="40dp"
-     	android:layout_marginLeft="15dp"
-     	android:layout_marginRight="15dp"
-        android:src="@drawable/status_sama"
-        android:layout_gravity="center"
-        />
-    <TextView
-     android:id="@+id/tvTinggiAirDetail"
-     android:layout_width="50dp"
-     android:layout_height="40dp"
-     android:layout_marginRight="5dp"
-     android:textSize="17sp"
-     android:textColor="#FFFFFF"
-     android:textStyle="bold"
-     android:gravity="center"/>
-    <TextView
-        android:id="@+id/tvStatusDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5sp"
-        android:paddingBottom ="5dip"
-        android:fontFamily="sans-serif-light" 
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:textColor="#6F6F6F"
-        android:gravity="center"/>
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+		
+	<com.iguanaui.controls.DataChart android:id="@+id/dataChart"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_weight="1" /> 	
 </LinearLayout>
