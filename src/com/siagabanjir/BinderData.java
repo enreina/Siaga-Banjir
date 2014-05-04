@@ -79,13 +79,13 @@ public class BinderData extends BaseAdapter {
 	      String status = pintuAirCollection.get(position).getStatus()[0];
 	      
 	      if (status.equals("NORMAL")) {
-	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#B7CC54"));
+	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#2ecc71"));
 	      } else if (status.equals("WASPADA")) {
-	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#FFB031"));
+	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#f1c40f"));
 	      } else if (status.equals("RAWAN")) {
-	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#F2571E"));
+	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#f39c12"));
 	      } else if (status.equals("KRITIS")) {
-	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#A52728"));
+	    	  holder.tvTinggiAir.setTextColor(Color.parseColor("#e74c3c"));
 	      }
 	      
 	      int curTinggiAir = pintuAirCollection.get(position).getTinggiAir()[0];

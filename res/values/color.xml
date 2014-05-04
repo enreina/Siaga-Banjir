@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gray">#ebebeb</color>
+    <color name="gray">#f4f4f4</color>
     <color name="white">#FFFFFF</color>
     <color name="tab_highlight">#CFCFCF</color>
     

@@ -8,7 +8,7 @@
         android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
-        android:divider="@color/gray"
+        android:divider="#f4f4f4"
         android:dividerHeight="1dip"
         android:visibility="visible">
     </ListView>
