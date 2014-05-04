@@ -228,7 +228,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 			@Override
 			public void onDestroyActionMode(ActionMode mode) {
 				// TODO Auto-generated method stub
-				
+				currentMarker.remove();
 			}
 			
 			@Override
