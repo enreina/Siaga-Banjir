@@ -28,6 +28,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -35,8 +36,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnMapLongClickListener, OnMarkerDragListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
+public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnMapLongClickListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
 	public GoogleMap peta = null;
+	private Marker currentMarker;
 	private SupportMapFragment mapFragment;
 	private Context context;
 	private LocationClient locationClient;
@@ -108,7 +110,10 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
                 Toast.makeText(this.getActivity().getApplicationContext(),
                         "Error showing map", Toast.LENGTH_SHORT)
                         .show();
+            } else {
+            	peta.setOnMapLongClickListener(this);
             }
+            
         }
     }
 
@@ -158,10 +163,9 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		marker.draggable(true);
+		//marker.draggable(true);
 		marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location));
 		
-		peta.setOnMarkerDragListener(this);
 		peta.addMarker(marker);
 		
 		for (LatLng loc : DataPintuAir.locationPintuAir.values()) {
@@ -198,30 +202,25 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 	}
 
 	@Override
-	public void onMapLongClick(LatLng arg0) {
-		// TODO Auto-generated method stub
+	public void onMapLongClick(LatLng newLoc) {
+		if (currentMarker != null) {
+			currentMarker.remove();
+		}
 		
+		MarkerOptions marker = new MarkerOptions();
+		marker.position(newLoc);
+		
+		currentMarker = peta.addMarker(marker);
+		checkLocation(marker);
 	}
 
 	@Override
 	public void onMapClick(LatLng arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
-	public void onMarkerDrag(Marker arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onMarkerDragEnd(Marker marker) {
-		checkLocation(marker);
-		
-	}
 	
-	public void checkLocation(Marker marker) {
+	public void checkLocation(MarkerOptions marker) {
 		HashMap<String, LatLng> inArea = DataPintuAir.checkLocation(marker.getPosition());
 		
 		
@@ -235,11 +234,6 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 		
 	}
 
-	@Override
-	public void onMarkerDragStart(Marker arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 }
