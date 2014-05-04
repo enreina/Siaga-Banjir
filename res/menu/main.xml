@@ -14,5 +14,11 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         Siaga:showAsAction="never"/>
+    
+    <item
+        android:id="@+id/action_information"
+        android:orderInCategory="100"
+        android:title="@string/info"
+        Siaga:showAsAction="never"/>
 
 </menu>
