@@ -25,12 +25,12 @@ public class RekomendasiFollowActivity extends ActionBarActivity
 		
 		Intent i = getIntent();
 		
-		ArrayList<DataPintuAir> curr = i.getParcelableArrayListExtra("pintuair");
+		/** ArrayList<DataPintuAir> curr = i.getParcelableArrayListExtra("pintuair");
 		int position = i.getIntExtra("selected", 0);
 		final DataPintuAir pintuair = (DataPintuAir)curr.get(position);
 		String nama = pintuair.getNama().toUpperCase();
 		String tinggiAir = pintuair.getTinggiAir()[0] + "";
-		String status = pintuair.getStatus()[0];
+		String status = pintuair.getStatus()[0]; **/
 		
 		actionBar.setDisplayHomeAsUpEnabled(true);
 

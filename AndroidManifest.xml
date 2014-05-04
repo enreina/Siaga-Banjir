@@ -37,6 +37,11 @@
                 android:value="com.siagabanjir.HomeActivity" />
         </activity>
         <activity
+            android:name="com.siagabanjir.RekomendasiFollowActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.siagabanjir.TestActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
