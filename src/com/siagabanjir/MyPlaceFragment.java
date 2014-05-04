@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -48,6 +49,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 	private LocationClient locationClient;
 	private LocationRequest locationRequest;
 	private boolean locationEnabled;
+	private boolean addingMyPlace;
 	
 	public MyPlaceFragment(Context context) {
 		this.context = context;
@@ -207,6 +209,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 
 	@Override
 	public void onMapLongClick(LatLng newLoc) {
+		//if (addingMyPlace) return;
+		
 		if (currentMarker != null) {
 			currentMarker.remove();
 		}
@@ -217,6 +221,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 		currentMarker = peta.addMarker(marker);
 		checkLocation(marker);
 		
+		if (addingMyPlace) return;
+		((ActionBarActivity) context).getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		((ActionBarActivity) context).startActionMode(new ActionMode.Callback() {
 			
 			@Override
@@ -229,11 +235,14 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 			public void onDestroyActionMode(ActionMode mode) {
 				// TODO Auto-generated method stub
 				currentMarker.remove();
+				((ActionBarActivity) context).getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+				addingMyPlace = false;
 			}
 			
 			@Override
 			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 				// TODO Auto-generated method stub
+				addingMyPlace = true;
 				mode.getMenuInflater().inflate(R.menu.add_actions, menu);
 				
 				return true;
