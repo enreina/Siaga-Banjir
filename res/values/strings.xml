@@ -7,5 +7,9 @@
     <string name="info">Information</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_new">Add</string>
+    <string name="location_hint">Enter location name</string>
+    <string name="dummy_location">Di hatimuuuuoooo</string>
+    <string name="title1">SLUICE RECOMMENDATION</string>
+    <string name="button_text">Follow</string>
 
 </resources>
