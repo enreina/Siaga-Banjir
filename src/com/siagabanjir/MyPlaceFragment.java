@@ -66,11 +66,13 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 	        mapFragment = SupportMapFragment.newInstance();
 	        fm.beginTransaction().replace(R.id.map, mapFragment).commit();
 	    }
+
 	}
 	
 	@Override
 	public void onResume() {
 	    super.onResume();
+
 	    initializeMap();
 	    setupUserLocation();
 	}

@@ -46,18 +46,18 @@ public class HomeFragment extends ListFragment {
 
 	public HomeFragment() {
 		this(0);
-		refreshHome();
+		//refreshHome();
 	}
 
 	public HomeFragment(ArrayList<DataPintuAir> pintuAir, Context context) {
 		this.pintuAir = pintuAir;
 		this.context = context;
-		refreshHome();
+		//refreshHome();
 	}
 
 	public HomeFragment(int status) {
 		pintuAir = new ArrayList<DataPintuAir>();
-		refreshHome();
+		//refreshHome();
 	}
 
 	public void refreshHome() {
@@ -76,6 +76,11 @@ public class HomeFragment extends ListFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.list_fragment, container, false);
 		return view;
+	}
+	
+	public void onActivityCreated(Bundle savedInstanceState) {
+	    super.onActivityCreated(savedInstanceState);
+	    refreshHome();
 	}
 
 	/*
@@ -102,15 +107,6 @@ public class HomeFragment extends ListFragment {
 
 	public void refresh() {
 		binder.notifyDataSetChanged();
-		if (binder.isEmpty()) {
-			this.getListView().setVisibility(View.GONE);
-			this.getActivity().findViewById(R.id.tvEmpty)
-					.setVisibility(View.VISIBLE);
-		} else {
-			this.getListView().setVisibility(View.VISIBLE);
-			this.getActivity().findViewById(R.id.tvEmpty)
-					.setVisibility(View.GONE);
-		}
 	}
 
 	private class JSONParse extends AsyncTask<String, String, JSONObject> {
