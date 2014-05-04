@@ -29,6 +29,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnMapLongClickListener, OnMarkerDragListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
 	public GoogleMap peta = null;
+	private SupportMapFragment mapFragment;
 	private Context context;
 	private LocationClient locationClient;
 	private LocationRequest locationRequest;
@@ -44,31 +46,34 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 	public MyPlaceFragment(Context context) {
 		this.context = context;
 	}
+	
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
 		View rootView = inflater.inflate(R.layout.fragment_myplace, container, false);
-		
-		initializeMap();
-		setupUserLocation();
 		
 		return rootView;
 	}
 	
-	private void initializeMap() {
-        if (peta == null) {
-        	peta = ((SupportMapFragment) this.getActivity().getSupportFragmentManager().findFragmentById(
-                   R.id.peta)).getMap();
- 
-            // check if map is created successfully or not
-            if (peta == null) {
-                Toast.makeText(this.getActivity().getApplicationContext(),
-                        "Error showing map", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        }
-    }
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+	    super.onActivityCreated(savedInstanceState);
+	    FragmentManager fm = getChildFragmentManager();
+	    mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
+	    if (mapFragment == null) {
+	        mapFragment = SupportMapFragment.newInstance();
+	        fm.beginTransaction().replace(R.id.map, mapFragment).commit();
+	    }
+	}
+	
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    initializeMap();
+	    setupUserLocation();
+	}
 	
 	private void setupUserLocation() {
 		locationClient = new LocationClient(context, this, this);
@@ -91,6 +96,19 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 		locationClient.connect();
 		
 	}
+	
+	private void initializeMap() {
+        if (peta == null) {
+        	peta = mapFragment.getMap();
+ 
+            // check if map is created successfully or not
+            if (peta == null) {
+                Toast.makeText(this.getActivity().getApplicationContext(),
+                        "Error showing map", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
@@ -126,7 +144,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 	public void refreshMap(LatLng currentLoc) {
 		DataPintuAir.initLocation();
 		
-		peta.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
+		peta.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
 		
 		MarkerOptions marker = new MarkerOptions();
 		marker.position(currentLoc);
