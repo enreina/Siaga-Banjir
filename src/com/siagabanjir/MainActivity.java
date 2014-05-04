@@ -46,6 +46,8 @@ public class MainActivity extends ActionBarActivity implements
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbar);
 		actionBar.setDisplayShowTitleEnabled(false);
+		
+		
 
 		//setUp data
 		dataKritis = new ArrayList<DataPintuAir>();
