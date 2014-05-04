@@ -17,14 +17,12 @@
         <activity
             android:name="com.siagabanjir.HomeActivity"
             android:logo="@drawable/ic_logo"
-            android:screenOrientation="portrait"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.siagabanjir.MainActivity"
             android:logo="@drawable/ic_logo"
-            android:screenOrientation="portrait"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:screenOrientation="portrait" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,8 +34,7 @@
             android:name="com.siagabanjir.DetailActivity"
             android:label="@string/app_name"
             android:parentActivityName="com.siagabanjir.HomeActivity"
-            android:screenOrientation="portrait" 
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.siagabanjir.HomeActivity" />
@@ -46,8 +43,7 @@
         <activity
             android:name="com.siagabanjir.TestActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:screenOrientation="portrait">
         </activity>
 
         <meta-data
