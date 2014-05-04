@@ -31,7 +31,11 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -209,9 +213,44 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener, OnM
 		
 		MarkerOptions marker = new MarkerOptions();
 		marker.position(newLoc);
-		
+		marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_mylocation));
 		currentMarker = peta.addMarker(marker);
 		checkLocation(marker);
+		
+		((ActionBarActivity) context).startActionMode(new ActionMode.Callback() {
+			
+			@Override
+			public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public void onDestroyActionMode(ActionMode mode) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+				// TODO Auto-generated method stub
+				mode.getMenuInflater().inflate(R.menu.add_actions, menu);
+				
+				return true;
+			}
+			
+			@Override
+			public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+				// TODO Auto-generated method stub
+				switch (item.getItemId()) {
+	            	case R.id.action_add:
+	                
+	                return true;
+	        }
+
+	        return false;
+			}
+		});
 	}
 
 	@Override

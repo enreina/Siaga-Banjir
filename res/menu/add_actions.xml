@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:Siaga="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.siaga.MainActivity" >
+
+    <item
+        android:id="@+id/action_add"
+        Siaga:showAsAction="always"
+        android:icon="@android:drawable/checkbox_off_background"
+        android:title="Add Place"/>
+
+</menu>
