@@ -36,7 +36,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-@SuppressLint("ValidFragment")
+
 public class HomeFragment extends ListFragment {
 	private ArrayList<DataPintuAir> pintuAir;
 	BinderData binder;
@@ -46,6 +46,7 @@ public class HomeFragment extends ListFragment {
 
 	public HomeFragment() {
 		this(0);
+		refreshHome();
 	}
 
 	public HomeFragment(ArrayList<DataPintuAir> pintuAir, Context context) {
@@ -56,7 +57,6 @@ public class HomeFragment extends ListFragment {
 
 	public HomeFragment(int status) {
 		pintuAir = new ArrayList<DataPintuAir>();
-
 		refreshHome();
 	}
 
@@ -74,7 +74,8 @@ public class HomeFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.list_fragment, container, false);
+		View view = inflater.inflate(R.layout.list_fragment, container, false);
+		return view;
 	}
 
 	/*

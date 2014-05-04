@@ -22,6 +22,9 @@ public class MainActivity extends ActionBarActivity implements
 		ActionBar.TabListener {
 
 	private Fragment fragment;
+	
+	private HomeFragment homeFragment;
+	private MyPlaceFragment myPlaceFragment;
 	private ViewPager viewPager;
 	private TabsPagerAdapter mAdapter;
 	
@@ -33,12 +36,12 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_home);
 
-		if (savedInstanceState == null) {
+		/*if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+		}*/
 
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbar);
@@ -58,10 +61,10 @@ public class MainActivity extends ActionBarActivity implements
 
 		
 		// Initilization
-		viewPager = (ViewPager) findViewById(R.id.container);
+		/* viewPager = (ViewPager) findViewById(R.id.container);
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager(), dataKritis, this);
-
-		viewPager.setAdapter(mAdapter);
+		
+		viewPager.setAdapter(mAdapter); */
 		actionBar.setHomeButtonEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -120,7 +123,16 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction arg1) {
-		
+		String tag = "CURRENT_FRAGMENT";
+		switch (tab.getPosition()) {
+		case 0:
+			fragment = new HomeFragment(dataKritis, this);
+			break;
+		case 1:
+			fragment = new MyPlaceFragment(this);
+			break;
+		}
+		getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, tag).commit();
 	}
 
 	@Override

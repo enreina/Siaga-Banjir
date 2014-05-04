@@ -15,9 +15,11 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
  
 	private ArrayList<DataPintuAir> dataKritis;
 	private Context context;
+	private FragmentManager fm;
 	
     public TabsPagerAdapter(FragmentManager fm, ArrayList<DataPintuAir> dp, Context context) {
         super(fm);
+        this.fm = fm;
         this.context = context;
         this.dataKritis = dp;
     }
