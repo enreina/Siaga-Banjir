@@ -39,5 +39,13 @@
         android:textColor="#f1c40f"
         android:textSize="15sp"
         android:textStyle="bold" />
+    
+    <ListView
+        android:id="@+id/rekomendasi_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="#f4f4f4"
+        android:dividerHeight="1dp" >
+    </ListView>
 
 </LinearLayout>

@@ -21,7 +21,8 @@ public class RekomendasiFollowActivity extends ActionBarActivity
 		setContentView(R.layout.rekomendasi_follow);
 		
 		actionBar = getSupportActionBar();
-		actionBar.setTitle("");
+		actionBar.setIcon(R.drawable.ico_actionbar);
+		actionBar.setDisplayShowTitleEnabled(false);
 		
 		Intent i = getIntent();
 		
