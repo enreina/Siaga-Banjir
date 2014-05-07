@@ -47,15 +47,15 @@ public class RekomendasiFollowActivity extends ActionBarActivity
 	
 	public boolean OnOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_refresh:
-	            return true;
-	        case android.R.id.home:
-	        	NavUtils.navigateUpFromSameTask(this);
-	        	return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		switch (item.getItemId()) {
+		case R.id.action_settings:
+			return true;
+		case R.id.action_information:
+			Intent i = new Intent(this, InformationActivity.class);
+			startActivity(i);
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 
 	}
 	
