@@ -1,116 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/tvNamaPintuAir"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="#A52728"
-        android:gravity="center"
-        android:text="DEPOK"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-<!--  
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvPintuAir"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvKetinggianAir"
-        android:layout_alignLeft="@+id/tvStatus"
-        android:layout_marginLeft="12dp"
-        android:text="STATUS"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:padding="15dp"
+        android:text="Tes Grafik IguanaUI"
+        android:textColor="#424242"
+        android:textSize="17sp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvNamaPintuAir"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="28dp"
-        android:text="KETINGGIAN AIR"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvKetinggianAir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
-        android:layout_marginLeft="38dp"
-        android:layout_marginTop="19dp"
-        android:background="#FFFFFF"
-        android:padding="5dp"
-        android:text="150"
-        android:textColor="#A52728"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvKetinggianAir"
-        android:layout_alignBottom="@+id/tvKetinggianAir"
-        android:layout_marginLeft="23dp"
-        android:layout_toRightOf="@+id/textView2"
-        android:background="#FFFFFF"
-        android:padding="5dp"
-        android:text="RAWAN"
-        android:textColor="#A52728"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:id="@+id/viewGraph"
-        android:layout_width="434dp"
-        android:layout_height="187dp"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignRight="@+id/tvStatus"
-        android:layout_below="@+id/tvKetinggianAir"
-        android:layout_marginTop="29dp"
-        android:orientation="vertical" >
-
-    </LinearLayout>
-    -->
-    
-    <ListView
-        android:id="@+id/listDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnShare"
-        android:layout_below="@+id/tvNamaPintuAir"
-        android:layout_margin="10dp"
-        android:dividerHeight="10dp"
-        android:visibility="visible" >
-
-    </ListView>
-
-    <Button
-        android:id="@+id/btnShare"
-        android:layout_width="84dp"
-        android:layout_height="35dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="22dp"
-        android:background="#ECECEC"
-        android:drawableLeft="@drawable/ic_action_share"
-        android:paddingRight="2dp"
-        android:text="SHARE"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-
-</RelativeLayout>
+    <com.iguanaui.controls.DataChart
+        android:id="@+id/dataChart"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:padding = "5dp"
+        android:layout_weight="1" />
+</LinearLayout>

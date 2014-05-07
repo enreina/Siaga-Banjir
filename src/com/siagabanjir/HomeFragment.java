@@ -36,7 +36,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 public class HomeFragment extends ListFragment {
 	private ArrayList<DataPintuAir> pintuAir;
 	BinderData binder;
@@ -46,18 +45,18 @@ public class HomeFragment extends ListFragment {
 
 	public HomeFragment() {
 		this(0);
-		//refreshHome();
+		// refreshHome();
 	}
 
 	public HomeFragment(ArrayList<DataPintuAir> pintuAir, Context context) {
 		this.pintuAir = pintuAir;
 		this.context = context;
-		//refreshHome();
+		// refreshHome();
 	}
 
 	public HomeFragment(int status) {
 		pintuAir = new ArrayList<DataPintuAir>();
-		//refreshHome();
+		// refreshHome();
 	}
 
 	public void refreshHome() {
@@ -77,24 +76,25 @@ public class HomeFragment extends ListFragment {
 		View view = inflater.inflate(R.layout.list_fragment, container, false);
 		return view;
 	}
-	
+
 	public void onActivityCreated(Bundle savedInstanceState) {
-	    super.onActivityCreated(savedInstanceState);
-	    refreshHome();
+		super.onActivityCreated(savedInstanceState);
+		refreshHome();
 	}
 
-	/*
-	 * @Override public void onListItemClick(ListView list, View v, int
-	 * position, long id) { if (this.empty == false) { Intent i = new
-	 * Intent(this.getActivity().getBaseContext(), DetailActivity.class);
-	 * 
-	 * i.putParcelableArrayListExtra("pintuair", pintuAir);
-	 * i.putExtra("selected", position);
-	 * 
-	 * startActivity(i); }
-	 * 
-	 * }
-	 */
+	@Override
+	public void onListItemClick(ListView list, View v, int position, long id) {
+		if (this.empty == false) {
+			Intent i = new Intent(this.getActivity().getBaseContext(),
+					DetailActivity.class);
+
+			// i.putParcelableArrayListExtra("pintuair", pintuAir);
+			// i.putExtra("selected", position);
+
+			startActivity(i);
+		}
+
+	}
 
 	public void addData(DataPintuAir dp) {
 		pintuAir.add(dp);
@@ -129,11 +129,11 @@ public class HomeFragment extends ListFragment {
 			InputStream is = null;
 			String json = "";
 			JSONObject jObj = null;
-			
+
 			try {
 				DefaultHttpClient httpClient = new DefaultHttpClient();
 				HttpPost httpPost = new HttpPost(url);
-				
+
 				HttpResponse httpResponse = httpClient.execute(httpPost);
 				HttpEntity httpEntity = httpResponse.getEntity();
 				is = httpEntity.getContent();
@@ -144,9 +144,10 @@ public class HomeFragment extends ListFragment {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			try {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(is, "iso-8859-1"), 8);
 				StringBuilder sb = new StringBuilder();
 				String line = null;
 				while ((line = reader.readLine()) != null) {
@@ -158,56 +159,58 @@ public class HomeFragment extends ListFragment {
 			} catch (Exception e) {
 				Log.e("Buffer Error", "Error converting result " + e);
 			}
-			
+
 			try {
 				jObj = new JSONObject(readFromFile());
 			} catch (JSONException e) {
-				Log.e("JSON Parser", "Error parsing data " + e.toString() );
+				Log.e("JSON Parser", "Error parsing data " + e.toString());
 			}
-			
+
 			return jObj;
 		}
-		
+
 		private void writeToFile(String json) {
 			try {
-		        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("datapintuair.txt", Context.MODE_PRIVATE));
-		        outputStreamWriter.write(json);
-		        outputStreamWriter.close();
-		    }
-		    catch (IOException e) {
-		        Log.e("Exception", "File write failed: " + e.toString());
-		    }
+				OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+						context.openFileOutput("datapintuair.txt",
+								Context.MODE_PRIVATE));
+				outputStreamWriter.write(json);
+				outputStreamWriter.close();
+			} catch (IOException e) {
+				Log.e("Exception", "File write failed: " + e.toString());
+			}
 		}
-		
+
 		private String readFromFile() {
 
-		    String ret = "";
+			String ret = "";
 
-		    try {
-		        InputStream inputStream = context.openFileInput("datapintuair.txt");
+			try {
+				InputStream inputStream = context
+						.openFileInput("datapintuair.txt");
 
+				if (inputStream != null) {
+					InputStreamReader inputStreamReader = new InputStreamReader(
+							inputStream);
+					BufferedReader bufferedReader = new BufferedReader(
+							inputStreamReader);
+					String receiveString = "";
+					StringBuilder stringBuilder = new StringBuilder();
 
-		        if ( inputStream != null ) {
-		            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-		            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-		            String receiveString = "";
-		            StringBuilder stringBuilder = new StringBuilder();
+					while ((receiveString = bufferedReader.readLine()) != null) {
+						stringBuilder.append(receiveString);
+					}
 
-		            while ( (receiveString = bufferedReader.readLine()) != null ) {
-		                stringBuilder.append(receiveString);
-		            }
+					inputStream.close();
+					ret = stringBuilder.toString();
+				}
+			} catch (FileNotFoundException e) {
+				Log.e("login activity", "File not found: " + e.toString());
+			} catch (IOException e) {
+				Log.e("login activity", "Can not read file: " + e.toString());
+			}
 
-		            inputStream.close();
-		            ret = stringBuilder.toString();
-		        }
-		    }
-		    catch (FileNotFoundException e) {
-		        Log.e("login activity", "File not found: " + e.toString());
-		    } catch (IOException e) {
-		        Log.e("login activity", "Can not read file: " + e.toString());
-		    }
-
-		    return ret;
+			return ret;
 		}
 
 		protected void onProgressUpdate(String... values) {
