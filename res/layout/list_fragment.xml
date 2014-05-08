@@ -4,15 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <TextView
+        android:id="@+id/tvWaktuUpdate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#acacac"
+        android:background="#f4f4f4"
+        android:textSize="12sp"
+        android:text="Tes last updated 9.00 AM" />
+
     <ListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
         android:divider="#f4f4f4"
         android:dividerHeight="1dip"
-        android:visibility="visible">
+        android:visibility="visible" >
     </ListView>
-    
+
     <TextView
         android:id="@+id/tvEmpty"
         android:layout_width="match_parent"

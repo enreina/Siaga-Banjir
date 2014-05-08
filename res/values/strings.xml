@@ -20,5 +20,7 @@
 	        Penanggung jawab adalah Kepala Badan Penanggulangan Bencana Daerah (Sekretaris Daerah).</string>
 	<string name="siaga1">Terjadi jika dalam enam jam debit air tidak surut. 
 	    Penanggung jawab penanganan adalah Gubernur.</string>
+	<string name="follow">Follow</string> 
+	<string name="unfollow">Following</string>    
 
 </resources>

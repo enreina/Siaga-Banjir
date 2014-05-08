@@ -33,6 +33,7 @@
                 android:gravity="left|center"
                 android:padding="5dip"
                 android:text="@string/siaga4"
+                android:fontFamily="sans-serif-light"
                 android:textColor="#424242"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -52,6 +53,7 @@
                 android:gravity="left|center"
                 android:padding="5dip"
                 android:text="@string/siaga3"
+                android:fontFamily="sans-serif-light"
                 android:textColor="#424242"
                 android:textSize="15sp" />
 
@@ -89,6 +91,7 @@
                 android:gravity="left|center"
                 android:padding="5dip"
                 android:text="@string/siaga2"
+                android:fontFamily="sans-serif-light"
                 android:textColor="#424242"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -107,6 +110,7 @@
                 android:gravity="left|center"
                 android:padding="5dip"
                 android:text="@string/siaga1"
+                android:fontFamily="sans-serif-light"
                 android:textColor="#424242"
                 android:textSize="15sp" />
 

@@ -5,20 +5,89 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/tvPintuAir"
+        android:id="@+id/tvWaktuUpdate"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="#f4f4f4"
         android:fontFamily="sans-serif-light"
-        android:gravity="center_vertical|center_horizontal|center"
-        android:padding="15dp"
-        android:text="Tes Grafik IguanaUI"
-        android:textColor="#424242"
-        android:textSize="17sp" />
+        android:gravity="center"
+        android:text="Tes last updated 9.00 AM"
+        android:textColor="#acacac"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tvPintuAir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5sp"
+            android:gravity="left"
+            android:text="Katulampa"
+            android:textColor="#424242"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/follow_btn"
+                android:layout_width="110dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="7dip"
+                android:background="@drawable/buttonfollow"
+                android:text="Follow"
+                android:textColor="#f1c40f"
+                android:textSize="15sp"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/unfollow_btn"
+                android:layout_width="110dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="7dip"
+                android:background="@drawable/buttonunfollow"
+                android:text="Following"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5sp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="left"
+            android:text="NORMAL"
+            android:textColor="#2ecc71"
+            android:textSize="15sp" />
+    </LinearLayout>
 
     <com.iguanaui.controls.DataChart
         android:id="@+id/dataChart"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:padding = "5dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:padding="5dp" />
+
 </LinearLayout>
