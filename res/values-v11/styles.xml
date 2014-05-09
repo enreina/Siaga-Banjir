@@ -27,7 +27,8 @@
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Example</item>
         <item name="android:actionModeBackground">@drawable/cab_background_top_example</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Example</item>
-        <item name="actionOverflowButtonStyle">@style/OverFlow</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverFlow</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_action_previous_item</item>
     </style>
 
     <style name="OverFlow" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">

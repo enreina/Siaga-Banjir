@@ -13,11 +13,11 @@
     <string name="button_text">Follow</string>
     <string name="content">Siaga</string>
     <string name="siaga4">Belum ada peningkatan debit air secara mencolok.
-        Komando di lapangan dilakukan oleh komandan pelaksana dinas atau wakil komandan operasional wilayah. </string>
+        Komando di lapangan dilakukan oleh wakil komandan operasional wilayah. </string>
     <string name="siaga3">Terjadi jika hujan menyebabkan peningkatan debit air di pintu-pintu air, 
 	    tetapi kondisinya masih belum kritis dan membahayakan.</string>
     <string name="siaga2">Terjadi jika hujan menyebabkan debit air mulai meluas.
-	        Penanggung jawab adalah Kepala Badan Penanggulangan Bencana Daerah (Sekretaris Daerah).</string>
+	        Penanggung jawab adalah Kepala Badan Penanggulangan Bencana Daerah.</string>
 	<string name="siaga1">Terjadi jika dalam enam jam debit air tidak surut. 
 	    Penanggung jawab penanganan adalah Gubernur.</string>
 	<string name="follow">Follow</string> 

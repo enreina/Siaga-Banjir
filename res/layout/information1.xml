@@ -11,6 +11,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <TextView
+            android:id="@+id/judul"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="#f1c40f"
+            android:gravity="center"
+            android:padding="10dip"
+            android:text="ARTI STATUS"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -23,17 +35,17 @@
                 android:layout_height="150dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="15dip"
+                android:padding="10dip"
                 android:src="@drawable/circle_dummy" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left|center"
-                android:padding="5dip"
-                android:text="@string/siaga4"
                 android:fontFamily="sans-serif-light"
+                android:gravity="left|center"
+                android:padding="15dip"
+                android:text="@string/siaga4"
                 android:textColor="#424242"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -50,10 +62,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left|center"
-                android:padding="5dip"
-                android:text="@string/siaga3"
                 android:fontFamily="sans-serif-light"
+                android:gravity="left|center"
+                android:padding="15dip"
+                android:text="@string/siaga3"
                 android:textColor="#424242"
                 android:textSize="15sp" />
 
@@ -63,7 +75,7 @@
                 android:layout_height="150dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="15dip"
+                android:padding="10dip"
                 android:src="@drawable/circle_dummy" />
         </LinearLayout>
 
@@ -72,7 +84,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
+            android:layout_marginTop="15dip"
             android:orientation="horizontal" >
 
             <ImageView
@@ -81,22 +93,23 @@
                 android:layout_height="150dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="15dip"
+                android:padding="10dip"
                 android:src="@drawable/circle_dummy" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left|center"
-                android:padding="5dip"
-                android:text="@string/siaga2"
                 android:fontFamily="sans-serif-light"
+                android:gravity="left|center"
+                android:padding="15dip"
+                android:text="@string/siaga2"
                 android:textColor="#424242"
                 android:textSize="15sp" />
         </LinearLayout>
 
         <!-- Row 4 -->
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -107,10 +120,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left|center"
-                android:padding="5dip"
-                android:text="@string/siaga1"
                 android:fontFamily="sans-serif-light"
+                android:gravity="left|center"
+                android:padding="15dip"
+                android:text="@string/siaga1"
                 android:textColor="#424242"
                 android:textSize="15sp" />
 
@@ -120,7 +133,7 @@
                 android:layout_height="150dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="15dip"
+                android:padding="10dip"
                 android:src="@drawable/circle_dummy" />
         </LinearLayout>
     </LinearLayout>

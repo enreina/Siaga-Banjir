@@ -184,13 +184,10 @@ public class DetailActivity extends ActionBarActivity {
 		categoryAxis.setGap(1.0f);
 		categoryAxis.setLabelBrush(new SolidColorBrush(Color
 				.parseColor("#424242")));
-		categoryAxis.setMinorBrush(new SolidColorBrush(Color
-				.parseColor("#f4f4f4")));
-		categoryAxis.setMajorBrush(new SolidColorBrush(Color
-				.parseColor("#f4f4f4")));
+		categoryAxis.setLabelTextSize(categoryAxis.getLabelTextSize() + 3.0f);
+		categoryAxis.setMinorBrush(null);
+		categoryAxis.setMajorBrush(null);
 		categoryAxis.setStripBrush(null);
-		categoryAxis.setMinorThickness(0.3f);
-		categoryAxis.setMajorThickness(0.3f);
 
 		// set up a y axis
 
@@ -221,13 +218,10 @@ public class DetailActivity extends ActionBarActivity {
 		});
 		valueAxis
 				.setLabelBrush(new SolidColorBrush(Color.parseColor("#424242")));
-		valueAxis
-				.setMinorBrush(new SolidColorBrush(Color.parseColor("#f4f4f4")));
-		valueAxis
-				.setMajorBrush(new SolidColorBrush(Color.parseColor("#f4f4f4")));
+		valueAxis.setLabelTextSize(valueAxis.getLabelTextSize() + 3.0f);
+		valueAxis.setMinorBrush(null);
+		valueAxis.setMajorBrush(null);
 		valueAxis.setStripBrush(null);
-		valueAxis.setMinorThickness(0.3f);
-		valueAxis.setMajorThickness(0.3f);
 		dataChart.scales().add(valueAxis); // all axes must be added to the
 											// chart's scales collection
 
