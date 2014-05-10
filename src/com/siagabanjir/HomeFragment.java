@@ -91,8 +91,8 @@ public class HomeFragment extends ListFragment {
 			Intent i = new Intent(this.getActivity().getBaseContext(),
 					DetailActivity.class);
 
-			// i.putParcelableArrayListExtra("pintuair", pintuAir);
-			// i.putExtra("selected", position);
+			i.putParcelableArrayListExtra("pintuair", pintuAir);
+			i.putExtra("selected", position);
 
 			startActivity(i);
 		}

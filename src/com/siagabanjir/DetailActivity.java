@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -13,6 +15,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.NavUtils;
@@ -39,9 +42,9 @@ import com.iguanaui.graphics.SolidColorBrush;
 
 public class DetailActivity extends ActionBarActivity {
 	private ActionBar actionBar;
-	private LinearLayout viewGraph;
-	private TextView tvnama;
-	private ListView listDetail;
+
+	private TextView tvPintuAir;
+	private TextView tvStatus;
 
 	private DataChart dataChart;
 	private List<String> categories = new ArrayList<String>();
@@ -55,110 +58,62 @@ public class DetailActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
 
-		createData();
-
-		createChart();
-
 		actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbar);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		Intent i = getIntent();
-		/*
-		 * ArrayList<DataPintuAir> curr =
-		 * i.getParcelableArrayListExtra("pintuair"); int position =
-		 * i.getIntExtra("selected", 0); final DataPintuAir pintuair =
-		 * (DataPintuAir)curr.get(position); String nama =
-		 * pintuair.getNama().toUpperCase(); String tinggiAir =
-		 * pintuair.getTinggiAir()[0] + ""; String status =
-		 * pintuair.getStatus()[0];
-		 * 
-		 * tvnama = (TextView) findViewById(R.id.tvNamaPintuAir); listDetail =
-		 * (ListView) findViewById(R.id.listDetail); listDetail.setAdapter(new
-		 * BinderDataDetail((Activity)this, pintuair));
-		 * 
-		 * tvtinggiair = (TextView) findViewById(R.id.tvKetinggianAir); tvstatus
-		 * = (TextView) findViewById(R.id.tvStatus);
-		 * 
-		 * tvnama.setText(nama); tvtinggiair.setText(tinggiAir);
-		 * tvstatus.setText(status);
-		 * 
-		 * if (status.equals("NORMAL")) {
-		 * tvnama.setBackgroundColor(Color.parseColor("#B7CC54"));
-		 * tvtinggiair.setTextColor(Color.parseColor("#B7CC54"));
-		 * tvstatus.setTextColor(Color.parseColor("#B7CC54")); } else if
-		 * (status.equals("WASPADA")) {
-		 * tvnama.setBackgroundColor(Color.parseColor("#FFB031")); //
-		 * tvtinggiair.setTextColor(Color.parseColor("#FFB031")); //
-		 * tvstatus.setTextColor(Color.parseColor("#FFB031")); } else if
-		 * (status.equals("RAWAN")) {
-		 * tvnama.setBackgroundColor(Color.parseColor("#F2571E")); //
-		 * tvtinggiair.setTextColor(Color.parseColor("#F2571E")); //
-		 * tvstatus.setTextColor(Color.parseColor("#F2571E")); } else if
-		 * (status.equals("KRITIS")) {
-		 * tvnama.setBackgroundColor(Color.parseColor("#A52728")); //
-		 * tvtinggiair.setTextColor(Color.parseColor("#A52728")); //
-		 * tvstatus.setTextColor(Color.parseColor("#A52728")); }
-		 * 
-		 * // viewGraph = (LinearLayout) findViewById(R.id.viewGraph); // graph
-		 * = new DetailGraph(this, pintuair.getTinggiAir(),
-		 * pintuair.getStatus(), pintuair.getTanggal(),
-		 * pintuair.getRentangWaktu());
-		 * 
-		 * // viewGraph.addView(graph);
-		 * 
-		 * Button shareButton = (Button)findViewById(R.id.btnShare);
-		 * shareButton.setOnClickListener(new View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { Bitmap bitmap =
-		 * takeScreenshot(); File img = saveBitmap(bitmap); String text =
-		 * "Status Tinggi Muka Air di Pintu " + pintuair.getNama() + ", " +
-		 * pintuair.getHari() + " (" + pintuair.getTanggalShort() + ") " +
-		 * String.format("%02d",pintuair.getWaktuTerakhir()) + ".00 WIB: " +
-		 * pintuair.getTinggiAir()[0] + " cm (" + pintuair.getStatus()[0] +
-		 * ") http://bit.ly/siagabanjir";
-		 * 
-		 * 
-		 * Intent shareIntent = new Intent();
-		 * shareIntent.setAction(Intent.ACTION_SEND);
-		 * shareIntent.setType("image/jpeg");
-		 * shareIntent.putExtra(Intent.EXTRA_TEXT, text);
-		 * shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(img));
-		 * startActivity(Intent.createChooser(shareIntent, "Share via")); } });
-		 */
+
+		ArrayList<DataPintuAir> curr = i
+				.getParcelableArrayListExtra("pintuair");
+		int position = i.getIntExtra("selected", 0);
+		final DataPintuAir pintuair = (DataPintuAir) curr.get(position);
+
+		createData(pintuair);
+
+		createChart(pintuair);
+
+		String nama = pintuair.getNama();
+
+		String tinggiAir = pintuair.getTinggiAir()[0] + "";
+		String status = pintuair.getStatus()[0];
+
+		tvPintuAir = (TextView) findViewById(R.id.tvPintuAir);
+		tvStatus = (TextView) findViewById(R.id.tvStatus);
+
+		tvPintuAir.setText(nama);
+		tvStatus.setText(status);
+
+		if (status.equals("NORMAL")) {
+			tvStatus.setTextColor(Color.parseColor("#2ecc71"));
+		} else if (status.equals("WASPADA")) {
+			tvStatus.setTextColor(Color.parseColor("#f1c40f"));
+		} else if (status.equals("RAWAN")) {
+			tvStatus.setTextColor(Color.parseColor("#f39c12"));
+		} else if (status.equals("KRITIS")) {
+			tvStatus.setTextColor(Color.parseColor("#e74c3c"));
+		}
 	}
 
-	private void createData() {
+	private void createData(DataPintuAir pintuair) {
+		float value1 = 0.0f;
 		Random random = new Random();
-		float value1 = 25.0f;
-		// float value2=25.0f;
 
 		for (int i = 0; i < 6; ++i) {
-			value1 += 2.0 * (random.nextFloat() - 0.5f);
-			// value2+=2.0*(random.nextFloat()-0.5f);
+			value1 = (float) pintuair.getTinggiAir()[i];
 
-			categories.add(Integer.toString(i));
+			// categories1=pintuair.getWaktu()[i];
+
+			categories.add(Integer.toString(pintuair.getWaktu()[i]) + ".00");
 			column1.add(value1);
 			// column2.add(value2);
 		}
+		Collections.reverse(column1);
+		Collections.reverse(categories);
 	}
 
-	private void updateData() {
-		Random random = new Random();
-		float value1 = 25.0f;
-		// float value2=25.0f;
-
-		for (int i = 0; i < categories.size(); ++i) {
-			value1 += 2.0 * (random.nextFloat() - 0.5f);
-			// value2+=2.0*(random.nextFloat()-0.5f);
-
-			column1.set(i, value1);
-			// column2.set(i, value2);
-		}
-	}
-
-	private void createChart() {
+	private void createChart(DataPintuAir pintuair) {
 		dataChart = (DataChart) findViewById(R.id.dataChart); // get the empty
 																// chart view
 																// from the
@@ -192,10 +147,19 @@ public class DetailActivity extends ActionBarActivity {
 		// set up a y axis
 
 		NumericYAxis valueAxis = new NumericYAxis();
-		valueAxis.setMinimumValue(0.0f); // the random data look much nicer with
-											// a fixed axis range
-		valueAxis.setMaximumValue(40.0f); // the random data look much nicer
-											// with a fixed axis range
+		int[] tinggiAir = pintuair.getTinggiAir();
+		Arrays.sort(tinggiAir);
+		int minValue = tinggiAir[0];
+		int maxValue = tinggiAir[5];
+
+		valueAxis.setMinimumValue((float) minValue - 10.0f); // the random data
+																// look much
+																// nicer with
+		// a fixed axis range
+		valueAxis.setMaximumValue((float) maxValue + 10.0f); // the random data
+																// look much
+																// nicer
+		// with a fixed axis range
 		valueAxis.setLabelFormatter(new NumericAxis.LabelFormatter() {
 			public String format(NumericAxis axis, float item, int precision) {
 				if (precision != numberFormat.getMinimumFractionDigits()) {
@@ -274,7 +238,6 @@ public class DetailActivity extends ActionBarActivity {
 		getMenuInflater().inflate(R.menu.detail, menu);
 		return true;
 	}
-	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -282,19 +245,40 @@ public class DetailActivity extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		// Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_share:
-	        	return true;
-	        case R.id.action_settings:
-	        	return true;
-	        case R.id.action_information:
-				Intent i = new Intent(this, InformationActivity.class);
-				startActivity(i);
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		switch (item.getItemId()) {
+		case R.id.action_share:
+			share();
+			return true;
+		case R.id.action_settings:
+			return true;
+		case R.id.action_information:
+			Intent i = new Intent(this, InformationActivity.class);
+			startActivity(i);
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
+	public void share() {
+		Intent i = getIntent();
+		ArrayList<DataPintuAir> curr = i.getParcelableArrayListExtra("pintuair");
+		int position = i.getIntExtra("selected", 0);
+		DataPintuAir pintuair = (DataPintuAir) curr.get(position);
+		Bitmap bitmap = takeScreenshot();
+		File img = saveBitmap(bitmap);
+		String text = "Status Tinggi Muka Air di Pintu " + pintuair.getNama()
+				+ ", " + pintuair.getHari() + " (" + pintuair.getTanggalShort()
+				+ ") " + String.format("%02d", pintuair.getWaktuTerakhir())
+				+ ".00 WIB: " + pintuair.getTinggiAir()[0] + " cm ("
+				+ pintuair.getStatus()[0] + ") http://bit.ly/siagabanjir";
+
+		Intent shareIntent = new Intent();
+		shareIntent.setAction(Intent.ACTION_SEND);
+		shareIntent.setType("image/jpeg");
+		shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+		shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(img));
+		startActivity(Intent.createChooser(shareIntent, "Share via"));
+	}
 
 	public void refreshData() {
 
