@@ -184,7 +184,7 @@ public class DetailActivity extends ActionBarActivity {
 		categoryAxis.setGap(1.0f);
 		categoryAxis.setLabelBrush(new SolidColorBrush(Color
 				.parseColor("#424242")));
-		categoryAxis.setLabelTextSize(categoryAxis.getLabelTextSize() + 3.0f);
+		categoryAxis.setLabelTextSize(categoryAxis.getLabelTextSize() + 5.0f);
 		categoryAxis.setMinorBrush(null);
 		categoryAxis.setMajorBrush(null);
 		categoryAxis.setStripBrush(null);
@@ -218,7 +218,7 @@ public class DetailActivity extends ActionBarActivity {
 		});
 		valueAxis
 				.setLabelBrush(new SolidColorBrush(Color.parseColor("#424242")));
-		valueAxis.setLabelTextSize(valueAxis.getLabelTextSize() + 3.0f);
+		valueAxis.setLabelTextSize(valueAxis.getLabelTextSize() + 5.0f);
 		valueAxis.setMinorBrush(null);
 		valueAxis.setMajorBrush(null);
 		valueAxis.setStripBrush(null);
@@ -269,26 +269,32 @@ public class DetailActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+
 		// Inflate the menu; this adds items to the action bar if it is present.
-		MenuInflater inflater = getMenuInflater();
-		// inflater.inflate(R.menu.home_actions, menu);
-		return super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.detail, menu);
+		return true;
 	}
+	
 
-	public boolean OnOptionsItemSelected(MenuItem item) {
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
 		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-		case R.id.action_refresh:
-			refreshData();
-			return true;
-		case android.R.id.home:
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-
+	    switch (item.getItemId()) {
+	        case R.id.action_share:
+	        	return true;
+	        case R.id.action_settings:
+	        	return true;
+	        case R.id.action_information:
+				Intent i = new Intent(this, InformationActivity.class);
+				startActivity(i);
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
+
 
 	public void refreshData() {
 

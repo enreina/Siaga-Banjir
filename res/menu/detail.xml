@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:Siaga="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.siaga.MainActivity" >
+
+    <item
+        android:id="@+id/action_share"
+        Siaga:showAsAction="always"
+        android:icon="@drawable/ic_action_share"
+        android:title="@string/action_share"/>
+    
+    <item
+        android:id="@+id/action_settings"
+        Siaga:showAsAction="never"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"/>
+    <item
+        android:id="@+id/action_information"
+        Siaga:showAsAction="never"
+        android:orderInCategory="100"
+        android:title="@string/info"/>
+
+</menu>
