@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.siagabanjir.follow.FollowPintuAir;
 import com.siagabanjir.utility.JSONParser;
 
 import android.annotation.SuppressLint;
@@ -42,6 +43,7 @@ public class HomeFragment extends ListFragment {
 	private boolean empty;
 
 	private Context context;
+	private FollowPintuAir followPintuAir;
 
 	public HomeFragment() {
 		this(0);
@@ -51,6 +53,7 @@ public class HomeFragment extends ListFragment {
 	public HomeFragment(ArrayList<DataPintuAir> pintuAir, Context context) {
 		this.pintuAir = pintuAir;
 		this.context = context;
+		followPintuAir = new FollowPintuAir(context);
 		// refreshHome();
 	}
 
@@ -251,6 +254,7 @@ public class HomeFragment extends ListFragment {
 					}
 
 					String status = dp.getStatus()[0];
+					dp.setFollowing(followPintuAir.isFollowing(dp.getNama()));
 
 					pintuAir.add(dp);
 					DataPintuAir.mapsPintuAir.put(dp.getNama(), dp);

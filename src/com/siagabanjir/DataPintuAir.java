@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.siagabanjir.follow.FollowPintuAir;
 
 import android.location.Location;
 import android.os.Parcel;
@@ -21,6 +22,7 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 	private String tanggalShort;
 	private String hari;
 	private LatLng location;
+	private boolean following;
 	
 	public static HashMap<String, LatLng> locationPintuAir;
 	public static HashMap<String, DataPintuAir> mapsPintuAir;
@@ -256,6 +258,24 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		} else {
 			return statusCode.get(status[0]) - statusCode.get(another.status[0]);
 		}
+	}
+
+	public void setFollowing(boolean following) {
+		// TODO Auto-generated method stub
+		this.following = following;
+	}
+	
+	public boolean getFollowing() {
+		return following;
+	}
+
+	public void follow() {
+		
+		
+	}
+	
+	public void unfollow() {
+		
 	}
 	
 	

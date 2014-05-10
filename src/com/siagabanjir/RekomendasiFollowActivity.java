@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.siagabanjir.follow.FollowPintuAir;
 
 import android.content.Intent;
 import android.location.Address;
@@ -83,8 +84,10 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		// Handle presses on the action bar items
 		 switch (item.getItemId()) {
 	        case R.id.action_save:
+	        	savePlace();
 	        	return true;
 	        case R.id.action_discard:
+	        	discardPlace();
 	        	return true;
 	        case R.id.action_information:
 				Intent i = new Intent(this, InformationActivity.class);
@@ -93,6 +96,16 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 	            return super.onOptionsItemSelected(item);
 	    }
 
+	}
+
+	private void discardPlace() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void savePlace() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

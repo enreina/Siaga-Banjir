@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.siagabanjir.BinderData.ViewHolder;
+import com.siagabanjir.follow.FollowPintuAir;
 
 public class BinderRekomendasiFollow extends BaseAdapter {
 	LayoutInflater inflater;
@@ -59,6 +60,7 @@ public class BinderRekomendasiFollow extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 
+		final int finPos = position;
 		View vi = convertView;
 		if (convertView == null) {
 
@@ -84,6 +86,7 @@ public class BinderRekomendasiFollow extends BaseAdapter {
 			public void onClick(View v) {
 				v.setVisibility(View.GONE);
 				((View)v.getParent()).findViewById(R.id.unfollow_btn).setVisibility(View.VISIBLE);
+				pintuAirCollection.get(finPos).follow();
 
 			}
 			
@@ -95,8 +98,17 @@ public class BinderRekomendasiFollow extends BaseAdapter {
 			public void onClick(View v) {
 				v.setVisibility(View.GONE);
 				((View)v.getParent()).findViewById(R.id.follow_btn).setVisibility(View.VISIBLE);
+				pintuAirCollection.get(finPos).unfollow();
 			}
 		});
+		
+		if (pintuAirCollection.get(position).getFollowing()) {
+			holder.btnFollow.setVisibility(View.GONE);
+			holder.btnUnfollow.setVisibility(View.VISIBLE);
+		} else {
+			holder.btnFollow.setVisibility(View.VISIBLE);
+			holder.btnUnfollow.setVisibility(View.GONE);
+		}
 
 		return vi;
 	}
