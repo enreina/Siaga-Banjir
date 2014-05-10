@@ -229,8 +229,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		if (currentMarker != null) {
 			currentMarker.remove();
 		}
-
-		MarkerOptions marker = new MarkerOptions();
+		final LatLng loc = newLoc;
+		final MarkerOptions marker = new MarkerOptions();
 		marker.position(newLoc);
 		marker.icon(BitmapDescriptorFactory
 				.fromResource(R.drawable.ic_mylocation));
@@ -263,6 +263,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 									.getActivity().getBaseContext(),
 									RekomendasiFollowActivity.class);
 						 i.putParcelableArrayListExtra("inarea", inArea);
+						 i.putExtra("lat", loc.latitude);
+						 i.putExtra("long", loc.longitude);
 						 startActivity(i);
 					}
 

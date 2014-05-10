@@ -1,8 +1,13 @@
 package com.siagabanjir;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -14,10 +19,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class RekomendasiFollowActivity extends ActionBarActivity {
 	private ActionBar actionBar;
 	private ListView listRekomendasi;
+	private TextView txtLocation;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +43,18 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		listRekomendasi = (ListView) findViewById(R.id.rekomendasi_list);
 		listRekomendasi.setAdapter(new BinderRekomendasiFollow(this,
 				rekomendasi));
-
+		txtLocation = (TextView) findViewById(R.id.location);
+		
+		Geocoder geocoder  = new Geocoder(this);
+		try {
+			Address addr = geocoder.getFromLocation(i.getDoubleExtra("lat", 0), i.getDoubleExtra("long", 0), 1).get(0);
+			txtLocation.setText(addr.getAddressLine(0));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 
 		/**
