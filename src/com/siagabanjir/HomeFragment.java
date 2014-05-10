@@ -253,6 +253,7 @@ public class HomeFragment extends ListFragment {
 					String status = dp.getStatus()[0];
 
 					pintuAir.add(dp);
+					DataPintuAir.mapsPintuAir.put(dp.getNama(), dp);
 
 				}
 				Collections.sort(pintuAir);

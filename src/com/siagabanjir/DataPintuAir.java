@@ -38,6 +38,7 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		locationPintuAir.put("Pesanggrahan", new LatLng(-6.396231, 106.772043));
 		locationPintuAir.put("Depok", new LatLng(-6.400386, 106.831627));
 		
+		
 		mapsPintuAir = new HashMap<String, DataPintuAir>();
 	}
 	public DataPintuAir(String nama) {
@@ -55,7 +56,10 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		hari = "";
 		
 		LatLng temp = locationPintuAir.get(nama);
-		location = temp;
+		if (temp != null)
+			location = temp;
+		else
+			location = new LatLng(0, 0);
 	}
 	
 	public DataPintuAir(Parcel p) {
