@@ -197,15 +197,21 @@ public class TestActivity extends FragmentActivity implements OnMapClickListener
 	}
 	
 	public void checkLocation(Marker marker) {
+		//HashMap<String, LatLng> inArea = DataPintuAir.checkLocation(marker.getPosition());
 		/** HashMap<String, LatLng> inArea = DataPintuAir.checkLocation(marker.getPosition());
+>>>>>>> FETCH_HEAD
 		
 		
-		String pintuAir = "";
-		for (String locName : inArea.keySet()) {
-			pintuAir += locName + ", ";
-		}
+		//String pintuAir = "";
+		//for (String locName : inArea.keySet()) {
+		//	pintuAir += locName + ", ";
+		//}
 		
 		
+<<<<<<< HEAD
+		//Toast.makeText(this, "Selected location: " + marker.getPosition().latitude + ", " + marker.getPosition().longitude + "\nNearest floodgates: " + pintuAir, Toast.LENGTH_LONG).show();
+		
+=======
 		Toast.makeText(this, "Selected location: " + marker.getPosition().latitude + ", " + marker.getPosition().longitude + "\nNearest floodgates: " + pintuAir, Toast.LENGTH_LONG).show();
 		**/
 	}
