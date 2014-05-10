@@ -18,8 +18,6 @@ import android.widget.ListView;
 public class RekomendasiFollowActivity extends ActionBarActivity {
 	private ActionBar actionBar;
 	private ListView listRekomendasi;
-	private Button btnFollow;
-	private Button btnUnfollow;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,32 +37,7 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		listRekomendasi.setAdapter(new BinderRekomendasiFollow(this,
 				rekomendasi));
 
-		btnFollow = (Button) findViewById(R.id.follow_btn);
-		btnUnfollow = (Button) findViewById(R.id.unfollow_btn);
-
-		btnFollow.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// code to follow pintu air
-
-				btnFollow.setVisibility(View.GONE);
-				btnUnfollow.setVisibility(View.VISIBLE);
-
-			}
-		});
-
-		btnUnfollow.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// code to follow pintu air
-
-				btnUnfollow.setVisibility(View.GONE);
-				btnFollow.setVisibility(View.VISIBLE);
-
-			}
-		});
+		
 
 		/**
 		 * ArrayList<DataPintuAir> curr =
