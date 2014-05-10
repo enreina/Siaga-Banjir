@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.siagabanjir.follow.FollowPintuAir;
+import com.siagabanjir.places.MyPlaces;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -19,8 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RekomendasiFollowActivity extends ActionBarActivity {
 	private ActionBar actionBar;
@@ -28,6 +32,10 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 	private TextView txtLocation;
 	private FollowPintuAir followPintuAir;
 	private BinderRekomendasiFollow binder;
+	private String nama;
+	private LatLng location;
+
+	private MyPlaces myPlaces;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +53,36 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 
 		listRekomendasi = (ListView) findViewById(R.id.rekomendasi_list);
 		binder = new BinderRekomendasiFollow(this, rekomendasi, this);
-		
+
 		listRekomendasi.setAdapter(binder);
 		txtLocation = (TextView) findViewById(R.id.location);
-		
-		Geocoder geocoder  = new Geocoder(this);
+
+		location = new LatLng(i.getDoubleExtra("lat", 0), i.getDoubleExtra(
+				"long", 0));
+
+		Geocoder geocoder = new Geocoder(this);
 		try {
-			Address addr = geocoder.getFromLocation(i.getDoubleExtra("lat", 0), i.getDoubleExtra("long", 0), 1).get(0);
-			txtLocation.setText(addr.getAddressLine(0) + ", " + addr.getLocality() + ", " + addr.getSubAdminArea());
-			
+			Address addr = geocoder.getFromLocation(location.latitude,
+					location.longitude, 1).get(0);
+			txtLocation.setText(addr.getAddressLine(0) + ", "
+					+ (addr.getLocality() == null ? "" : addr.getLocality())
+					+ ", " + addr.getSubAdminArea());
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		followPintuAir = new FollowPintuAir(this);
 		ArrayList<String> listFollowing = followPintuAir.getListFollowing();
-		
-		
+
+		myPlaces = new MyPlaces(this);
+
+		nama = i.getStringExtra("nama");
+		if (nama != null) {
+			((EditText) findViewById(R.id.location_name)).setText(nama);
+			myPlaces.removePlace(nama);
+		}
 
 		/**
 		 * ArrayList<DataPintuAir> curr =
@@ -86,37 +106,58 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		return true;
 	}
 
-	public boolean OnOptionsItemSelected(MenuItem item) {
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
-		 switch (item.getItemId()) {
-	        case R.id.action_save:
-	        	savePlace();
-	        	return true;
-	        case R.id.action_discard:
-	        	discardPlace();
-	        	return true;
-	        case R.id.action_information:
-				Intent i = new Intent(this, InformationActivity.class);
-				startActivity(i);
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		switch (item.getItemId()) {
+		case R.id.action_save:
+			savePlace();
+			return true;
+		case R.id.action_discard:
+			discardPlace();
+			return true;
+		case R.id.action_information:
+			Intent i = new Intent(this, InformationActivity.class);
+			startActivity(i);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 
+	}
+
+	public void onBackPressed() {
+		savePlace();
+		super.onBackPressed();
 	}
 
 	private void discardPlace() {
-		// TODO Auto-generated method stub
-		
+		this.setResult(Activity.RESULT_OK);
+
+		finish();
+
 	}
 
 	private void savePlace() {
-		// TODO Auto-generated method stub
-		
+		EditText etLocName = (EditText) findViewById(R.id.location_name);
+		String locName = etLocName.getText().toString();
+		if (locName.isEmpty()) {
+			Toast.makeText(this, "You have to specify the location's name",
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		myPlaces.savePlace(locName, location);
+		this.setResult(Activity.RESULT_OK);
+
+		finish();
+
 	}
-	
+
 	public void followPintuAir(String pintuAir) {
 		followPintuAir.followPintuAir(pintuAir);
 	}
+
 	public void unfollowPintuAir(String pintuAir) {
 		followPintuAir.unfollowPintuAir(pintuAir);
 	}

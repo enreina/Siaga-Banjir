@@ -25,6 +25,7 @@ public class BinderRekomendasiFollow extends BaseAdapter {
 
 	public BinderRekomendasiFollow() {
 		// TODO Auto-generated constructor stub
+		this.pintuAirCollection = new ArrayList<DataPintuAir>();
 	}
 
 	public BinderRekomendasiFollow(Activity act,

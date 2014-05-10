@@ -26,6 +26,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,6 +41,7 @@ import com.iguanaui.controls.valuecategory.ColumnSeries;
 import com.iguanaui.controls.valuecategory.ValueCategorySeries;
 import com.iguanaui.graphics.Brush;
 import com.iguanaui.graphics.SolidColorBrush;
+import com.siagabanjir.follow.FollowPintuAir;
 
 public class DetailActivity extends ActionBarActivity {
 	private ActionBar actionBar;
@@ -49,6 +52,11 @@ public class DetailActivity extends ActionBarActivity {
 	private DataChart dataChart;
 	private List<String> categories = new ArrayList<String>();
 	private List<Float> column1 = new ArrayList<Float>();
+	
+	private Button btnFollow;
+	private Button btnUnfollow;
+	
+	private FollowPintuAir followPintuAir;
 
 	// private TextView tvnama, tvtinggiair, tvstatus;
 	// private DetailGraph graph;
@@ -93,6 +101,38 @@ public class DetailActivity extends ActionBarActivity {
 			tvStatus.setTextColor(Color.parseColor("#f39c12"));
 		} else if (status.equals("KRITIS")) {
 			tvStatus.setTextColor(Color.parseColor("#e74c3c"));
+		}
+		
+		followPintuAir = new FollowPintuAir(this);
+		btnFollow = (Button) findViewById(R.id.follow_btn);
+		btnUnfollow = (Button) findViewById(R.id.unfollow_btn);
+		
+		btnFollow.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				btnFollow.setVisibility(View.GONE);
+				btnUnfollow.setVisibility(View.VISIBLE);
+				followPintuAir.followPintuAir(pintuair.getNama());
+			}
+		});
+		
+		btnUnfollow.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				btnFollow.setVisibility(View.VISIBLE);
+				btnUnfollow.setVisibility(View.GONE);
+				followPintuAir.unfollowPintuAir(pintuair.getNama());
+				
+			}
+		});
+		if (followPintuAir.isFollowing(nama)) {
+			btnFollow.setVisibility(View.GONE);
+			btnUnfollow.setVisibility(View.VISIBLE);
+		} else {
+			btnFollow.setVisibility(View.VISIBLE);
+			btnUnfollow.setVisibility(View.GONE);
 		}
 	}
 

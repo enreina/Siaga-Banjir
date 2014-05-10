@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -32,6 +33,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -40,6 +42,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.siagabanjir.places.MyPlaces;
 
 public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		OnMapLongClickListener, ConnectionCallbacks,
@@ -53,8 +56,12 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 	private boolean locationEnabled;
 	private boolean addingMyPlace;
 
+	private HashMap<LatLng, String> myPlaces;
+
 	public MyPlaceFragment(Context context) {
 		this.context = context;
+		myPlaces = new MyPlaces(context).getPlaces();
+
 	}
 
 	@Override
@@ -191,18 +198,45 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 			MarkerOptions markerPintuAir = new MarkerOptions().position(loc);
 
 			peta.addMarker(markerPintuAir);
-			CircleOptions circle = new CircleOptions();
-
-			int strokeColor = 0xffff0000; // red outline
-			int shadeColor = 0x44ff0000;
-
-			circle.center(loc);
-			circle.radius(4000.0f);
-			circle.strokeColor(strokeColor);
-			circle.fillColor(shadeColor);
-
-			peta.addCircle(circle);
+			/**
+			 * CircleOptions circle = new CircleOptions();
+			 * 
+			 * int strokeColor = 0xffff0000; // red outline int shadeColor =
+			 * 0x44ff0000;
+			 * 
+			 * circle.center(loc); circle.radius(4000.0f);
+			 * circle.strokeColor(strokeColor); circle.fillColor(shadeColor);
+			 * 
+			 * peta.addCircle(circle);
+			 **/
 		}
+
+		for (LatLng loc : myPlaces.keySet()) {
+			MarkerOptions markerPlaces = new MarkerOptions().position(loc);
+			markerPlaces.position(loc);
+			markerPlaces.snippet("");
+			markerPlaces.title(myPlaces.get(loc));
+			markerPlaces.icon(BitmapDescriptorFactory
+					.fromResource(R.drawable.ic_mylocation));
+			
+			peta.addMarker(markerPlaces);
+		}
+
+		peta.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+
+			@Override
+			public void onInfoWindowClick(Marker markerPlace) {
+				LatLng loc = markerPlace.getPosition();
+				Intent i = new Intent(context, RekomendasiFollowActivity.class);
+				ArrayList<DataPintuAir> inArea = checkLocation(loc);
+				i.putParcelableArrayListExtra("inarea", inArea);
+				i.putExtra("nama", myPlaces.get(loc));
+				i.putExtra("lat", loc.latitude);
+				i.putExtra("long", loc.longitude);
+
+				startActivityForResult(i, 1);
+			}
+		});
 
 	}
 
@@ -210,6 +244,21 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 	public void onDisconnected() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case (1): {
+			if (resultCode == Activity.RESULT_OK) {
+				peta.clear();
+				myPlaces = new MyPlaces(context).getPlaces();
+				Location lastLoc = locationClient.getLastLocation();
+				refreshMap(new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude()));
+			}
+			break;
+		}
+		}
 	}
 
 	@Override
@@ -235,7 +284,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		marker.icon(BitmapDescriptorFactory
 				.fromResource(R.drawable.ic_mylocation));
 		currentMarker = peta.addMarker(marker);
-		final ArrayList<DataPintuAir> inArea = checkLocation(marker);
+		final ArrayList<DataPintuAir> inArea = checkLocation(marker.getPosition());
 
 		if (addingMyPlace)
 			return;
@@ -254,18 +303,19 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 					@Override
 					public void onDestroyActionMode(ActionMode mode) {
 						// TODO Auto-generated method stub
-						 currentMarker.remove();
-						 ((ActionBarActivity)
-						 context).getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-						 addingMyPlace = false;
-						 
-						 Intent i = new Intent(MyPlaceFragment.this
-									.getActivity().getBaseContext(),
-									RekomendasiFollowActivity.class);
-						 i.putParcelableArrayListExtra("inarea", inArea);
-						 i.putExtra("lat", loc.latitude);
-						 i.putExtra("long", loc.longitude);
-						 startActivity(i);
+						currentMarker.remove();
+						((ActionBarActivity) context).getSupportActionBar()
+								.setNavigationMode(
+										ActionBar.NAVIGATION_MODE_TABS);
+						addingMyPlace = false;
+
+						Intent i = new Intent(MyPlaceFragment.this
+								.getActivity().getBaseContext(),
+								RekomendasiFollowActivity.class);
+						i.putParcelableArrayListExtra("inarea", inArea);
+						i.putExtra("lat", loc.latitude);
+						i.putExtra("long", loc.longitude);
+						startActivityForResult(i, 1);
 					}
 
 					@Override
@@ -284,10 +334,12 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 						// TODO Auto-generated method stub
 						switch (item.getItemId()) {
 						case R.id.action_add:
-							/* Intent i = new Intent(MyPlaceFragment.this
-									.getActivity().getBaseContext(),
-									RekomendasiFollowActivity.class);
-							startActivity(i);*/
+							/*
+							 * Intent i = new Intent(MyPlaceFragment.this
+							 * .getActivity().getBaseContext(),
+							 * RekomendasiFollowActivity.class);
+							 * startActivity(i);
+							 */
 							return true;
 						}
 
@@ -301,22 +353,18 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		// TODO Auto-generated method stub
 	}
 
-	public ArrayList<DataPintuAir> checkLocation(MarkerOptions marker) {
-		ArrayList<DataPintuAir> inArea = DataPintuAir.checkLocation(marker
-				.getPosition());
+	public ArrayList<DataPintuAir> checkLocation(LatLng loc) {
+		ArrayList<DataPintuAir> inArea = DataPintuAir.checkLocation(loc);
 
-		/** String pintuAir = "";
-		for (String locName : inArea.keySet()) {
-			pintuAir += locName + ", ";
-		}
+		/**
+		 * String pintuAir = ""; for (String locName : inArea.keySet()) {
+		 * pintuAir += locName + ", "; }
+		 * 
+		 * Toast.makeText( context, "Selected location: " +
+		 * marker.getPosition().latitude + ", " + marker.getPosition().longitude
+		 * + "\nNearest floodgates: " + pintuAir, Toast.LENGTH_LONG).show();
+		 **/
 
-		Toast.makeText(
-				context,
-				"Selected location: " + marker.getPosition().latitude + ", "
-						+ marker.getPosition().longitude
-						+ "\nNearest floodgates: " + pintuAir,
-				Toast.LENGTH_LONG).show(); **/
-		
 		return inArea;
 
 	}
