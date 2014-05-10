@@ -20,8 +20,10 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 	private String tanggal;
 	private String tanggalShort;
 	private String hari;
+	private LatLng location;
 	
 	public static HashMap<String, LatLng> locationPintuAir;
+	public static HashMap<String, DataPintuAir> mapsPintuAir;
 	
 	private final String[] hariArr = new String[]{"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
 	private final static HashMap<String, Integer> statusCode = new HashMap<String, Integer>();
@@ -35,6 +37,8 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		locationPintuAir.put("Katulampa", new LatLng(-6.634091, 106.83718));
 		locationPintuAir.put("Pesanggrahan", new LatLng(-6.396231, 106.772043));
 		locationPintuAir.put("Depok", new LatLng(-6.400386, 106.831627));
+		
+		mapsPintuAir = new HashMap<String, DataPintuAir>();
 	}
 	public DataPintuAir(String nama) {
 		super();
@@ -49,6 +53,9 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		tanggal = "";
 		tanggalShort = "";
 		hari = "";
+		
+		LatLng temp = locationPintuAir.get(nama);
+		location = temp;
 	}
 	
 	public DataPintuAir(Parcel p) {
@@ -61,24 +68,35 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		tanggal = "";
 		tanggalShort = "";
 		hari = "";
+		location = new LatLng(0, 0);
 		readFromParcel(p);
 	}
 	
+	
+	
+	public LatLng getLocation() {
+		return location;
+	}
+
+	public void setLocation(LatLng location) {
+		this.location = location;
+	}
+
 	public static void initLocation() {
 		
 	}
 	
-	public static HashMap<String, LatLng> checkLocation(LatLng location) {
-		HashMap<String, LatLng> listLoc = new HashMap<String, LatLng>();
+	public static ArrayList<DataPintuAir> checkLocation(LatLng location) {
+		ArrayList<DataPintuAir> listPintuAir = new ArrayList<DataPintuAir>();
 		
-		for (String strLoc : locationPintuAir.keySet()) {
-			LatLng cur = locationPintuAir.get(strLoc);
-			if (isInArea(cur, location)) {
-				listLoc.put(strLoc, cur);
+		for (String strPintuAir : mapsPintuAir.keySet()) {
+			DataPintuAir cur = mapsPintuAir.get(strPintuAir);
+			if (isInArea(cur.getLocation(), location)) {
+				listPintuAir.add(cur);
 			}
 		}
 		
-		return listLoc;
+		return listPintuAir;
 	}
 	
 	private static boolean isInArea(LatLng location, LatLng currentlocation) {
@@ -195,6 +213,9 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		this.tanggal = in.readString();
 		this.tanggalShort = in.readString();
 		this.hari = in.readString();
+		
+		LatLng temp = locationPintuAir.get(this.nama);
+		location = temp;
 	}
 
 	public static final Parcelable.Creator<DataPintuAir> CREATOR = 

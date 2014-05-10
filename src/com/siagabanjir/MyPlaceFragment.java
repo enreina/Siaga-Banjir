@@ -1,6 +1,7 @@
 package com.siagabanjir;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -234,7 +235,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		marker.icon(BitmapDescriptorFactory
 				.fromResource(R.drawable.ic_mylocation));
 		currentMarker = peta.addMarker(marker);
-		checkLocation(marker);
+		final ArrayList<DataPintuAir> inArea = checkLocation(marker);
 
 		if (addingMyPlace)
 			return;
@@ -261,6 +262,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 						 Intent i = new Intent(MyPlaceFragment.this
 									.getActivity().getBaseContext(),
 									RekomendasiFollowActivity.class);
+						 i.putParcelableArrayListExtra("inarea", inArea);
 						 startActivity(i);
 					}
 
@@ -297,11 +299,11 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		// TODO Auto-generated method stub
 	}
 
-	public void checkLocation(MarkerOptions marker) {
-		HashMap<String, LatLng> inArea = DataPintuAir.checkLocation(marker
+	public ArrayList<DataPintuAir> checkLocation(MarkerOptions marker) {
+		ArrayList<DataPintuAir> inArea = DataPintuAir.checkLocation(marker
 				.getPosition());
 
-		String pintuAir = "";
+		/** String pintuAir = "";
 		for (String locName : inArea.keySet()) {
 			pintuAir += locName + ", ";
 		}
@@ -311,7 +313,9 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 				"Selected location: " + marker.getPosition().latitude + ", "
 						+ marker.getPosition().longitude
 						+ "\nNearest floodgates: " + pintuAir,
-				Toast.LENGTH_LONG).show();
+				Toast.LENGTH_LONG).show(); **/
+		
+		return inArea;
 
 	}
 

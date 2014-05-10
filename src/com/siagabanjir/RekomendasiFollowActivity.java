@@ -10,29 +10,72 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ListView;
 
-public class RekomendasiFollowActivity extends ActionBarActivity
-{
+public class RekomendasiFollowActivity extends ActionBarActivity {
 	private ActionBar actionBar;
-	
+	private ListView listRekomendasi;
+	private Button btnFollow;
+	private Button btnUnfollow;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.rekomendasi_follow);
-		
+
 		actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbar);
 		actionBar.setDisplayShowTitleEnabled(false);
-		
+
 		Intent i = getIntent();
-		
-		/** ArrayList<DataPintuAir> curr = i.getParcelableArrayListExtra("pintuair");
-		int position = i.getIntExtra("selected", 0);
-		final DataPintuAir pintuair = (DataPintuAir)curr.get(position);
-		String nama = pintuair.getNama().toUpperCase();
-		String tinggiAir = pintuair.getTinggiAir()[0] + "";
-		String status = pintuair.getStatus()[0]; **/
-		
+
+		ArrayList<DataPintuAir> rekomendasi = i
+				.getParcelableArrayListExtra("inarea");
+
+		listRekomendasi = (ListView) findViewById(R.id.rekomendasi_list);
+		listRekomendasi.setAdapter(new BinderRekomendasiFollow(this,
+				rekomendasi));
+
+		btnFollow = (Button) findViewById(R.id.follow_btn);
+		btnUnfollow = (Button) findViewById(R.id.unfollow_btn);
+
+		btnFollow.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// code to follow pintu air
+
+				btnFollow.setVisibility(View.GONE);
+				btnUnfollow.setVisibility(View.VISIBLE);
+
+			}
+		});
+
+		btnUnfollow.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// code to follow pintu air
+
+				btnUnfollow.setVisibility(View.GONE);
+				btnFollow.setVisibility(View.VISIBLE);
+
+			}
+		});
+
+		/**
+		 * ArrayList<DataPintuAir> curr =
+		 * i.getParcelableArrayListExtra("pintuair"); int position =
+		 * i.getIntExtra("selected", 0); final DataPintuAir pintuair =
+		 * (DataPintuAir)curr.get(position); String nama =
+		 * pintuair.getNama().toUpperCase(); String tinggiAir =
+		 * pintuair.getTinggiAir()[0] + ""; String status =
+		 * pintuair.getStatus()[0];
+		 **/
+
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 	}
@@ -41,10 +84,10 @@ public class RekomendasiFollowActivity extends ActionBarActivity
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		MenuInflater inflater = getMenuInflater();
-		//inflater.inflate(R.menu.home_actions, menu);
+		// inflater.inflate(R.menu.home_actions, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	public boolean OnOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
@@ -58,5 +101,5 @@ public class RekomendasiFollowActivity extends ActionBarActivity
 		}
 
 	}
-	
+
 }
