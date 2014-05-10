@@ -284,10 +284,10 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 						// TODO Auto-generated method stub
 						switch (item.getItemId()) {
 						case R.id.action_add:
-							Intent i = new Intent(MyPlaceFragment.this
+							/* Intent i = new Intent(MyPlaceFragment.this
 									.getActivity().getBaseContext(),
 									RekomendasiFollowActivity.class);
-							startActivity(i);
+							startActivity(i);*/
 							return true;
 						}
 

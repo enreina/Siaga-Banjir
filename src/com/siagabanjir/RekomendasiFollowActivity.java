@@ -26,6 +26,8 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 	private ActionBar actionBar;
 	private ListView listRekomendasi;
 	private TextView txtLocation;
+	private FollowPintuAir followPintuAir;
+	private BinderRekomendasiFollow binder;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,19 +44,23 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 				.getParcelableArrayListExtra("inarea");
 
 		listRekomendasi = (ListView) findViewById(R.id.rekomendasi_list);
-		listRekomendasi.setAdapter(new BinderRekomendasiFollow(this,
-				rekomendasi));
+		binder = new BinderRekomendasiFollow(this, rekomendasi, this);
+		
+		listRekomendasi.setAdapter(binder);
 		txtLocation = (TextView) findViewById(R.id.location);
 		
 		Geocoder geocoder  = new Geocoder(this);
 		try {
 			Address addr = geocoder.getFromLocation(i.getDoubleExtra("lat", 0), i.getDoubleExtra("long", 0), 1).get(0);
-			txtLocation.setText(addr.getAddressLine(0));
+			txtLocation.setText(addr.getAddressLine(0) + ", " + addr.getLocality() + ", " + addr.getSubAdminArea());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		followPintuAir = new FollowPintuAir(this);
+		ArrayList<String> listFollowing = followPintuAir.getListFollowing();
 		
 		
 
@@ -106,6 +112,13 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 	private void savePlace() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void followPintuAir(String pintuAir) {
+		followPintuAir.followPintuAir(pintuAir);
+	}
+	public void unfollowPintuAir(String pintuAir) {
+		followPintuAir.unfollowPintuAir(pintuAir);
 	}
 
 }

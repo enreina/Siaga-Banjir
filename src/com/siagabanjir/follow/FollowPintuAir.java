@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.siagabanjir.DataPintuAir;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -30,11 +32,17 @@ public class FollowPintuAir {
 	public void followPintuAir(String pintuAir) {
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putBoolean(pintuAir, true);
+		editor.apply();
+		settings = context.getSharedPreferences(PREFS_NAME, 0);
+		DataPintuAir.mapsPintuAir.get(pintuAir).setFollowing(true);
 	}
 	
 	public void unfollowPintuAir(String pintuAir) {
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putBoolean(pintuAir, false);
+		editor.apply();
+		settings = context.getSharedPreferences(PREFS_NAME, 0);
+		DataPintuAir.mapsPintuAir.get(pintuAir).setFollowing(false);
 	}
 	
 	public ArrayList<String> getListFollowing() {

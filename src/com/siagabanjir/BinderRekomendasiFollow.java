@@ -21,15 +21,18 @@ public class BinderRekomendasiFollow extends BaseAdapter {
 	LayoutInflater inflater;
 	ArrayList<DataPintuAir> pintuAirCollection;
 	ViewHolder holder;
+	Context context;
 
 	public BinderRekomendasiFollow() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public BinderRekomendasiFollow(Activity act,
-			ArrayList<DataPintuAir> collection) {
+			ArrayList<DataPintuAir> collection, Context context) {
 
 		this.pintuAirCollection = collection;
+		
+		this.context = context;
 
 		inflater = (LayoutInflater) act
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -86,7 +89,7 @@ public class BinderRekomendasiFollow extends BaseAdapter {
 			public void onClick(View v) {
 				v.setVisibility(View.GONE);
 				((View)v.getParent()).findViewById(R.id.unfollow_btn).setVisibility(View.VISIBLE);
-				pintuAirCollection.get(finPos).follow();
+				((RekomendasiFollowActivity)context).followPintuAir(pintuAirCollection.get(finPos).getNama());
 
 			}
 			
@@ -98,11 +101,12 @@ public class BinderRekomendasiFollow extends BaseAdapter {
 			public void onClick(View v) {
 				v.setVisibility(View.GONE);
 				((View)v.getParent()).findViewById(R.id.follow_btn).setVisibility(View.VISIBLE);
-				pintuAirCollection.get(finPos).unfollow();
+				((RekomendasiFollowActivity)context).unfollowPintuAir(pintuAirCollection.get(finPos).getNama());
 			}
 		});
+		String namaPintuAir = pintuAirCollection.get(position).getNama();
 		
-		if (pintuAirCollection.get(position).getFollowing()) {
+		if (DataPintuAir.mapsPintuAir.get(namaPintuAir).getFollowing()) {
 			holder.btnFollow.setVisibility(View.GONE);
 			holder.btnUnfollow.setVisibility(View.VISIBLE);
 		} else {

@@ -253,6 +253,8 @@ public class HomeFragment extends ListFragment {
 						dp.addTinggiAir(tinggi, status, waktu);
 					}
 
+					ArrayList<String> listFollowing = followPintuAir.getListFollowing();
+					
 					String status = dp.getStatus()[0];
 					dp.setFollowing(followPintuAir.isFollowing(dp.getNama()));
 
