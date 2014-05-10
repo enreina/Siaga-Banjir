@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -22,17 +23,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements
 		ActionBar.TabListener {
 
 	private Fragment fragment;
-	
+
+	private MenuItem refreshItem;
 	private HomeFragment homeFragment;
 	private MyPlaceFragment myPlaceFragment;
 	private ViewPager viewPager;
 	private TabsPagerAdapter mAdapter;
-	
+
 	private ArrayList<DataPintuAir> dataKritis;
 
 	// Tab titles
@@ -43,35 +46,35 @@ public class MainActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
-		/*if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}*/
+		/*
+		 * if (savedInstanceState == null) {
+		 * getSupportFragmentManager().beginTransaction() .add(R.id.container,
+		 * new PlaceholderFragment()).commit(); }
+		 */
 
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbar);
 		actionBar.setDisplayShowTitleEnabled(false);
-		
-		
 
-		//setUp data
+		// setUp data
 		dataKritis = new ArrayList<DataPintuAir>();
-		
-		//set up data
-		/* for(int i = 0; i < 5; i++) {
-			DataPintuAir dp = new DataPintuAir("Pintu air " + i);
-			dp.setTanggal("2014/05/01");
-			dp.addTinggiAir(528, "KRITIS", 7*i);
-			
-			dataKritis.add(dp);
-		} */
 
-		
+		// set up data
+		/*
+		 * for(int i = 0; i < 5; i++) { DataPintuAir dp = new
+		 * DataPintuAir("Pintu air " + i); dp.setTanggal("2014/05/01");
+		 * dp.addTinggiAir(528, "KRITIS", 7*i);
+		 * 
+		 * dataKritis.add(dp); }
+		 */
+
 		// Initilization
-		/* viewPager = (ViewPager) findViewById(R.id.container);
-		mAdapter = new TabsPagerAdapter(getSupportFragmentManager(), dataKritis, this);
-		
-		viewPager.setAdapter(mAdapter); */
+		/*
+		 * viewPager = (ViewPager) findViewById(R.id.container); mAdapter = new
+		 * TabsPagerAdapter(getSupportFragmentManager(), dataKritis, this);
+		 * 
+		 * viewPager.setAdapter(mAdapter);
+		 */
 		actionBar.setHomeButtonEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -80,10 +83,7 @@ public class MainActivity extends ActionBarActivity implements
 			actionBar.addTab(actionBar.newTab().setText(tab_name)
 					.setTabListener(this));
 		}
-		
-		
-	
-	
+
 	}
 
 	@Override
@@ -93,7 +93,6 @@ public class MainActivity extends ActionBarActivity implements
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -101,19 +100,22 @@ public class MainActivity extends ActionBarActivity implements
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		// Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_refresh:
-	        	if (fragment instanceof HomeFragment)
-	        		((HomeFragment)fragment).refreshHome();
-	            return true;
-	        case R.id.action_settings:
-	        	return true;
-	        case R.id.action_information:
-				Intent i = new Intent(this, InformationActivity.class);
-				startActivity(i);
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		switch (item.getItemId()) {
+		case R.id.action_refresh:
+			refreshItem = item;
+
+			if (fragment instanceof HomeFragment)
+				((HomeFragment) fragment).refreshHome();
+
+			return true;
+		case R.id.action_settings:
+			return true;
+		case R.id.action_information:
+			Intent i = new Intent(this, InformationActivity.class);
+			startActivity(i);
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/**
@@ -136,7 +138,7 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -150,13 +152,24 @@ public class MainActivity extends ActionBarActivity implements
 			fragment = new MyPlaceFragment(this);
 			break;
 		}
-		getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, tag).commit();
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.container, fragment, tag).commit();
 	}
 
 	@Override
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	public void setRefreshActionButtonState(boolean refreshing) {
+		if (refreshItem != null) {
+			if (refreshing) {
+				MenuItemCompat.setActionView(refreshItem,
+						R.layout.action_progressbar);
+			} else {
+				MenuItemCompat.setActionView(refreshItem, null);
+			}
+		} 
+	}
 }

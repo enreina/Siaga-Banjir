@@ -48,6 +48,7 @@ public class DetailActivity extends ActionBarActivity {
 
 	private TextView tvPintuAir;
 	private TextView tvStatus;
+	private TextView lastUpdate;
 
 	private DataChart dataChart;
 	private List<String> categories = new ArrayList<String>();
@@ -84,14 +85,16 @@ public class DetailActivity extends ActionBarActivity {
 
 		String nama = pintuair.getNama();
 
-		String tinggiAir = pintuair.getTinggiAir()[0] + "";
 		String status = pintuair.getStatus()[0];
-
+		int waktu = pintuair.getWaktuTerakhir();
+		
 		tvPintuAir = (TextView) findViewById(R.id.tvPintuAir);
 		tvStatus = (TextView) findViewById(R.id.tvStatus);
-
+		lastUpdate = (TextView) findViewById(R.id.tvWaktuUpdate);
+		
 		tvPintuAir.setText(nama);
 		tvStatus.setText(status);
+		lastUpdate.setText("Last updated: " + waktu + ".00");
 
 		if (status.equals("NORMAL")) {
 			tvStatus.setTextColor(Color.parseColor("#2ecc71"));
