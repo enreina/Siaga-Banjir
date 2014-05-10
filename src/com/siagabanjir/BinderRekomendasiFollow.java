@@ -82,19 +82,19 @@ public class BinderRekomendasiFollow extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				holder.btnFollow.setVisibility(View.GONE);
-				holder.btnUnfollow.setVisibility(View.VISIBLE);
+				v.setVisibility(View.GONE);
+				((View)v.getParent()).findViewById(R.id.unfollow_btn).setVisibility(View.VISIBLE);
 
 			}
+			
 		});
 		
 		holder.btnUnfollow.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				holder.btnUnfollow.setVisibility(View.GONE);
-				holder.btnFollow.setVisibility(View.VISIBLE);
-
+				v.setVisibility(View.GONE);
+				((View)v.getParent()).findViewById(R.id.follow_btn).setVisibility(View.VISIBLE);
 			}
 		});
 
