@@ -73,23 +73,25 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+
 		// Inflate the menu; this adds items to the action bar if it is present.
-		MenuInflater inflater = getMenuInflater();
-		// inflater.inflate(R.menu.home_actions, menu);
-		return super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.rekomendasi_menu, menu);
+		return true;
 	}
 
 	public boolean OnOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-		case R.id.action_settings:
-			return true;
-		case R.id.action_information:
-			Intent i = new Intent(this, InformationActivity.class);
-			startActivity(i);
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+		 switch (item.getItemId()) {
+	        case R.id.action_save:
+	        	return true;
+	        case R.id.action_discard:
+	        	return true;
+	        case R.id.action_information:
+				Intent i = new Intent(this, InformationActivity.class);
+				startActivity(i);
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 
 	}
 

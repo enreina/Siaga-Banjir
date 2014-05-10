@@ -7,6 +7,8 @@
     <string name="info">Information</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_share">Share</string>
+    <string name="action_save">Save</string>
+    <string name="action_discard">Delete</string>
     <string name="action_new">Add</string>
     <string name="location_hint">Enter location name</string>
     <string name="dummy_location">Di hatimuuuuoooo</string>
@@ -19,9 +21,9 @@
 	    tetapi kondisinya masih belum kritis dan membahayakan.</string>
     <string name="siaga2">Terjadi jika hujan menyebabkan debit air mulai meluas.
 	        Penanggung jawab adalah Kepala Badan Penanggulangan Bencana Daerah.</string>
-	<string name="siaga1">Terjadi jika dalam enam jam debit air tidak surut. 
+    <string name="siaga1">Terjadi jika dalam enam jam debit air tidak surut. 
 	    Penanggung jawab penanganan adalah Gubernur.</string>
-	<string name="follow">Follow</string> 
-	<string name="unfollow">Following</string>    
+    <string name="follow">Follow</string>
+    <string name="unfollow">Following</string>
 
 </resources>
