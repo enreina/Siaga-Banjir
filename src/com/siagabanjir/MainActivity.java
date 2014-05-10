@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.siagabanjir.DataPintuAir;
 import com.siagabanjir.adapter.TabsPagerAdapter;
-import com.siagabanjir.utility.NotificationFetcher;
 
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBarActivity;
@@ -82,7 +81,6 @@ public class MainActivity extends ActionBarActivity implements
 					.setTabListener(this));
 		}
 		
-		setUpAlarm();
 		
 	
 	
@@ -160,14 +158,5 @@ public class MainActivity extends ActionBarActivity implements
 		// TODO Auto-generated method stub
 		
 	}
-	
-	public void setUpAlarm() {
-        Intent intent = new Intent(this, NotificationFetcher.class);
-        PendingIntent pending_intent = PendingIntent.getService(this, 0, intent, 0);
-
-        AlarmManager alarm_mgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarm_mgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime(), 1000, pending_intent);
-    }
 
 }

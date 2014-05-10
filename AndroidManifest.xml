@@ -62,12 +62,6 @@
             android:screenOrientation="portrait" >
         </activity>
 
-        <receiver android:name="com.sigabanjir.utility.BootCompletedReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <!--
         Riska's API KEY 
         <meta-data
