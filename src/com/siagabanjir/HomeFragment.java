@@ -35,6 +35,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class HomeFragment extends ListFragment {
@@ -44,6 +45,8 @@ public class HomeFragment extends ListFragment {
 
 	private Context context;
 	private FollowPintuAir followPintuAir;
+	
+	private TextView lastUpdate;
 
 	public HomeFragment() {
 		this(0);
@@ -64,6 +67,7 @@ public class HomeFragment extends ListFragment {
 
 	public void refreshHome() {
 		new JSONParse().execute();
+		//((MainActivity) this.getActivity()).setRefreshActionButtonState(true);
 	}
 
 	@Override
@@ -71,12 +75,21 @@ public class HomeFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 		binder = new BinderData(getActivity(), pintuAir);
 		setListAdapter(binder);
+		
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.list_fragment, container, false);
+		
+		/* Force closed kalo ditambahin code ini
+		DataPintuAir pintuPertama = (DataPintuAir) pintuAir.get(1);
+		int waktu = pintuPertama.getWaktuTerakhir();
+		
+		lastUpdate = (TextView) getView().findViewById(R.id.tvWaktuUpdate);
+		lastUpdate.setText("Last updated: " + waktu + ".00");
+		*/
 		return view;
 	}
 
@@ -117,6 +130,7 @@ public class HomeFragment extends ListFragment {
 
 		// ProgressDialog pd;
 		protected void onPreExecute() {
+			((MainActivity) HomeFragment.this.getActivity()).setRefreshActionButtonState(true);
 			Toast.makeText(context, "Updating data...", Toast.LENGTH_LONG)
 					.show();
 			/**
@@ -219,6 +233,7 @@ public class HomeFragment extends ListFragment {
 		protected void onProgressUpdate(String... values) {
 			Toast.makeText(context, "Updating data...", Toast.LENGTH_LONG)
 					.show();
+			((MainActivity) HomeFragment.this.getActivity()).setRefreshActionButtonState(true);
 		}
 
 		protected void onPostExecute(JSONObject json) {
@@ -266,6 +281,7 @@ public class HomeFragment extends ListFragment {
 				refresh();
 
 				Toast.makeText(context, "Done!", Toast.LENGTH_LONG).show();
+				((MainActivity) HomeFragment.this.getActivity()).setRefreshActionButtonState(false);
 				/**
 				 * if (pd != null) { pd.dismiss(); }
 				 **/
