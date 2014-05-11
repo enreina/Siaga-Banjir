@@ -157,11 +157,11 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 				e.printStackTrace();
 			}
 
-			Toast.makeText(
+			/** Toast.makeText(
 					context,
 					"Initial location: " + location.getLatitude() + ", "
 							+ location.getLongitude(), Toast.LENGTH_LONG)
-					.show();
+					.show(); **/
 			LatLng currentLoc = new LatLng(location.getLatitude(),
 					location.getLongitude());
 			refreshMap(currentLoc);

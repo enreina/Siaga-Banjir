@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.siagabanjir.DataPintuAir;
 import com.siagabanjir.adapter.TabsPagerAdapter;
+import com.siagabanjir.AboutActivity;
 
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBarActivity;

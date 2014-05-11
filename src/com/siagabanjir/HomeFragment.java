@@ -139,8 +139,8 @@ public class HomeFragment extends ListFragment {
 		// ProgressDialog pd;
 		protected void onPreExecute() {
 			((MainActivity) HomeFragment.this.getActivity()).setRefreshActionButtonState(true);
-			Toast.makeText(context, "Updating data...", Toast.LENGTH_LONG)
-					.show();
+			//Toast.makeText(context, "Updating data...", Toast.LENGTH_LONG)
+			//		.show();
 			/**
 			 * pd = new ProgressDialog(context);
 			 * pd.setTitle("Updating data..."); pd.setMessage("Please wait.");
@@ -239,8 +239,8 @@ public class HomeFragment extends ListFragment {
 		}
 
 		protected void onProgressUpdate(String... values) {
-			Toast.makeText(context, "Updating data...", Toast.LENGTH_LONG)
-					.show();
+			//Toast.makeText(context, "Updating data...", Toast.LENGTH_LONG)
+			//		.show();
 			((MainActivity) HomeFragment.this.getActivity()).setRefreshActionButtonState(true);
 		}
 
@@ -288,7 +288,7 @@ public class HomeFragment extends ListFragment {
 				Collections.sort(pintuAir);
 				refresh();
 
-				Toast.makeText(context, "Done!", Toast.LENGTH_LONG).show();
+				//Toast.makeText(context, "Done!", Toast.LENGTH_LONG).show();
 				((MainActivity) HomeFragment.this.getActivity()).setRefreshActionButtonState(false);
 				/**
 				 * if (pd != null) { pd.dismiss(); }
