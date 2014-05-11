@@ -56,9 +56,11 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 
 		listRekomendasi.setAdapter(binder);
 		txtLocation = (TextView) findViewById(R.id.location);
-
+		
 		location = new LatLng(i.getDoubleExtra("lat", 0), i.getDoubleExtra(
 				"long", 0));
+		
+		txtLocation.setText(location.toString());
 
 		Geocoder geocoder = new Geocoder(this);
 		try {
@@ -132,7 +134,10 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 	}
 
 	private void discardPlace() {
-		this.setResult(Activity.RESULT_OK);
+		Intent i = new Intent();
+		i.putExtra("lat", location.latitude);
+		i.putExtra("long", location.longitude);
+		this.setResult(Activity.RESULT_OK, i);
 
 		finish();
 
@@ -148,7 +153,10 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		}
 
 		myPlaces.savePlace(locName, location);
-		this.setResult(Activity.RESULT_OK);
+		Intent i = new Intent();
+		i.putExtra("lat", location.latitude);
+		i.putExtra("long", location.longitude);
+		this.setResult(Activity.RESULT_OK, i);
 
 		finish();
 

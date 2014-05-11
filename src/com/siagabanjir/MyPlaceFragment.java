@@ -191,12 +191,18 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		// marker.draggable(true);
 		marker.icon(BitmapDescriptorFactory
 				.fromResource(R.drawable.ic_location));
+		marker.title("Current Location");
+		marker.snippet("");
 
 		peta.addMarker(marker);
 
-		for (LatLng loc : DataPintuAir.locationPintuAir.values()) {
+		for (String name : DataPintuAir.locationPintuAir.keySet()) {
+			LatLng loc = DataPintuAir.locationPintuAir.get(name);
+			
 			MarkerOptions markerPintuAir = new MarkerOptions().position(loc);
-
+			markerPintuAir.snippet("");
+			markerPintuAir.title("Pintu Air " + name);
+			
 			peta.addMarker(markerPintuAir);
 			/**
 			 * CircleOptions circle = new CircleOptions();
@@ -255,6 +261,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 				myPlaces = new MyPlaces(context).getPlaces();
 				Location lastLoc = locationClient.getLastLocation();
 				refreshMap(new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude()));
+				peta.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(data.getDoubleExtra("lat", lastLoc.getLatitude()), data.getDoubleExtra("long", lastLoc.getLongitude())), 15));
 			}
 			break;
 		}

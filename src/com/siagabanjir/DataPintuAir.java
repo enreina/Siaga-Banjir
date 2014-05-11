@@ -38,7 +38,18 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		locationPintuAir = new HashMap<String, LatLng>();
 		locationPintuAir.put("Katulampa", new LatLng(-6.634091, 106.83718));
 		locationPintuAir.put("Pesanggrahan", new LatLng(-6.396231, 106.772043));
-		locationPintuAir.put("Depok", new LatLng(-6.400386, 106.831627));
+		locationPintuAir.put("Angke Hulu", new LatLng(-6.165859, 106.748641));
+		locationPintuAir.put("Cipinang Hulu", new LatLng(-6.339593, 106.872839));
+		locationPintuAir.put("Sunter Hulu", new LatLng(-6.31796, 106.92109));
+		locationPintuAir.put("Depok", new LatLng(-6.40055, 106.83158));
+		locationPintuAir.put("Manggarai", new LatLng(-6.207862, 106.848386));
+		locationPintuAir.put("Karet", new LatLng(-6.198161, 106.809887));
+		locationPintuAir.put("Waduk Pluit", new LatLng(-6.122804, 106.801786));
+		locationPintuAir.put("Pasar Ikan", new LatLng(-6.127594, 106.809452));
+		locationPintuAir.put("Pulo Gadung", new LatLng(-6.190875, 106.904266));
+		locationPintuAir.put("Sunter Utara", new LatLng(-6.1261111, 106.868333));
+		locationPintuAir.put("Sunter Selatan", new LatLng(-6.155249, 106.859085));
+		locationPintuAir.put("Krukut Hulu", new LatLng(-6.343725, 106.798937));
 		
 		
 		mapsPintuAir = new HashMap<String, DataPintuAir>();
