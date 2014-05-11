@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <ImageView
@@ -17,23 +17,149 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:paddingBottom="10dip"
+        android:paddingBottom="20dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:text="@string/deskripsi"
         android:textColor="#424242"
         android:textSize="15sp" />
-    
-     <TextView
+
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:paddingBottom="15dip"
+        android:paddingBottom="10dip"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:text="@string/us"
-        android:textColor="#34495e"
+        android:textColor="#424242"
         android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:paddingBottom="5dip"
+            android:paddingLeft="15dp"
+            android:text="Fauzan Helmi Sudaryanto"
+            android:textColor="#2ecc71"
+            android:textSize="14sp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:gravity="right|center"
+            android:paddingBottom="5dip"
+            android:paddingRight="15dp"
+            android:text="\@ujanjan"
+            android:textColor="#2ecc71"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:gravity="left|center"
+        android:paddingBottom="20dip"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Product Manager"
+        android:textColor="#424242"
+        android:textSize="13sp" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:paddingBottom="5dip"
+            android:paddingLeft="15dp"
+            android:text="Enreina Annisa Rizkiasri"
+            android:textColor="#2ecc71"
+            android:textSize="14sp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:gravity="right|center"
+            android:paddingBottom="5dip"
+            android:paddingRight="15dp"
+            android:text="\@reyreina"
+            android:textColor="#2ecc71"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:gravity="left|center"
+        android:paddingBottom="20dip"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Back-End Programmer"
+        android:textColor="#424242"
+        android:textSize="13sp" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:paddingBottom="5dip"
+            android:paddingLeft="15dp"
+            android:text="Riska Fadilla"
+            android:textColor="#2ecc71"
+            android:textSize="14sp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-light"
+            android:gravity="right|center"
+            android:paddingBottom="5dip"
+            android:paddingRight="15dp"
+            android:text="\@riskaincoss"
+            android:textColor="#2ecc71"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:gravity="left|center"
+        android:paddingBottom="20dip"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Front-End Programmer"
+        android:textColor="#424242"
+        android:textSize="13sp" />
 
 </LinearLayout>
