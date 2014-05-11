@@ -13,20 +13,19 @@
     <string name="action_new">Add</string>
     <string name="location_hint">Enter location name</string>
     <string name="dummy_location">Di hatimuuuuoooo</string>
+    <string name="judulInformation">COLOR MEANINGS</string>
+    <string name="rekomendasiKosong">There is no sluice in this area.</string>
     <string name="title1">SLUICE RECOMMENDATION</string>
     <string name="button_text">Follow</string>
     <string name="content">Siaga</string>
-    <string name="siaga4">The increase in the water flow is not noticeable.
-        Person in charge of field operations carried out by the deputy commander of the area.</string>
+    <string name="siaga4">The increase in the water flow is not noticeable. Person in charge of field operations carried out by the deputy commander of the area.</string>
     <string name="siaga3">Happens if rain water led to an increase in water in the sluice, 
 but this condition is not critical and dangerous yet.</string>
-    <string name="siaga2">Happens if rains caused widespread water discharge.
-	        Person in charge is Head of the Regional Disaster Management.</string>
-    <string name="siaga1">Happens within six hours if the water flow is not receding. 
-	    Person in charge is the Governor.</string>
+    <string name="siaga2">Happens if rains caused widespread water discharge. Person in charge is Head of the Regional Disaster Management.</string>
+    <string name="siaga1">Happens within six hours if the water flow is not receding. Person in charge is the Governor.</string>
     <string name="follow">Follow</string>
     <string name="unfollow">Following</string>
     <string name="deskripsi">Siaga Banjir (Jakarta Flood Alert) is an application that functions to monitor 14 sluices’ activities in Jakarta.</string>
-	<string name="us">Developed by Kawung Labs, 2014</string>
+	<string name="us">Developed with love by:</string>
     
 </resources>

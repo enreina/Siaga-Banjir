@@ -19,7 +19,7 @@
             android:background="#f1c40f"
             android:gravity="center"
             android:padding="10dip"
-            android:text="COLOR MEANINGS"
+            android:text="@string/judulInformation"
             android:textColor="#ffffff"
             android:textSize="15sp" />
 
