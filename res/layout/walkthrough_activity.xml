@@ -9,8 +9,16 @@
         android:layout_height="fill_parent"
         android:layout_above="@+id/screen_navigation_button" />
 
-    <!--  This TextView will not swipe when you swipe in the ViewPager -->
-
+    <Button
+        android:id="@+id/angry_btn"
+        android:layout_width="110dp"
+        android:layout_height="35dp"
+        android:text="Skip"
+        android:textColor="#424242"
+        android:textSize="15sp" />
+    
+    <!-- This TextView will not swipe when you swipe in the ViewPager -->
+    <!--
     <TextView
         android:id="@id/screen_navigation_button"
         android:layout_width="fill_parent"
@@ -20,5 +28,6 @@
         android:padding="10dip"
         android:text="Hello, Walkthrough!"
         android:textSize="18sp" />
+    -->
 
 </RelativeLayout>

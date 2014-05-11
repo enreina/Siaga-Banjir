@@ -1,6 +1,7 @@
 package com.siagabanjir;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -29,6 +30,13 @@ public class WalkthroughActivity extends ActionBarActivity {
         
         actionBar = getSupportActionBar();
         actionBar.hide();
+        
+        /*
+        if (mViewPager.getAdapter().getCount() == MAX_VIEWS-1) {
+        	Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
+        }
+        */
     }
 
 
@@ -101,7 +109,7 @@ public class WalkthroughActivity extends ActionBarActivity {
             // Here is where you should show change the view of page indicator
             switch(position) {
 
-            case MAX_VIEWS - 1:
+            case MAX_VIEWS-1:
                 break;
 
             default:
