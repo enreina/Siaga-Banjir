@@ -380,11 +380,14 @@ public class DetailActivity extends ActionBarActivity {
 		case R.id.action_share:
 			captureMapScreen();
 			return true;
-		case R.id.action_settings:
+		case R.id.action_about:
+			Intent ii = new Intent(this, AboutActivity.class);
+			startActivity(ii);
 			return true;
 		case R.id.action_information:
 			Intent i = new Intent(this, InformationActivity.class);
 			startActivity(i);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

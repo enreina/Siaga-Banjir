@@ -56,6 +56,13 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.siagabanjir.AboutActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.siagabanjir.MainActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
             android:name="com.siagabanjir.TestActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >

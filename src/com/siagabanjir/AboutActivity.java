@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class InformationActivity extends ActionBarActivity {
+public class AboutActivity extends ActionBarActivity {
 
 	private ActionBar actionBar;
 	private Fragment fragment;
@@ -19,7 +19,7 @@ public class InformationActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.information1);
+		setContentView(R.layout.about);
 
 		actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbar);
@@ -46,11 +46,9 @@ public class InformationActivity extends ActionBarActivity {
 		case R.id.action_about:
 			Intent ii = new Intent(this, AboutActivity.class);
 			startActivity(ii);
-			return true;
 		case R.id.action_information:
 			Intent i = new Intent(this, InformationActivity.class);
 			startActivity(i);
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

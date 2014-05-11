@@ -4,6 +4,7 @@
     <string name="app_name">Siaga Banjir</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
     <string name="info">Information</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_share">Share</string>
@@ -15,15 +16,17 @@
     <string name="title1">SLUICE RECOMMENDATION</string>
     <string name="button_text">Follow</string>
     <string name="content">Siaga</string>
-    <string name="siaga4">Belum ada peningkatan debit air secara mencolok.
-        Komando di lapangan dilakukan oleh wakil komandan operasional wilayah. </string>
-    <string name="siaga3">Terjadi jika hujan menyebabkan peningkatan debit air di pintu-pintu air, 
-	    tetapi kondisinya masih belum kritis dan membahayakan.</string>
-    <string name="siaga2">Terjadi jika hujan menyebabkan debit air mulai meluas.
-	        Penanggung jawab adalah Kepala Badan Penanggulangan Bencana Daerah.</string>
-    <string name="siaga1">Terjadi jika dalam enam jam debit air tidak surut. 
-	    Penanggung jawab penanganan adalah Gubernur.</string>
+    <string name="siaga4">The increase in the water flow is not noticeable.
+        Person in charge of field operations carried out by the deputy commander of the area.</string>
+    <string name="siaga3">Happens if rain water led to an increase in water in the sluice, 
+but this condition is not critical and dangerous yet.</string>
+    <string name="siaga2">Happens if rains caused widespread water discharge.
+	        Person in charge is Head of the Regional Disaster Management.</string>
+    <string name="siaga1">Happens within six hours if the water flow is not receding. 
+	    Person in charge is the Governor.</string>
     <string name="follow">Follow</string>
     <string name="unfollow">Following</string>
-
+    <string name="deskripsi">Siaga Banjir (Jakarta Flood Alert) is an application that functions to monitor 14 sluices’ activities in Jakarta.</string>
+	<string name="us">Developed by Kawung Labs, 2014</string>
+    
 </resources>

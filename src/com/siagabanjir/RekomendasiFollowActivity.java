@@ -118,6 +118,10 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		case R.id.action_discard:
 			discardPlace();
 			return true;
+		case R.id.action_about:
+			Intent ii = new Intent(this, AboutActivity.class);
+			startActivity(ii);
+			return true;
 		case R.id.action_information:
 			Intent i = new Intent(this, InformationActivity.class);
 			startActivity(i);
