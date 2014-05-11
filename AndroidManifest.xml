@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Example" >
         <activity
             android:name="com.siagabanjir.HomeActivity"
-            android:logo="@drawable/ic_logo"
+            android:logo="@drawable/ico_actionbarcopy"
             android:screenOrientation="portrait" >
         </activity>
         <activity
