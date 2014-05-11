@@ -85,7 +85,7 @@ public class DetailActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_detail);
 
 		actionBar = getSupportActionBar();
-		actionBar.setIcon(R.drawable.ico_actionbar);
+		actionBar.setIcon(R.drawable.ico_actionbarcopy);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
