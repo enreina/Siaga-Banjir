@@ -1,13 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:Siaga="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.siaga.MainActivity" >
-
-    <item
-        android:id="@+id/action_refresh"
-        Siaga:showAsAction="always"
-        android:icon="@drawable/ic_action_refresh"
-        android:title="@string/action_refresh"/>
+    xmlns:tools="http://schemas.android.com/tools" >
     
     <item
         android:id="@+id/action_about"
