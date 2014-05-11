@@ -106,6 +106,8 @@ public class HomeFragment extends ListFragment {
 
 			i.putParcelableArrayListExtra("pintuair", pintuAir);
 			i.putExtra("selected", position);
+			
+			i.putExtra("pintuair", pintuAir.get(position));
 
 			startActivity(i);
 		}
@@ -123,6 +125,12 @@ public class HomeFragment extends ListFragment {
 
 	public void refresh() {
 		binder.notifyDataSetChanged();
+		
+		DataPintuAir pintuPertama = (DataPintuAir) pintuAir.get(0);
+		int waktu = pintuPertama.getWaktuTerakhir();
+		
+		lastUpdate = (TextView) getView().findViewById(R.id.tvWaktuUpdate);
+		lastUpdate.setText("Last updated: " + pintuPertama.getTanggal() + " " + waktu + ".00");
 	}
 
 	private class JSONParse extends AsyncTask<String, String, JSONObject> {

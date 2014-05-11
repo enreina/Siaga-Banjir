@@ -14,7 +14,9 @@ import java.util.Random;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -37,6 +39,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -88,10 +91,7 @@ public class DetailActivity extends ActionBarActivity {
 
 		Intent i = getIntent();
 
-		ArrayList<DataPintuAir> curr = i
-				.getParcelableArrayListExtra("pintuair");
-		int position = i.getIntExtra("selected", 0);
-		pintuair = (DataPintuAir) curr.get(position);
+		pintuair = (DataPintuAir) i.getParcelableExtra("pintuair");
 
 		createData(pintuair);
 
@@ -108,7 +108,7 @@ public class DetailActivity extends ActionBarActivity {
 		
 		tvPintuAir.setText(nama);
 		tvStatus.setText(status);
-		lastUpdate.setText("Last updated: " + waktu + ".00");
+		lastUpdate.setText("Last updated: " + pintuair.getTanggal() + " " + waktu + ".00");
 
 		if (status.equals("NORMAL")) {
 			tvStatus.setTextColor(Color.parseColor("#2ecc71"));
@@ -241,7 +241,7 @@ public class DetailActivity extends ActionBarActivity {
 		// set up a y axis
 
 		NumericYAxis valueAxis = new NumericYAxis();
-		int[] tinggiAir = pintuair.getTinggiAir();
+		int[] tinggiAir = Arrays.copyOf(pintuair.getTinggiAir(), pintuair.getTinggiAir().length);
 		Arrays.sort(tinggiAir);
 		int minValue = tinggiAir[0];
 		int maxValue = tinggiAir[5];
@@ -302,7 +302,7 @@ public class DetailActivity extends ActionBarActivity {
 	protected File saveBitmap(Bitmap bitmap) {
 		// TODO Auto-generated method stub
 		File imagePath = new File(Environment.getExternalStorageDirectory()
-				+ "/siagabanjir.jpg");
+				+ "/siagabanjir" + System.currentTimeMillis() + ".png");
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(imagePath);
@@ -324,6 +324,43 @@ public class DetailActivity extends ActionBarActivity {
 		rootView.setDrawingCacheEnabled(true);
 		return rootView.getDrawingCache();
 	}
+	
+	public void captureMapScreen() {
+        SnapshotReadyCallback callback = new SnapshotReadyCallback() {
+
+            @Override
+            public void onSnapshotReady(Bitmap snapshot) {
+                try {
+                	View rootView = findViewById(android.R.id.content).getRootView();
+                	
+                    rootView.setDrawingCacheEnabled(true);
+                    Bitmap backBitmap = rootView.getDrawingCache();
+                    Bitmap bmOverlay = Bitmap.createBitmap(
+                            backBitmap.getWidth(), backBitmap.getHeight(),
+                            backBitmap.getConfig());
+                    Canvas canvas = new Canvas(bmOverlay);
+
+                    canvas.drawBitmap(backBitmap, 0, 0, null);
+                    canvas.drawBitmap(snapshot, (backBitmap.getWidth() - snapshot.getWidth())/2, backBitmap.getHeight() - snapshot.getHeight() - 85, null);
+                    File imagePath = new File (Environment.getExternalStorageDirectory()
+                                    + "/siagabanjir"
+                                    + System.currentTimeMillis() + ".png");
+                    FileOutputStream out = new FileOutputStream(imagePath);
+
+                    bmOverlay.compress(Bitmap.CompressFormat.PNG, 90, out);
+                    
+                    share(imagePath);
+                    
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        peta.snapshot(callback);
+
+    }
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -341,7 +378,7 @@ public class DetailActivity extends ActionBarActivity {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.action_share:
-			share();
+			captureMapScreen();
 			return true;
 		case R.id.action_settings:
 			return true;
@@ -353,13 +390,7 @@ public class DetailActivity extends ActionBarActivity {
 		}
 	}
 
-	public void share() {
-		Intent i = getIntent();
-		ArrayList<DataPintuAir> curr = i.getParcelableArrayListExtra("pintuair");
-		int position = i.getIntExtra("selected", 0);
-		DataPintuAir pintuair = (DataPintuAir) curr.get(position);
-		Bitmap bitmap = takeScreenshot();
-		File img = saveBitmap(bitmap);
+	public void share(File img) {
 		String text = "Status Tinggi Muka Air di Pintu " + pintuair.getNama()
 				+ ", " + pintuair.getHari() + " (" + pintuair.getTanggalShort()
 				+ ") " + String.format("%02d", pintuair.getWaktuTerakhir())
