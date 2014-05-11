@@ -18,6 +18,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -31,7 +33,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.iguanaui.controls.DataChart;
 import com.iguanaui.controls.axes.CategoryAxis;
 import com.iguanaui.controls.axes.CategoryXAxis;
@@ -58,6 +66,12 @@ public class DetailActivity extends ActionBarActivity {
 	private Button btnUnfollow;
 	
 	private FollowPintuAir followPintuAir;
+	
+	public GoogleMap peta = null;
+	private SupportMapFragment mapFragment;
+	private LatLng locPintuAir;
+	
+	private DataPintuAir pintuair;
 
 	// private TextView tvnama, tvtinggiair, tvstatus;
 	// private DetailGraph graph;
@@ -77,7 +91,7 @@ public class DetailActivity extends ActionBarActivity {
 		ArrayList<DataPintuAir> curr = i
 				.getParcelableArrayListExtra("pintuair");
 		int position = i.getIntExtra("selected", 0);
-		final DataPintuAir pintuair = (DataPintuAir) curr.get(position);
+		pintuair = (DataPintuAir) curr.get(position);
 
 		createData(pintuair);
 
@@ -137,6 +151,43 @@ public class DetailActivity extends ActionBarActivity {
 			btnFollow.setVisibility(View.VISIBLE);
 			btnUnfollow.setVisibility(View.GONE);
 		}
+		
+		FragmentManager fm = getSupportFragmentManager();
+		mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
+		if (mapFragment == null) {
+			mapFragment = SupportMapFragment.newInstance();
+			fm.beginTransaction().replace(R.id.map, mapFragment).commit();
+		}
+		
+		locPintuAir = DataPintuAir.locationPintuAir.get(nama);
+	}
+	
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		initializeMap();
+	}
+
+	private void initializeMap() {
+		if (peta == null) {
+			peta = mapFragment.getMap();
+
+			// check if map is created successfully or not
+			if (peta == null) {
+				Toast.makeText(this.getApplicationContext(),
+						"Error showing map", Toast.LENGTH_SHORT).show();
+			} else {
+				peta.addMarker(new MarkerOptions()
+				.position(locPintuAir)
+				.title("Pintu Air " + pintuair.getNama())
+				.snippet(""));
+				
+				peta.moveCamera(CameraUpdateFactory.newLatLngZoom(locPintuAir, 15));
+			}
+
+		}
+		
 	}
 
 	private void createData(DataPintuAir pintuair) {
