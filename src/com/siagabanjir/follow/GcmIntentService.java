@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -101,5 +102,8 @@ public class GcmIntentService extends IntentService {
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        
+        Vibrator v = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(1000);
     }
 }
