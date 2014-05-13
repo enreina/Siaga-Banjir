@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.siagabanjir.DataPintuAir;
 import com.siagabanjir.adapter.TabsPagerAdapter;
+import com.siagabanjir.follow.GcmBroadcastReceiver;
 import com.siagabanjir.AboutActivity;
 
 import android.support.v7.app.ActionBar.Tab;
@@ -53,57 +54,55 @@ public class MainActivity extends ActionBarActivity implements
 		 * if (savedInstanceState == null) {
 		 * getSupportFragmentManager().beginTransaction() .add(R.id.container,
 		 * new PlaceholderFragment()).commit(); }
-		 
+		 * 
+		 * 
+		 * sharedPreferences = getSharedPreferences("firstRunPreference", 0);
+		 * 
+		 * 
+		 * // Checking if the boolean value of "isFirstRun" is true
+		 * 
+		 * if (FirstRun.isFirstRun() == true) {
+		 * 
+		 * // calling this method changes the boolean value to false. // on new
+		 * launch of the activity this if block is not interpreted.
+		 * FirstRun.appRunned(); Intent intent = new Intent(this,
+		 * WalkthroughActivity.class); this.startActivity(intent); } else {
+		 */
 
-		sharedPreferences = getSharedPreferences("firstRunPreference", 0);
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setIcon(R.drawable.ico_actionbar);
+		actionBar.setDisplayShowTitleEnabled(false);
 
+		// setUp data
+		dataKritis = new ArrayList<DataPintuAir>();
+
+		// set up data
+		/*
+		 * for(int i = 0; i < 5; i++) { DataPintuAir dp = new
+		 * DataPintuAir("Pintu air " + i); dp.setTanggal("2014/05/01");
+		 * dp.addTinggiAir(528, "KRITIS", 7*i);
+		 * 
+		 * dataKritis.add(dp); }
+		 */
+
+		// Initilization
+		/*
+		 * viewPager = (ViewPager) findViewById(R.id.container); mAdapter = new
+		 * TabsPagerAdapter(getSupportFragmentManager(), dataKritis, this);
+		 * 
+		 * viewPager.setAdapter(mAdapter);
+		 */
+		actionBar.setHomeButtonEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		// Adding Tabs
+		for (String tab_name : tabs) {
+			actionBar.addTab(actionBar.newTab().setText(tab_name)
+					.setTabListener(this));
+		}
 		
-		 // Checking if the boolean value of "isFirstRun" is true
-		 
-		if (FirstRun.isFirstRun() == true) {
 
-			// calling this method changes the boolean value to false.
-			// on new launch of the activity this if block is not interpreted.
-			FirstRun.appRunned();
-			Intent intent = new Intent(this, WalkthroughActivity.class);
-            this.startActivity(intent);
-		} else {
-			*/
-
-			ActionBar actionBar = getSupportActionBar();
-			actionBar.setIcon(R.drawable.ico_actionbar);
-			actionBar.setDisplayShowTitleEnabled(false);
-
-			// setUp data
-			dataKritis = new ArrayList<DataPintuAir>();
-
-			// set up data
-			/*
-			 * for(int i = 0; i < 5; i++) { DataPintuAir dp = new
-			 * DataPintuAir("Pintu air " + i); dp.setTanggal("2014/05/01");
-			 * dp.addTinggiAir(528, "KRITIS", 7*i);
-			 * 
-			 * dataKritis.add(dp); }
-			 */
-
-			// Initilization
-			/*
-			 * viewPager = (ViewPager) findViewById(R.id.container); mAdapter =
-			 * new TabsPagerAdapter(getSupportFragmentManager(), dataKritis,
-			 * this);
-			 * 
-			 * viewPager.setAdapter(mAdapter);
-			 */
-			actionBar.setHomeButtonEnabled(false);
-			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-			// Adding Tabs
-			for (String tab_name : tabs) {
-				actionBar.addTab(actionBar.newTab().setText(tab_name)
-						.setTabListener(this));
-			}
-
-		//}
+		// }
 	}
 
 	@Override

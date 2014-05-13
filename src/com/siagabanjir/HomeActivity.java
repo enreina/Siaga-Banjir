@@ -96,6 +96,8 @@ public class HomeActivity extends ActionBarActivity implements TabListener,Conne
         
 	}
 	
+	
+	
 	private void setupUserLocation() {
 		locationClient = new LocationClient(this, this, this);
 		locationRequest = new LocationRequest();
