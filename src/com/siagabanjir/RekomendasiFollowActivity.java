@@ -95,6 +95,12 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		 * pintuair.getTinggiAir()[0] + ""; String status =
 		 * pintuair.getStatus()[0];
 		 **/
+		
+		if (rekomendasi.isEmpty()) {
+			findViewById(R.id.rekomendasiEmpty).setVisibility(View.VISIBLE);
+		} else {
+			findViewById(R.id.rekomendasiEmpty).setVisibility(View.GONE);
+		}
 
 		actionBar.setDisplayHomeAsUpEnabled(true);
 

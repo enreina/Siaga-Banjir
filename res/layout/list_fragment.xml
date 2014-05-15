@@ -14,7 +14,7 @@
         android:textColor="#acacac"
         android:background="#f4f4f4"
         android:textSize="14sp"
-        android:text="Tes last updated 9.00 AM"
+        android:text="Loading"
         android:padding="5dip"  />
 
     <ListView
