@@ -15,7 +15,7 @@ import android.widget.ImageView;
 
 public class WalkthroughActivity extends ActionBarActivity {
 	private ActionBar actionBar;
-    private static final int MAX_VIEWS = 5;
+    private static final int MAX_VIEWS = 4;
 
     ViewPager mViewPager;
 
@@ -31,6 +31,8 @@ public class WalkthroughActivity extends ActionBarActivity {
         actionBar = getSupportActionBar();
         actionBar.hide();
         
+        Intent i = getIntent();
+        //balikin ke aplikasinya bingung Rei hehe
         /*
         if (mViewPager.getAdapter().getCount() == MAX_VIEWS-1) {
         	Intent intent = new Intent(this, MainActivity.class);
@@ -76,9 +78,6 @@ public class WalkthroughActivity extends ActionBarActivity {
                 imageView.setImageResource(R.drawable.image4);
                 break;
 
-            case 4:
-                imageView.setImageResource(R.drawable.image1);
-                break;
             }
 
             ((ViewPager) container).addView(imageViewContainer, 0);
@@ -109,7 +108,7 @@ public class WalkthroughActivity extends ActionBarActivity {
             // Here is where you should show change the view of page indicator
             switch(position) {
 
-            case MAX_VIEWS-1:
+            case MAX_VIEWS - 1:
                 break;
 
             default:

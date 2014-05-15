@@ -49,6 +49,10 @@ public class AboutActivity extends ActionBarActivity {
 		case R.id.action_information:
 			Intent i = new Intent(this, InformationActivity.class);
 			startActivity(i);
+		case R.id.action_tutorial:
+			Intent iii = new Intent(this, WalkthroughActivity.class);
+			startActivity(iii);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

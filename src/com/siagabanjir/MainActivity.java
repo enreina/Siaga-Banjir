@@ -49,26 +49,23 @@ public class MainActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
-		/*
-		 * if (savedInstanceState == null) {
-		 * getSupportFragmentManager().beginTransaction() .add(R.id.container,
-		 * new PlaceholderFragment()).commit(); }
-		 
+		if (savedInstanceState == null) {
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.container, new PlaceholderFragment()).commit();
+		}
 
 		sharedPreferences = getSharedPreferences("firstRunPreference", 0);
 
-		
-		 // Checking if the boolean value of "isFirstRun" is true
-		 
+		// Checking if the boolean value of "isFirstRun" is true
+
 		if (FirstRun.isFirstRun() == true) {
 
 			// calling this method changes the boolean value to false.
 			// on new launch of the activity this if block is not interpreted.
 			FirstRun.appRunned();
 			Intent intent = new Intent(this, WalkthroughActivity.class);
-            this.startActivity(intent);
+			this.startActivity(intent);
 		} else {
-			*/
 
 			ActionBar actionBar = getSupportActionBar();
 			actionBar.setIcon(R.drawable.ico_actionbar);
@@ -103,7 +100,7 @@ public class MainActivity extends ActionBarActivity implements
 						.setTabListener(this));
 			}
 
-		//}
+		}
 	}
 
 	@Override
@@ -135,6 +132,10 @@ public class MainActivity extends ActionBarActivity implements
 		case R.id.action_information:
 			Intent i = new Intent(this, InformationActivity.class);
 			startActivity(i);
+			return true;
+		case R.id.action_tutorial:
+			Intent iii = new Intent(this, WalkthroughActivity.class);
+			startActivity(iii);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

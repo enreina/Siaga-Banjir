@@ -9,13 +9,6 @@
         android:layout_height="fill_parent"
         android:layout_above="@+id/screen_navigation_button" />
 
-    <Button
-        android:id="@+id/angry_btn"
-        android:layout_width="110dp"
-        android:layout_height="35dp"
-        android:text="Skip"
-        android:textColor="#424242"
-        android:textSize="15sp" />
     
     <!-- This TextView will not swipe when you swipe in the ViewPager -->
     <!--

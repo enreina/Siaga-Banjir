@@ -388,6 +388,10 @@ public class DetailActivity extends ActionBarActivity {
 			Intent i = new Intent(this, InformationActivity.class);
 			startActivity(i);
 			return true;
+		case R.id.action_tutorial:
+			Intent iii = new Intent(this, WalkthroughActivity.class);
+			startActivity(iii);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
