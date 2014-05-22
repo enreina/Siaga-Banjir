@@ -7,6 +7,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 public class WalkthroughActivity extends ActionBarActivity {
 	private ActionBar actionBar;
     private static final int MAX_VIEWS = 4;
+    public Context context;
 
     ViewPager mViewPager;
 
@@ -26,7 +28,7 @@ public class WalkthroughActivity extends ActionBarActivity {
         setContentView(R.layout.walkthrough_activity);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPager.setAdapter(new WalkthroughPagerAdapter());
-        mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener());
+        mViewPager.setOnPageChangeListener(new WalkthroughPageChangeListener(this));
         
         actionBar = getSupportActionBar();
         actionBar.hide();
@@ -43,10 +45,10 @@ public class WalkthroughActivity extends ActionBarActivity {
 
 
     class WalkthroughPagerAdapter extends PagerAdapter {
-
+    	
         @Override
         public int getCount() {
-            return MAX_VIEWS;
+            return MAX_VIEWS + 1;
         }
 
         @Override
@@ -63,21 +65,22 @@ public class WalkthroughActivity extends ActionBarActivity {
 
             switch(position) {
             case 0:
-                imageView.setImageResource(R.drawable.image1);
+                imageView.setImageResource(R.drawable.image1en);
                 break;
 
             case 1:
-                imageView.setImageResource(R.drawable.image2);
+                imageView.setImageResource(R.drawable.image2en);
                 break;
 
             case 2:
-                imageView.setImageResource(R.drawable.image3);
+                imageView.setImageResource(R.drawable.image3en);
                 break;
 
             case 3:
-                imageView.setImageResource(R.drawable.image4);
+                imageView.setImageResource(R.drawable.image4en);
                 break;
-
+            case 4:
+            	break;
             }
 
             ((ViewPager) container).addView(imageViewContainer, 0);
@@ -92,7 +95,12 @@ public class WalkthroughActivity extends ActionBarActivity {
 
 
     class WalkthroughPageChangeListener implements ViewPager.OnPageChangeListener {
-
+    	Context context; 
+    	
+    	public WalkthroughPageChangeListener(Context context) {
+    		this.context = context;
+    	}
+    	
         @Override
         public void onPageScrollStateChanged(int arg0) {
 
@@ -100,7 +108,9 @@ public class WalkthroughActivity extends ActionBarActivity {
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-
+        	if (arg0 == MAX_VIEWS) {
+        		((Activity)context).finish();
+        	}
         }
 
         @Override
@@ -109,6 +119,7 @@ public class WalkthroughActivity extends ActionBarActivity {
             switch(position) {
 
             case MAX_VIEWS - 1:
+            	
                 break;
 
             default:

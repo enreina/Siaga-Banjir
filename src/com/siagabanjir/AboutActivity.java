@@ -22,7 +22,7 @@ public class AboutActivity extends ActionBarActivity {
 		setContentView(R.layout.about);
 
 		actionBar = getSupportActionBar();
-		actionBar.setIcon(R.drawable.ico_actionbar);
+		actionBar.setIcon(R.drawable.ico_actionbarcopy);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		

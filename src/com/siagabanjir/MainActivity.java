@@ -50,7 +50,6 @@ public class MainActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
-<<<<<<< HEAD
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -67,43 +66,8 @@ public class MainActivity extends ActionBarActivity implements
 			FirstRun.appRunned();
 			Intent intent = new Intent(this, WalkthroughActivity.class);
 			this.startActivity(intent);
-		} else {
-
-			ActionBar actionBar = getSupportActionBar();
-			actionBar.setIcon(R.drawable.ico_actionbar);
-			actionBar.setDisplayShowTitleEnabled(false);
-
-			// setUp data
-			dataKritis = new ArrayList<DataPintuAir>();
-
-			// set up data
-			/*
-			 * for(int i = 0; i < 5; i++) { DataPintuAir dp = new
-			 * DataPintuAir("Pintu air " + i); dp.setTanggal("2014/05/01");
-			 * dp.addTinggiAir(528, "KRITIS", 7*i);
-			 * 
-			 * dataKritis.add(dp); }
-			 */
-
-			// Initilization
-			/*
-			 * viewPager = (ViewPager) findViewById(R.id.container); mAdapter =
-			 * new TabsPagerAdapter(getSupportFragmentManager(), dataKritis,
-			 * this);
-			 * 
-			 * viewPager.setAdapter(mAdapter);
-			 */
-			actionBar.setHomeButtonEnabled(false);
-			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-			// Adding Tabs
-			for (String tab_name : tabs) {
-				actionBar.addTab(actionBar.newTab().setText(tab_name)
-						.setTabListener(this));
-			}
-
 		}
-=======
+
 		/*
 		 * if (savedInstanceState == null) {
 		 * getSupportFragmentManager().beginTransaction() .add(R.id.container,
@@ -124,7 +88,7 @@ public class MainActivity extends ActionBarActivity implements
 		 */
 
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setIcon(R.drawable.ico_actionbar);
+		actionBar.setIcon(R.drawable.ico_actionbarcopy);
 		actionBar.setDisplayShowTitleEnabled(false);
 
 		// setUp data
@@ -157,7 +121,7 @@ public class MainActivity extends ActionBarActivity implements
 		
 
 		// }
->>>>>>> FETCH_HEAD
+
 	}
 
 	@Override
