@@ -74,11 +74,9 @@ public class GcmIntentService extends IntentService {
                 	changes = "menurun";
                 }
                 
-                String message = "Ketinggian air di Pintu Air " + extras.getString("pintuair") +
-                		" " + changes + " pada pukul " + extras.getString("waktu") + ".00. Status: " + extras.getString("status") + ".";
-                
+           
                 //message = "Ketinggian air di Pintu Air Pasar Ikan meningkat pada pukul 19.00. Status: WASPADA.";
-                //String message = "Water level in "+ extras.getString("pintuair")+" sluice " + extras.getString("changes")+ " at "+extras.getString("waktu")+".00. Status: "+extras.getString("status")+".";
+                String message = "Water level in "+ extras.getString("pintuair")+" sluice " + extras.getString("changes")+ " at "+extras.getString("waktu")+".00. Status: "+extras.getString("status")+".";
                 if (extras.getString("changes").equals("increased")) {
                 	message = "Watch out! " + message;
                 }
