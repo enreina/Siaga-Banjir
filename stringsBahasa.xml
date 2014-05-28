@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Siaga Banjir</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_about">Tentang Kami</string>
+    <string name="info">Informasi</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_share">Share</string>
+    <string name="action_save">Save</string>
+    <string name="action_discard">Delete</string>
+    <string name="action_new">Add</string>
+    <string name="location_hint">Masukkan nama lokasi</string>
+    <string name="dummy_location">Di hatimuuuuoooo</string>
+    <string name="judulInformation">ARTI WARNA</string>
+    <string name="rekomendasiKosong">Tidak ada pintu air di daerah ini.</string>
+    <string name="title1">REKOMENDASI PINTU AIR</string>
+    <string name="button_text">Follow</string>
+    <string name="content">Siaga</string>
+    <string name="siaga4">Kenaikan air di pintu air tidak terlalu mecolok. Penanggung jawab di lapangan adalah komandan pelaksana dinas.</string>
+    <string name="siaga3">Terjadi jika hujan menyebabkan peningkatan debit air di pintu air, namun kondisinya masih belum kritis dan memabahayakan.</string>
+    <string name="siaga2">Terjadi jika hujan menyebabkan debit air meluas. Penanggung jawab adalah Kepala Badan Penanggulangan Bencana Daerah.</string>
+    <string name="siaga1">Terjadi jika dalam 6 jam debit air tidak surut. Penanggung jawab adalah Gubernur.</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Following</string>
+    <string name="deskripsi">Siaga Banjir (Jakarta Flood Alert) is an application that functions to monitor 14 sluices’ activities in Jakarta.</string>
+	<string name="us">Developed with love by:</string>
+    
+</resources>

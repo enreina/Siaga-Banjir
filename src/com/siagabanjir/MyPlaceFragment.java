@@ -202,6 +202,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 			MarkerOptions markerPintuAir = new MarkerOptions().position(loc);
 			markerPintuAir.snippet("");
 			markerPintuAir.title("Pintu Air " + name);
+			markerPintuAir.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_savedlocation));
 			
 			peta.addMarker(markerPintuAir);
 			/**
