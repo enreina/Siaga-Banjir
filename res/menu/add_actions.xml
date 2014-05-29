@@ -6,7 +6,7 @@
     <item
         android:id="@+id/action_add"
         Siaga:showAsAction="always"
-        android:icon="@android:drawable/checkbox_off_background"
+        android:icon="@android:drawable/ic_action_cancel"
         android:title="Add Place"/>
-
+	
 </menu>
