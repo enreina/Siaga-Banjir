@@ -24,7 +24,6 @@ public class ListFragmentActivity extends ActionBarActivity {
 		actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbarcopy);
 		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		Intent i = getIntent();
 	}

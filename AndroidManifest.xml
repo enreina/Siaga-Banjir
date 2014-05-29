@@ -62,6 +62,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.siagabanjir.ListFragmentActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.siagabanjir.MainActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.siagabanjir.TestActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
@@ -72,33 +78,36 @@
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.siagabanjir" />
             </intent-filter>
         </receiver>
+
         <service android:name="com.siagabanjir.follow.GcmIntentService" />
 
         <!--
         Riska's API KEY 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAKiXibV_gyF5AFiGPh3dUTa-ECkDfJuI4" />
+            android:value="AIzaSyAKiXibV_gyF5AFiGPh3dUTa-ECkDfJuI4" />
         -->
-        
-        <!-- release api key 
+
+
+        <!--
+        release api key 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBNwWqfHHxaOtZebnZNLWdu6WxtcZMfT9Y" />
-            -->
-        <!--  debug api key -->
+            android:value="AIzaSyBNwWqfHHxaOtZebnZNLWdu6WxtcZMfT9Y" />
+        -->
+        <!-- debug api key -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAt_Ne0RAw6ODUU8mz2QYLtHWyeTljZlrM" />
-        
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
     </application>
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

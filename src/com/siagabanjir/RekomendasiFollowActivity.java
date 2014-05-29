@@ -102,7 +102,6 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 			findViewById(R.id.rekomendasiEmpty).setVisibility(View.GONE);
 		}
 
-		actionBar.setDisplayHomeAsUpEnabled(true);
 
 	}
 

@@ -146,6 +146,10 @@ public class MainActivity extends ActionBarActivity implements
 				((HomeFragment) fragment).refreshHome();
 
 			return true;
+		case R.id.action_view_as_list:
+			Intent m = new Intent(this, ListFragmentActivity.class);
+			startActivity(m);
+			return true; 
 		case R.id.action_about:
 			Intent ii = new Intent(this, AboutActivity.class);
 			startActivity(ii);
