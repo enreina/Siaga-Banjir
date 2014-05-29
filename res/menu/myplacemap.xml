@@ -1,5 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:Siaga="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.siaga.MainActivity" >
+
+    <item
+        android:id="@+id/action_view_as_list"
+        Siaga:showAsAction="always"
+        android:icon="@drawable/ic_view_as_list"
+        android:title="@string/action_view_as_list"/>
     
+    <item
+        android:id="@+id/action_about"
+        Siaga:showAsAction="never"
+        android:orderInCategory="100"
+        android:title="@string/action_about"/>
+    <item
+        android:id="@+id/action_tutorial"
+        Siaga:showAsAction="never"
+        android:orderInCategory="100"
+        android:title="@string/tutorial"/>
+    <item
+        android:id="@+id/action_information"
+        Siaga:showAsAction="never"
+        android:orderInCategory="100"
+        android:title="@string/info"/>
 
 </menu>
