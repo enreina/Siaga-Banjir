@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		this.setHasOptionsMenu(true);
 		View rootView = inflater.inflate(R.layout.fragment_myplace, container,
 				false);
 
@@ -190,7 +192,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		}
 		// marker.draggable(true);
 		marker.icon(BitmapDescriptorFactory
-				.fromResource(R.drawable.ic_location));
+				.fromResource(R.drawable.ic_mylocation));
 		marker.title("Current Location");
 		marker.snippet("");
 
@@ -202,7 +204,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 			MarkerOptions markerPintuAir = new MarkerOptions().position(loc);
 			markerPintuAir.snippet("");
 			markerPintuAir.title("Pintu Air " + name);
-			markerPintuAir.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_savedlocation));
+			markerPintuAir.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location));
 			
 			peta.addMarker(markerPintuAir);
 			/**
@@ -224,7 +226,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 			markerPlaces.snippet("");
 			markerPlaces.title(myPlaces.get(loc));
 			markerPlaces.icon(BitmapDescriptorFactory
-					.fromResource(R.drawable.ic_mylocation));
+					.fromResource(R.drawable.ic_savedlocation));
 			
 			peta.addMarker(markerPlaces);
 		}
@@ -247,6 +249,11 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 
 	}
 
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.myplacemap, menu);
+		//super.onCreateOptionsMenu(menu, inflater);
+	}
+	
 	@Override
 	public void onDisconnected() {
 		// TODO Auto-generated method stub

@@ -88,7 +88,7 @@ public class MainActivity extends ActionBarActivity implements
 		 */
 
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setIcon(R.drawable.ico_actionbarcopy);
+		actionBar.setIcon(R.drawable.ico_actionbar);
 		actionBar.setDisplayShowTitleEnabled(false);
 
 		// setUp data
@@ -128,7 +128,7 @@ public class MainActivity extends ActionBarActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
