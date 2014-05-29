@@ -65,6 +65,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 
 	}
 
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
