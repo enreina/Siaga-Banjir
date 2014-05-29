@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,11 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 				false);
 
 		return rootView;
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.myplacemap, menu);
 	}
 
 	@Override
@@ -157,11 +163,11 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 				e.printStackTrace();
 			}
 
-			/** Toast.makeText(
-					context,
-					"Initial location: " + location.getLatitude() + ", "
-							+ location.getLongitude(), Toast.LENGTH_LONG)
-					.show(); **/
+			/**
+			 * Toast.makeText( context, "Initial location: " +
+			 * location.getLatitude() + ", " + location.getLongitude(),
+			 * Toast.LENGTH_LONG) .show();
+			 **/
 			LatLng currentLoc = new LatLng(location.getLatitude(),
 					location.getLongitude());
 			refreshMap(currentLoc);
@@ -198,12 +204,13 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 
 		for (String name : DataPintuAir.locationPintuAir.keySet()) {
 			LatLng loc = DataPintuAir.locationPintuAir.get(name);
-			
+
 			MarkerOptions markerPintuAir = new MarkerOptions().position(loc);
 			markerPintuAir.snippet("");
 			markerPintuAir.title("Pintu Air " + name);
-			markerPintuAir.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_savedlocation));
-			
+			markerPintuAir.icon(BitmapDescriptorFactory
+					.fromResource(R.drawable.ic_savedlocation));
+
 			peta.addMarker(markerPintuAir);
 			/**
 			 * CircleOptions circle = new CircleOptions();
@@ -225,7 +232,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 			markerPlaces.title(myPlaces.get(loc));
 			markerPlaces.icon(BitmapDescriptorFactory
 					.fromResource(R.drawable.ic_mylocation));
-			
+
 			peta.addMarker(markerPlaces);
 		}
 
@@ -261,8 +268,12 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 				peta.clear();
 				myPlaces = new MyPlaces(context).getPlaces();
 				Location lastLoc = locationClient.getLastLocation();
-				refreshMap(new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude()));
-				peta.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(data.getDoubleExtra("lat", lastLoc.getLatitude()), data.getDoubleExtra("long", lastLoc.getLongitude())), 15));
+				refreshMap(new LatLng(lastLoc.getLatitude(),
+						lastLoc.getLongitude()));
+				peta.moveCamera(CameraUpdateFactory.newLatLngZoom(
+						new LatLng(data.getDoubleExtra("lat",
+								lastLoc.getLatitude()), data.getDoubleExtra(
+								"long", lastLoc.getLongitude())), 15));
 			}
 			break;
 		}
@@ -292,7 +303,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		marker.icon(BitmapDescriptorFactory
 				.fromResource(R.drawable.ic_mylocation));
 		currentMarker = peta.addMarker(marker);
-		final ArrayList<DataPintuAir> inArea = checkLocation(marker.getPosition());
+		final ArrayList<DataPintuAir> inArea = checkLocation(marker
+				.getPosition());
 
 		if (addingMyPlace)
 			return;
