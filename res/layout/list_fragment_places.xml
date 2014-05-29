@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <ListView
-        android:id="@id/android:list"
+        android:id="@+id/listPlaces"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#f4f4f4"

@@ -17,7 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.ActionMode;
+import android.support.v7.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -238,6 +238,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 			@Override
 			public void onInfoWindowClick(Marker markerPlace) {
 				LatLng loc = markerPlace.getPosition();
+				
 				Intent i = new Intent(context, RekomendasiFollowActivity.class);
 				ArrayList<DataPintuAir> inArea = checkLocation(loc);
 				i.putParcelableArrayListExtra("inarea", inArea);
@@ -308,7 +309,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		((ActionBarActivity) context).getSupportActionBar().setNavigationMode(
 				ActionBar.NAVIGATION_MODE_STANDARD);
 		((ActionBarActivity) context)
-				.startActionMode(new ActionMode.Callback() {
+				.startSupportActionMode(new ActionMode.Callback() {
 
 					@Override
 					public boolean onPrepareActionMode(ActionMode mode,
@@ -370,7 +371,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		// TODO Auto-generated method stub
 	}
 
-	public ArrayList<DataPintuAir> checkLocation(LatLng loc) {
+	public static ArrayList<DataPintuAir> checkLocation(LatLng loc) {
 		ArrayList<DataPintuAir> inArea = DataPintuAir.checkLocation(loc);
 
 		/**

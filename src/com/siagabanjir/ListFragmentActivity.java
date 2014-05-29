@@ -1,5 +1,10 @@
 package com.siagabanjir;
 
+import java.util.ArrayList;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.siagabanjir.places.MyPlaces;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,11 +15,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 public class ListFragmentActivity extends ActionBarActivity {
 
 	private ActionBar actionBar;
-	private Fragment fragment;
+	private ListView listPlaces;
+	private BinderPlaces binderPlaces;
+	
+	private MyPlaces myPlaces;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +36,30 @@ public class ListFragmentActivity extends ActionBarActivity {
 		actionBar.setIcon(R.drawable.ico_actionbarcopy);
 		actionBar.setDisplayShowTitleEnabled(false);
 		
-		Intent i = getIntent();
+		myPlaces = new MyPlaces(this);
+		binderPlaces = new BinderPlaces(this, myPlaces.getPlaces());
+		
+		
+		listPlaces = (ListView) findViewById(R.id.listPlaces);
+		listPlaces.setAdapter(binderPlaces);
+		
+		listPlaces.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				LatLng loc = binderPlaces.placesLatLng.get(position);
+				Intent i = new Intent(ListFragmentActivity.this, RekomendasiFollowActivity.class);
+				ArrayList<DataPintuAir> inArea = MyPlaceFragment.checkLocation(loc);
+				i.putParcelableArrayListExtra("inarea", inArea);
+				i.putExtra("nama", binderPlaces.myPlaces.get(loc));
+				i.putExtra("lat", loc.latitude);
+				i.putExtra("long", loc.longitude);
+
+				startActivityForResult(i, 1);
+				
+			}
+		});
 	}
 
 	@Override
