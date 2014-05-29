@@ -19,7 +19,7 @@ public class ListFragmentActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_frament_places);
+		setContentView(R.layout.list_fragment_places);
 
 		actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbarcopy);

@@ -12,7 +12,7 @@
     <item
         android:id="@+id/action_view_as_list"
         Siaga:showAsAction="always"
-        android:icon="@drawable/ic_view_as_list"
+        android:icon="@drawable/ic_action_view_as_list"
         android:title="@string/action_view_as_list"/>
     
     <item
