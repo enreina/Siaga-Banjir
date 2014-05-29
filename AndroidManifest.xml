@@ -81,7 +81,7 @@
         Riska's API KEY 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAKiXibV_gyF5AFiGPh3dUTa-ECkDfJuI4" />
+            android:value="AIzaSyAKiXibV_gyF5AFiGPh3dUTa-ECkDfJuI4" />
         -->
         
         <!-- release api key 
