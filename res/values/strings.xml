@@ -30,5 +30,6 @@ but this condition is not critical and dangerous yet.</string>
     <string name="unfollow">Following</string>
     <string name="deskripsi">Siaga Banjir (Jakarta Flood Alert) is an application that functions to monitor 14 sluices’ activities in Jakarta.</string>
 	<string name="us">Developed with love by:</string>
+	<string name="emptyplace">You haven\'t saved any location yet.</string>
     
 </resources>

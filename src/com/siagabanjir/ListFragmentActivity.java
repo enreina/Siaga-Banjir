@@ -35,9 +35,16 @@ public class ListFragmentActivity extends ActionBarActivity {
 		actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbarcopy);
 		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayHomeAsUpEnabled(false);
+
 		
 		myPlaces = new MyPlaces(this);
 		binderPlaces = new BinderPlaces(this, myPlaces.getPlaces());
+		if (binderPlaces.getCount() == 0) {
+			findViewById(R.id.placeEmpty).setVisibility(View.VISIBLE);
+		} else {
+			findViewById(R.id.placeEmpty).setVisibility(View.GONE);
+		}
 		
 		
 		listPlaces = (ListView) findViewById(R.id.listPlaces);

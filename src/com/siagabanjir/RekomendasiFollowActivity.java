@@ -45,6 +45,7 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbarcopy);
 		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayHomeAsUpEnabled(false);
 
 		Intent i = getIntent();
 

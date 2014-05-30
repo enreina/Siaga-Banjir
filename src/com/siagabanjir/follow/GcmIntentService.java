@@ -4,7 +4,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.siagabanjir.HomeActivity;
 import com.siagabanjir.MainActivity;
 import com.siagabanjir.R;
 
