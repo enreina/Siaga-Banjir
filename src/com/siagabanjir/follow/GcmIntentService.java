@@ -80,6 +80,10 @@ public class GcmIntentService extends IntentService {
                 	message = "Watch out! " + message;
                 }
                 
+                message = "Ketinggian air di Pintu Air "+ extras.getString("pintuair") + " "+ changes +" pada pukul " + extras.getString("waktu") + ".00. Status: " + extras.getString("status") + ".";
+                if (extras.getString("changes").equals("increased")) {
+                	message = "Hati-hati! " + message;
+                }
                 sendNotification(message);
                 Log.i(TAG, "Received: " + extras.toString());
             }

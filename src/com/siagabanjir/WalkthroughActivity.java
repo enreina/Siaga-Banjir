@@ -65,19 +65,19 @@ public class WalkthroughActivity extends ActionBarActivity {
 
             switch(position) {
             case 0:
-                imageView.setImageResource(R.drawable.image1en);
+                imageView.setImageResource(R.drawable.image1);
                 break;
 
             case 1:
-                imageView.setImageResource(R.drawable.image2en);
+                imageView.setImageResource(R.drawable.image2);
                 break;
 
             case 2:
-                imageView.setImageResource(R.drawable.image3en);
+                imageView.setImageResource(R.drawable.image3);
                 break;
 
             case 3:
-                imageView.setImageResource(R.drawable.image4en);
+                imageView.setImageResource(R.drawable.image4);
                 break;
             case 4:
             	break;

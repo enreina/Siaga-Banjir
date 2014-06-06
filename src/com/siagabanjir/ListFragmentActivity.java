@@ -33,7 +33,7 @@ public class ListFragmentActivity extends ActionBarActivity {
 		setContentView(R.layout.list_fragment_places);
 
 		actionBar = getSupportActionBar();
-		actionBar.setIcon(R.drawable.ico_actionbarcopy);
+		actionBar.setIcon(R.drawable.ico_actionbar);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayHomeAsUpEnabled(false);
 
