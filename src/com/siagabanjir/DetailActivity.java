@@ -34,6 +34,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -332,22 +333,33 @@ public class DetailActivity extends ActionBarActivity {
             public void onSnapshotReady(Bitmap snapshot) {
                 try {
                 	View rootView = findViewById(android.R.id.content).getRootView();
+                	ScrollView scrollView = (ScrollView) findViewById(R.id.scrollViewDetail);
+                	int height = scrollView.getChildAt(0).getHeight();
+                	
                 	
                     rootView.setDrawingCacheEnabled(true);
+
+                    rootView.setDrawingCacheBackgroundColor(Color.WHITE);
                     Bitmap backBitmap = rootView.getDrawingCache();
+                    backBitmap = Bitmap.createBitmap(backBitmap, 0, 0, backBitmap.getWidth(), backBitmap.getHeight()-220);
                     Bitmap bmOverlay = Bitmap.createBitmap(
-                            backBitmap.getWidth(), backBitmap.getHeight(),
+                    		backBitmap.getWidth(), backBitmap.getHeight(),
                             backBitmap.getConfig());
+                    bmOverlay.eraseColor(Color.WHITE);
                     Canvas canvas = new Canvas(bmOverlay);
 
+                    
+                    //rootView.layout(0, 0, rootView.getLayoutParams().width, rootView.getLayoutParams().height);
+                    //rootView.draw(canvas);
                     canvas.drawBitmap(backBitmap, 0, 0, null);
-                    canvas.drawBitmap(snapshot, (backBitmap.getWidth() - snapshot.getWidth())/2, backBitmap.getHeight() - snapshot.getHeight() - 85, null);
+                    
+                    //canvas.drawBitmap(snapshot, (bmOverlay.getWidth() - snapshot.getWidth())/2, height - snapshot.getHeight() - 50, null);
                     File imagePath = new File (Environment.getExternalStorageDirectory()
                                     + "/siagabanjir"
                                     + System.currentTimeMillis() + ".png");
                     FileOutputStream out = new FileOutputStream(imagePath);
 
-                    bmOverlay.compress(Bitmap.CompressFormat.PNG, 90, out);
+                    bmOverlay.compress(Bitmap.CompressFormat.PNG, 100, out);
                     
                     share(imagePath);
                     
