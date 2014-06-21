@@ -6,13 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -55,7 +58,9 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 	private LocationClient locationClient;
 	private LocationRequest locationRequest;
 	private boolean locationEnabled;
-	private boolean addingMyPlace;
+	public boolean addingMyPlace;
+	private ActionMode actionMode;
+	private LocationManager locationManager;
 
 	private HashMap<LatLng, String> myPlaces;
 
@@ -98,6 +103,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 	}
 
 	private void setupUserLocation() {
+		checkLocationService();
+		
 		locationClient = new LocationClient(context, this, this);
 		locationRequest = new LocationRequest();
 
@@ -124,6 +131,56 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 
 	}
 
+	private void checkLocationService() {
+		// TODO Auto-generated method stub
+		
+		boolean gpsEnabled = false, networkEnabled = false;
+		
+		if (locationManager == null) {
+			locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		}
+		
+		try {
+			gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		} catch (Exception ex) {
+			
+		}
+		
+		try {
+			networkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+		} catch (Exception ex) {
+			
+		}
+		
+		if(!gpsEnabled && !networkEnabled){
+			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+	        dialog.setMessage("Location Service is not enabled");
+	        dialog.setNegativeButton("Settings", new DialogInterface.OnClickListener() {
+
+	            @Override
+	            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+	                // TODO Auto-generated method stub
+	                Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+	                context.startActivity(myIntent);
+	                //get gps
+	            }
+	        });
+	        dialog.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+
+	            @Override
+	            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+	                // TODO Auto-generated method stub
+	            	((MainActivity)getActivity()).switchTab(0);
+	            }
+	        });
+	        dialog.show();
+
+	    }
+		
+	}
+
+
+
 	private void initializeMap() {
 		if (peta == null) {
 			peta = mapFragment.getMap();
@@ -134,6 +191,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 						"Error showing map", Toast.LENGTH_SHORT).show();
 			} else {
 				peta.setOnMapLongClickListener(this);
+				peta.setMyLocationEnabled(true);
+				peta.getUiSettings().setMyLocationButtonEnabled(true);
 			}
 
 		}
@@ -308,7 +367,10 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 			return;
 		((ActionBarActivity) context).getSupportActionBar().setNavigationMode(
 				ActionBar.NAVIGATION_MODE_STANDARD);
-		((ActionBarActivity) context)
+		
+		
+		
+		actionMode = ((ActionBarActivity) context)
 				.startSupportActionMode(new ActionMode.Callback() {
 
 					@Override
@@ -321,19 +383,22 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 					@Override
 					public void onDestroyActionMode(ActionMode mode) {
 						// TODO Auto-generated method stub
-						currentMarker.remove();
-						((ActionBarActivity) context).getSupportActionBar()
-								.setNavigationMode(
-										ActionBar.NAVIGATION_MODE_TABS);
-						addingMyPlace = false;
-
-						Intent i = new Intent(MyPlaceFragment.this
-								.getActivity().getBaseContext(),
-								RekomendasiFollowActivity.class);
-						i.putParcelableArrayListExtra("inarea", inArea);
-						i.putExtra("lat", loc.latitude);
-						i.putExtra("long", loc.longitude);
-						startActivityForResult(i, 1);
+						
+						if (addingMyPlace) {
+							currentMarker.remove();
+							((ActionBarActivity) context).getSupportActionBar()
+									.setNavigationMode(
+											ActionBar.NAVIGATION_MODE_TABS);
+							addingMyPlace = false;
+							
+							Intent i = new Intent(MyPlaceFragment.this
+									.getActivity().getBaseContext(),
+									RekomendasiFollowActivity.class);
+							i.putParcelableArrayListExtra("inarea", inArea);
+							i.putExtra("lat", loc.latitude);
+							i.putExtra("long", loc.longitude);
+							startActivityForResult(i, 1);
+						}
 					}
 
 					@Override
@@ -352,12 +417,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 						// TODO Auto-generated method stub
 						switch (item.getItemId()) {
 						case R.id.action_add:
-							/*
-							 * Intent i = new Intent(MyPlaceFragment.this
-							 * .getActivity().getBaseContext(),
-							 * RekomendasiFollowActivity.class);
-							 * startActivity(i);
-							 */
+							disableActionMode();
 							return true;
 						}
 
@@ -365,6 +425,9 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 					}
 				});
 	}
+	
+	
+	
 
 	@Override
 	public void onMapClick(LatLng arg0) {
@@ -385,6 +448,19 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 
 		return inArea;
 
+	}
+	
+
+
+
+	public void disableActionMode() {
+		currentMarker.remove();
+		addingMyPlace = false;
+		actionMode.finish();
+		((ActionBarActivity) context).getSupportActionBar()
+		.setNavigationMode(
+				ActionBar.NAVIGATION_MODE_TABS);
+		
 	}
 
 }

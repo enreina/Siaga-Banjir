@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -204,6 +205,10 @@ public class MainActivity extends ActionBarActivity implements
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.container, fragment, tag).commit();
 	}
+	
+	public void switchTab(int position) {
+		getSupportActionBar().setSelectedNavigationItem(position);
+	}
 
 	@Override
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
@@ -220,5 +225,18 @@ public class MainActivity extends ActionBarActivity implements
 				MenuItemCompat.setActionView(refreshItem, null);
 			}
 		}
+	}
+	
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+	    if(fragment instanceof MyPlaceFragment) {
+	    	if (((MyPlaceFragment)fragment).addingMyPlace) {
+		        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+		        	((MyPlaceFragment)fragment).disableActionMode();
+		        	return true; // consumes the back key event - ActionMode is not finished
+		        }
+	    	}
+	    }
+	    return super.dispatchKeyEvent(event);
 	}
 }

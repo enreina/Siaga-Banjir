@@ -148,6 +148,8 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 	}
 
 	private void discardPlace() {
+		myPlaces.removePlace(nama);
+		
 		Intent i = new Intent();
 		i.putExtra("lat", location.latitude);
 		i.putExtra("long", location.longitude);
@@ -170,6 +172,7 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		Intent i = new Intent();
 		i.putExtra("lat", location.latitude);
 		i.putExtra("long", location.longitude);
+		i.putExtra("locname", locName);
 		this.setResult(Activity.RESULT_OK, i);
 
 		finish();

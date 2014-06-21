@@ -2,10 +2,13 @@ package com.siagabanjir;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.siagabanjir.places.MyPlaces;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -98,6 +101,31 @@ public class ListFragmentActivity extends ActionBarActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case (1): {
+			if (resultCode == Activity.RESULT_OK) {
+				refreshList();
+			}
+			break;
+		}
+		}
+	}
+
+	private void refreshList() {
+		// TODO Auto-generated method stub
+		myPlaces = new MyPlaces(this);
+		binderPlaces = new BinderPlaces(this, myPlaces.getPlaces());
+		if (binderPlaces.getCount() == 0) {
+			findViewById(R.id.placeEmpty).setVisibility(View.VISIBLE);
+		} else {
+			findViewById(R.id.placeEmpty).setVisibility(View.GONE);
+		}
+		
+		listPlaces.setAdapter(binderPlaces);
 	}
 
 	/**
