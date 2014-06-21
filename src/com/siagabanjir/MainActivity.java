@@ -44,8 +44,8 @@ public class MainActivity extends ActionBarActivity implements
 	private ArrayList<DataPintuAir> dataKritis;
 
 	// Tab titles
-	private String[] tabs = { "Home", "My Place" };
-
+	//private String[] tabs;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -113,6 +113,9 @@ public class MainActivity extends ActionBarActivity implements
 		 */
 		actionBar.setHomeButtonEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		
+		String[] tabs = { getResources().getString(R.string.home), getResources().getString(R.string.myplace) };
+
 
 		// Adding Tabs
 		for (String tab_name : tabs) {

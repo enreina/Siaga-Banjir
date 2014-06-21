@@ -138,7 +138,7 @@ public class HomeFragment extends ListFragment {
 		int waktu = pintuPertama.getWaktuTerakhir();
 		
 		lastUpdate = (TextView) getView().findViewById(R.id.tvWaktuUpdate);
-		lastUpdate.setText("Last updated: " + pintuPertama.getTanggal() + " " + waktu + ".00");
+		lastUpdate.setText(getResources().getString(R.string.lastupdated) + " " + pintuPertama.getTanggal() + " " + waktu + ".00 WIB");
 	}
 
 	private class JSONParse extends AsyncTask<String, String, JSONObject> {

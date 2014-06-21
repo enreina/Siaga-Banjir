@@ -3,6 +3,8 @@
 
     <string name="app_name">Jakarta Flood Alert</string>
     <string name="hello_world">Hello world!</string>
+    <string name="home">Home</string>
+    <string name="myplace">My Places</string>
     <string name="action_settings">Settings</string>
     <string name="action_view_as_list">Places List</string>
     <string name="action_about">About</string>
@@ -29,7 +31,9 @@ but this condition is not critical and dangerous yet.</string>
     <string name="follow">Follow</string>
     <string name="unfollow">Following</string>
     <string name="deskripsi">Siaga Banjir (Jakarta Flood Alert) is an application that functions to monitor 14 sluices’ activities in Jakarta.</string>
-	<string name="us">Developed with love by:</string>
+	<string name="us">Developed with love:</string>
 	<string name="emptyplace">You haven\'t saved any location yet.</string>
+	<string name="locationnotice">To use this feature, Google\'s Location Service has to be enabled first.</string>
+	<string name="lastupdated">Last Updated: </string>
     
 </resources>

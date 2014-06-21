@@ -129,8 +129,9 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 	}
 
 	public void setTanggal(String tanggal) {
-		//String[] arrbulan = new String[] {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
-		String[] arrbulan = new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+		
+		String[] arrbulan = new String[] {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+		//String[] arrbulan = new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 		
 		int bulan = Integer.parseInt(tanggal.split("/")[1]) - 1;
 		String strBulan = arrbulan[bulan];

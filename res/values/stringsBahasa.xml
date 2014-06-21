@@ -3,6 +3,8 @@
 
     <string name="app_name">Siaga Banjir</string>
     <string name="hello_world">Hello world!</string>
+    <string name="home">Beranda</string>
+    <string name="myplace">Peta</string>
     <string name="action_settings">Settings</string>
     <string name="action_about">Tentang Kami</string>
     <string name="info">Informasi</string>
@@ -24,7 +26,9 @@
     <string name="siaga1">Terjadi jika dalam 6 jam debit air tidak surut. Penanggung jawab adalah Gubernur.</string>
     <string name="follow">Follow</string>
     <string name="unfollow">Following</string>
-    <string name="deskripsi">Siaga Banjir (Jakarta Flood Alert) is an application that functions to monitor 14 sluices\' activities in Jakarta.</string>
-	<string name="us">Developed with love by:</string>
+    <string name="deskripsi">Siaga Banjir merupakan aplikasi yang berfungsi untuk memantau 14 pintu air di Jakarta dan memberikan peringatan dini kepada warga yang tinggal di daerah berpotensi apabila banjir akan datang.\n\nSumber data pintu air:\nhttp://pusdalops.jakarta.go.id/waterlevel</string>
+	<string name="us">Dikembangkan oleh Kawung Labs:</string>
     <string name="emptyplace">Belum ada lokasi yang disimpan.</string>
+    <string name="locationnotice">Untuk dapat menggunakan fitur ini, Anda harus mengaktifkan Google\'s location service terlebih dahulu.</string>
+	<string name="lastupdated">Data terbaru: </string>
 </resources>

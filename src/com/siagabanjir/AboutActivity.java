@@ -24,7 +24,7 @@ public class AboutActivity extends ActionBarActivity {
 		actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ico_actionbar);
 		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(false);
 		
 		Intent i = getIntent();
 	}

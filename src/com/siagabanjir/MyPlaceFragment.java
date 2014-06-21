@@ -154,7 +154,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		
 		if(!gpsEnabled && !networkEnabled){
 			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-	        dialog.setMessage("Location Service is not enabled");
+	        dialog.setMessage(getResources().getString(R.string.locationnotice));
 	        dialog.setNegativeButton("Settings", new DialogInterface.OnClickListener() {
 
 	            @Override
