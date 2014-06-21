@@ -333,8 +333,6 @@ public class DetailActivity extends ActionBarActivity {
             public void onSnapshotReady(Bitmap snapshot) {
                 try {
                 	View rootView = findViewById(android.R.id.content).getRootView();
-                	ScrollView scrollView = (ScrollView) findViewById(R.id.scrollViewDetail);
-                	int height = scrollView.getChildAt(0).getHeight();
                 	
                 	
                     rootView.setDrawingCacheEnabled(true);
