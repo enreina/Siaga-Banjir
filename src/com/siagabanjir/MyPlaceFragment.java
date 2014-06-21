@@ -173,6 +173,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 	            	((MainActivity)getActivity()).switchTab(0);
 	            }
 	        });
+	        
+	        dialog.setCancelable(false);
 	        dialog.show();
 
 	    }
@@ -193,6 +195,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 				peta.setOnMapLongClickListener(this);
 				peta.setMyLocationEnabled(true);
 				peta.getUiSettings().setMyLocationButtonEnabled(true);
+
+				peta.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.2297465,106.829518), 11));
 			}
 
 		}
