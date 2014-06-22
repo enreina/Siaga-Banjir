@@ -118,12 +118,7 @@ public class DetailActivity extends ActionBarActivity {
 
 		pintuair = (DataPintuAir) i.getParcelableExtra("pintuair");
 		
-		if (pintuair == null) {
-			tvPintuAir.setText(i.getStringExtra("namapintuair"));
-			getPintuAirData();
-		} else {
-			initializeData();
-		}
+		initializeData();
 
 		
 	}
@@ -200,18 +195,14 @@ public class DetailActivity extends ActionBarActivity {
 		}
 		
 		locPintuAir = DataPintuAir.locationPintuAir.get(nama);
+		
 	}
 
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (pintuair != null || getIntent().getStringExtra("namapintuair") != null)
-			initializeMap();
-		else {
-			tvPintuAir.setText(getIntent().getStringExtra("namapintuair"));
-			getPintuAirData();
-		}
+		initializeMap();
 			
 	}
 

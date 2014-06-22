@@ -63,6 +63,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 	private LocationManager locationManager;
 
 	private HashMap<LatLng, String> myPlaces;
+	private boolean longClickEnable;
 
 	public MyPlaceFragment(Context context) {
 		this.context = context;
@@ -78,6 +79,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		this.setHasOptionsMenu(true);
 		View rootView = inflater.inflate(R.layout.fragment_myplace, container,
 				false);
+		
 
 		return rootView;
 	}
@@ -100,6 +102,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 
 		initializeMap();
 		setupUserLocation();
+		
 	}
 
 	private void setupUserLocation() {
@@ -197,6 +200,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 				peta.getUiSettings().setMyLocationButtonEnabled(true);
 
 				peta.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.2297465,106.829518), 11));
+				
 			}
 
 		}
@@ -240,6 +244,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 
 	public void refreshMap(LatLng currentLoc) {
 		DataPintuAir.initLocation();
+		
+		myPlaces = new MyPlaces(context).getPlaces();
 
 		peta.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15));
 
@@ -336,6 +342,26 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 				Location lastLoc = locationClient.getLastLocation();
 				refreshMap(new LatLng(lastLoc.getLatitude(), lastLoc.getLongitude()));
 				peta.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(data.getDoubleExtra("lat", lastLoc.getLatitude()), data.getDoubleExtra("long", lastLoc.getLongitude())), 15));
+				addingMyPlace = false;
+				
+				ArrayList<String> followed = data.getStringArrayListExtra("followed");
+				String strFollowed = "";
+				if (followed.size() == 2) {
+					strFollowed = followed.get(0) + " dan " + followed.get(1);
+				} else {
+					for (int ii=0; ii<followed.size(); ii++) {
+						if (ii != followed.size() - 1) {
+							strFollowed += followed.get(ii);
+							strFollowed += ", ";
+						} else {
+							strFollowed += "dan " + followed.get(ii);
+						}
+					}
+				}
+				
+				if (!followed.isEmpty()) {
+					Toast.makeText(context, getResources().getString(R.string.follownotif) + " " + strFollowed + ".", Toast.LENGTH_LONG).show();
+				}
 			}
 			break;
 		}
@@ -355,6 +381,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 	@Override
 	public void onMapLongClick(LatLng newLoc) {
 		// if (addingMyPlace) return;
+		
+		longClickEnable = true;
 
 		if (currentMarker != null) {
 			currentMarker.remove();
@@ -402,6 +430,8 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 							i.putExtra("lat", loc.latitude);
 							i.putExtra("long", loc.longitude);
 							startActivityForResult(i, 1);
+							
+							
 						}
 					}
 
@@ -460,6 +490,7 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 	public void disableActionMode() {
 		currentMarker.remove();
 		addingMyPlace = false;
+		longClickEnable = false;
 		actionMode.finish();
 		((ActionBarActivity) context).getSupportActionBar()
 		.setNavigationMode(

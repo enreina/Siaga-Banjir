@@ -35,5 +35,6 @@ but this condition is not critical and dangerous yet.</string>
 	<string name="emptyplace">You haven\'t saved any location yet.</string>
 	<string name="locationnotice">To use this feature, Google\'s Location Service has to be enabled first.</string>
 	<string name="lastupdated">Last Updated: </string>
-    
+	<string name="longtapinfo">Tap and hold to add new location.</string>
+    <string name="follownotif">You will be notified when there are changes on sluice </string>
 </resources>

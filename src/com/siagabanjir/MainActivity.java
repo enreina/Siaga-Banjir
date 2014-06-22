@@ -50,6 +50,7 @@ public class MainActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
@@ -203,6 +204,10 @@ public class MainActivity extends ActionBarActivity implements
 			break;
 		case 1:
 			fragment = new MyPlaceFragment(this);
+
+			Toast.makeText(this,
+					getResources().getString(R.string.longtapinfo),
+					Toast.LENGTH_LONG).show();
 			break;
 		}
 		getSupportFragmentManager().beginTransaction()

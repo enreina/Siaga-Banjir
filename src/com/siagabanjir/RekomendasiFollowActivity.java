@@ -36,6 +36,11 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 	private LatLng location;
 
 	private MyPlaces myPlaces;
+	
+	private ArrayList<DataPintuAir> rekomendasi;
+	
+	private ArrayList<String> followedRecommendation;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,7 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 
 		Intent i = getIntent();
 
-		ArrayList<DataPintuAir> rekomendasi = i
+		rekomendasi = i
 				.getParcelableArrayListExtra("inarea");
 
 		listRekomendasi = (ListView) findViewById(R.id.rekomendasi_list);
@@ -78,6 +83,7 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 
 		followPintuAir = new FollowPintuAir(this);
 		ArrayList<String> listFollowing = followPintuAir.getListFollowing();
+		
 
 		myPlaces = new MyPlaces(this);
 
@@ -86,6 +92,8 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 			((EditText) findViewById(R.id.location_name)).setText(nama);
 			myPlaces.removePlace(nama);
 		}
+		
+		followedRecommendation = new ArrayList<String>();
 
 		/**
 		 * ArrayList<DataPintuAir> curr =
@@ -169,12 +177,21 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		}
 
 		myPlaces.savePlace(locName, location);
+		
+		for (DataPintuAir dp : rekomendasi) {
+			if (DataPintuAir.mapsPintuAir.get(dp.getNama()).getFollowing()) {
+				followedRecommendation.add(dp.getNama());
+			}
+		}
+		
 		Intent i = new Intent();
 		i.putExtra("lat", location.latitude);
 		i.putExtra("long", location.longitude);
 		i.putExtra("locname", locName);
+		i.putStringArrayListExtra("followed", followedRecommendation);
 		this.setResult(Activity.RESULT_OK, i);
-
+		
+		
 		finish();
 
 	}

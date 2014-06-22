@@ -31,4 +31,6 @@
     <string name="emptyplace">Belum ada lokasi yang disimpan.</string>
     <string name="locationnotice">Untuk dapat menggunakan fitur ini, Anda harus mengaktifkan Google\'s location service terlebih dahulu.</string>
 	<string name="lastupdated">Data terbaru: </string>
+	<string name="longtapinfo">Tekan lama pada lokasi untuk menyimpan.</string>
+	<string name="follownotif">Anda akan mendapatkan notifikasi apabila terjadi perubahan status pada pintu air </string>
 </resources>

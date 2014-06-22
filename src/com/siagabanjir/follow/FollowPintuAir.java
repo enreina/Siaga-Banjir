@@ -17,6 +17,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.siagabanjir.DataPintuAir;
+import com.siagabanjir.R;
 import com.siagabanjir.utility.Installation;
 
 import android.app.Activity;
@@ -215,6 +216,7 @@ public class FollowPintuAir {
 		DataPintuAir.mapsPintuAir.get(pintuAir).setFollowing(true);
 		
 		new FollowRequest().execute("follow", installid, regid, pintuAir);
+		
 	}
 	
 	public void unfollowPintuAir(String pintuAir) {
@@ -225,6 +227,7 @@ public class FollowPintuAir {
 		DataPintuAir.mapsPintuAir.get(pintuAir).setFollowing(false);
 		
 		new FollowRequest().execute("unfollow", installid, regid, pintuAir);
+		
 	}
 	
 	public ArrayList<String> getListFollowing() {
