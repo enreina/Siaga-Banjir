@@ -1,9 +1,14 @@
 package com.siagabanjir;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +16,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -18,6 +33,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -89,11 +105,38 @@ public class DetailActivity extends ActionBarActivity {
 		actionBar.setIcon(R.drawable.ico_actionbar);
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+
+		
+		tvPintuAir = (TextView) findViewById(R.id.tvPintuAir);
+		tvStatus = (TextView) findViewById(R.id.tvStatus);
+		lastUpdate = (TextView) findViewById(R.id.tvWaktuUpdate);
+		
+		followPintuAir = new FollowPintuAir(this);
 
 		Intent i = getIntent();
 
 		pintuair = (DataPintuAir) i.getParcelableExtra("pintuair");
+		
+		if (pintuair == null) {
+			tvPintuAir.setText(i.getStringExtra("namapintuair"));
+			getPintuAirData();
+		} else {
+			initializeData();
+		}
 
+		
+	}
+	
+	
+	private void getPintuAirData() {
+		// TODO Auto-generated method stub
+		new JSONParseDetail().execute();
+	}
+
+
+	private void initializeData() {
+		// TODO Auto-generated method stub
 		createData(pintuair);
 
 		createChart(pintuair);
@@ -103,13 +146,9 @@ public class DetailActivity extends ActionBarActivity {
 		String status = pintuair.getStatus()[0];
 		int waktu = pintuair.getWaktuTerakhir();
 		
-		tvPintuAir = (TextView) findViewById(R.id.tvPintuAir);
-		tvStatus = (TextView) findViewById(R.id.tvStatus);
-		lastUpdate = (TextView) findViewById(R.id.tvWaktuUpdate);
-		
 		tvPintuAir.setText(nama);
 		tvStatus.setText(status);
-		lastUpdate.setText("Last updated: " + pintuair.getTanggal() + " " + waktu + ".00");
+		lastUpdate.setText(getResources().getString(R.string.lastupdated) + " " + pintuair.getTanggal() + " " + waktu + ".00 WIB");
 
 		if (status.equals("NORMAL")) {
 			tvStatus.setTextColor(Color.parseColor("#2ecc71"));
@@ -121,7 +160,7 @@ public class DetailActivity extends ActionBarActivity {
 			tvStatus.setTextColor(Color.parseColor("#e74c3c"));
 		}
 		
-		followPintuAir = new FollowPintuAir(this);
+		
 		btnFollow = (Button) findViewById(R.id.follow_btn);
 		btnUnfollow = (Button) findViewById(R.id.unfollow_btn);
 		
@@ -162,12 +201,18 @@ public class DetailActivity extends ActionBarActivity {
 		
 		locPintuAir = DataPintuAir.locationPintuAir.get(nama);
 	}
-	
-	
+
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		initializeMap();
+		if (pintuair != null || getIntent().getStringExtra("namapintuair") != null)
+			initializeMap();
+		else {
+			tvPintuAir.setText(getIntent().getStringExtra("namapintuair"));
+			getPintuAirData();
+		}
+			
 	}
 
 	private void initializeMap() {
@@ -423,6 +468,177 @@ public class DetailActivity extends ActionBarActivity {
 	}
 
 	public void refreshData() {
+
+	}
+	
+	private class JSONParseDetail extends AsyncTask<String, String, JSONObject> {
+		private static final String url = "http://labs.pandagostudio.com/siaga-banjir/";
+
+		// ProgressDialog pd;
+		protected void onPreExecute() {
+			lastUpdate.setText("Mengunduh data...");
+		}
+
+		@Override
+		protected JSONObject doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			InputStream is = null;
+			String json = "";
+			JSONObject jObj = null;
+
+			try {
+				DefaultHttpClient httpClient = new DefaultHttpClient();
+				HttpPost httpPost = new HttpPost(url);
+
+				HttpResponse httpResponse = httpClient.execute(httpPost);
+				HttpEntity httpEntity = httpResponse.getEntity();
+				is = httpEntity.getContent();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(is, "iso-8859-1"), 8);
+				StringBuilder sb = new StringBuilder();
+				String line = null;
+				while ((line = reader.readLine()) != null) {
+					sb.append(line + "\n");
+				}
+				is.close();
+				json = sb.toString();
+				writeToFile(json);
+			} catch (Exception e) {
+				Log.e("Buffer Error", "Error converting result " + e);
+			}
+
+			try {
+				jObj = new JSONObject(readFromFile());
+			} catch (JSONException e) {
+				Log.e("JSON Parser", "Error parsing data " + e.toString());
+			}
+
+			return jObj;
+		}
+
+		private void writeToFile(String json) {
+			try {
+				OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+						DetailActivity.this.openFileOutput("datapintuair.txt",
+								Context.MODE_PRIVATE));
+				outputStreamWriter.write(json);
+				outputStreamWriter.close();
+			} catch (IOException e) {
+				Log.e("Exception", "File write failed: " + e.toString());
+			}
+		}
+
+		private String readFromFile() {
+
+			String ret = "";
+
+			try {
+				InputStream inputStream = DetailActivity.this
+						.openFileInput("datapintuair.txt");
+
+				if (inputStream != null) {
+					InputStreamReader inputStreamReader = new InputStreamReader(
+							inputStream);
+					BufferedReader bufferedReader = new BufferedReader(
+							inputStreamReader);
+					String receiveString = "";
+					StringBuilder stringBuilder = new StringBuilder();
+
+					while ((receiveString = bufferedReader.readLine()) != null) {
+						stringBuilder.append(receiveString);
+					}
+
+					inputStream.close();
+					ret = stringBuilder.toString();
+				}
+			} catch (FileNotFoundException e) {
+				Log.e("login activity", "File not found: " + e.toString());
+			} catch (IOException e) {
+				Log.e("login activity", "Can not read file: " + e.toString());
+			}
+
+			return ret;
+		}
+
+		protected void onPostExecute(JSONObject json) {
+			//pintuAir.clear();
+
+			JSONArray dataPintuAir;
+			try {
+				dataPintuAir = json.getJSONArray("datapintuair");
+				for (int ii = 0; ii < dataPintuAir.length(); ii++) {
+					JSONObject obj = dataPintuAir.getJSONObject(ii);
+					String nama = obj.getString("nama");
+					String tanggal = obj.getString("tanggal");
+					JSONArray dataTinggi = obj.getJSONArray("tinggiair");
+
+					DataPintuAir dp = new DataPintuAir(nama);
+					dp.setTanggal(tanggal);
+
+					for (int jj = 0; jj < dataTinggi.length(); jj++) {
+						int tinggi = 0;
+						String status = dataTinggi.getJSONObject(jj).getString(
+								"status");
+						if (!dataTinggi.getJSONObject(jj).getString("tinggi")
+								.split(" ")[0].equals("-")) {
+							tinggi = Integer.parseInt(dataTinggi
+									.getJSONObject(jj).getString("tinggi")
+									.split(" ")[0]);
+						} else {
+							status = "N/A";
+						}
+						int waktu = dataTinggi.getJSONObject(jj)
+								.getInt("waktu");
+						dp.addTinggiAir(tinggi, status, waktu);
+					}
+
+					ArrayList<String> listFollowing = followPintuAir.getListFollowing();
+					
+					String status = dp.getStatus()[0];
+					dp.setFollowing(followPintuAir.isFollowing(dp.getNama()));
+
+					//pintuAir.add(dp);
+					DataPintuAir.mapsPintuAir.put(dp.getNama(), dp);
+
+				}
+				//Collections.sort(pintuAir);
+				//refresh();
+
+				//Toast.makeText(context, "Done!", Toast.LENGTH_LONG).show();
+				//((MainActivity) HomeFragment.this.getActivity()).setRefreshActionButtonState(false);
+				/**
+				 * if (pd != null) { pd.dismiss(); }
+				 **/
+				pintuair = DataPintuAir.mapsPintuAir.get(DetailActivity.this.getIntent().getStringExtra("namapintuair"));
+				initializeData();
+				initializeMap();
+
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Toast.makeText(DetailActivity.this, "No internet connection",
+						Toast.LENGTH_LONG).show();
+				/**
+				 * if (pd != null) { pd.dismiss(); }
+				 **/
+			} catch (NullPointerException e) {
+				Toast.makeText(DetailActivity.this,
+						"Error fetching data or no internet connection",
+						Toast.LENGTH_LONG).show();
+				/**
+				 * if (pd != null) { pd.dismiss(); }
+				 **/
+			}
+
+		}
 
 	}
 

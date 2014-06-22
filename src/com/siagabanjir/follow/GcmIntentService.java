@@ -4,6 +4,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.siagabanjir.DataPintuAir;
+import com.siagabanjir.DetailActivity;
 import com.siagabanjir.MainActivity;
 import com.siagabanjir.R;
 
@@ -47,11 +49,11 @@ public class GcmIntentService extends IntentService {
              */
             if (GoogleCloudMessaging.
                     MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification("Send error: " + extras.toString());
+                //sendNotification("Send error: " + extras.toString(), extras);
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_DELETED.equals(messageType)) {
-                sendNotification("Deleted messages on server: " +
-                        extras.toString());
+                //sendNotification("Deleted messages on server: " +
+                 //       extras.toString(), extras);
             // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
@@ -84,7 +86,7 @@ public class GcmIntentService extends IntentService {
                 if (extras.getString("changes").equals("increased")) {
                 	message = "Hati-hati! " + message;
                 }
-                sendNotification(message);
+                sendNotification(message, extras);
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
@@ -95,12 +97,18 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String msg) {
+    private void sendNotification(String msg, Bundle extras) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        Intent intent = new Intent(this, DetailActivity.class);
+
+        //DataPintuAir pa = DataPintuAir.mapsPintuAir.get(extras.getString("pintuair"));
+        
+        intent.putExtra("namapintuair", extras.getString("pintuair"));
+        
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+                intent, 0);
         
 
         NotificationCompat.Builder mBuilder =
