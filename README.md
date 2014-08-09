@@ -1,6 +1,4 @@
-Siaga-Banjir
+Jakarta Flood Alert
 ============
 
-Aplikasi Android untuk menampilkan informasi ketinggian air di pintu air di daerah Jakarta.
-
-Untuk membantu pengembangan aplikasi ini, silakan Fork repository ini dan submit Pull Request setelah melakukan perubahan terhadap source code.
+A monitoring and flood alert system for 14 sluices in Greater Jakarta area.
