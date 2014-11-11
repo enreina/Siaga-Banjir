@@ -2,13 +2,8 @@ package com.siagabanjir;
 
 import java.util.ArrayList;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.siagabanjir.places.MyPlaces;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -22,6 +17,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.flurry.android.FlurryAgent;
+import com.google.android.gms.maps.model.LatLng;
+import com.siagabanjir.places.MyPlaces;
+
 public class ListFragmentActivity extends ActionBarActivity {
 
 	private ActionBar actionBar;
@@ -29,6 +28,22 @@ public class ListFragmentActivity extends ActionBarActivity {
 	private BinderPlaces binderPlaces;
 	
 	private MyPlaces myPlaces;
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.setReportLocation(true);
+		FlurryAgent.setLogEnabled(true);
+		FlurryAgent.onStartSession(this, "CZWJXGNWJVHM35JYDTRC");
+	}
+	
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		FlurryAgent.onEndSession(this);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +63,9 @@ public class ListFragmentActivity extends ActionBarActivity {
 		} else {
 			findViewById(R.id.placeEmpty).setVisibility(View.GONE);
 		}
+		
+		//Flurry log
+		FlurryAgent.logEvent("View_MySavedPlaces");
 		
 		
 		listPlaces = (ListView) findViewById(R.id.listPlaces);

@@ -1,26 +1,19 @@
 package com.siagabanjir;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.siagabanjir.DataPintuAir;
-import com.siagabanjir.adapter.TabsPagerAdapter;
-import com.siagabanjir.follow.GcmBroadcastReceiver;
-import com.siagabanjir.AboutActivity;
-
-import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.os.SystemClock;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.flurry.android.FlurryAgent;
+import com.google.android.gms.location.LocationClient;
+import com.siagabanjir.adapter.TabsPagerAdapter;
 
 public class MainActivity extends ActionBarActivity implements
 		ActionBar.TabListener {
@@ -45,6 +42,22 @@ public class MainActivity extends ActionBarActivity implements
 
 	// Tab titles
 	//private String[] tabs;
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.setReportLocation(true);
+		FlurryAgent.setLogEnabled(true);
+		FlurryAgent.onStartSession(this, "CZWJXGNWJVHM35JYDTRC");
+	}
+	
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		FlurryAgent.onEndSession(this);
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +159,9 @@ public class MainActivity extends ActionBarActivity implements
 		switch (item.getItemId()) {
 		case R.id.action_refresh:
 			refreshItem = item;
+			
+			//Flurry Log			
+			FlurryAgent.logEvent("Refresh");
 
 			if (fragment instanceof HomeFragment)
 				((HomeFragment) fragment).refreshHome();
@@ -157,15 +173,15 @@ public class MainActivity extends ActionBarActivity implements
 			return true; 
 		case R.id.action_about:
 			Intent ii = new Intent(this, AboutActivity.class);
-			startActivity(ii);
+			startActivity(ii);			
 			return true;
 		case R.id.action_information:
 			Intent i = new Intent(this, InformationActivity.class);
-			startActivity(i);
+			startActivity(i);			
 			return true;
 		case R.id.action_tutorial:
 			Intent iii = new Intent(this, WalkthroughActivity.class);
-			startActivity(iii);
+			startActivity(iii);			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

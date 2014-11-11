@@ -13,7 +13,9 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.http.HttpEntity;
@@ -31,29 +33,23 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback;
@@ -95,6 +91,22 @@ public class DetailActivity extends ActionBarActivity {
 
 	// private TextView tvnama, tvtinggiair, tvstatus;
 	// private DetailGraph graph;
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.setReportLocation(true);
+		FlurryAgent.setLogEnabled(true);
+		FlurryAgent.onStartSession(this, "CZWJXGNWJVHM35JYDTRC");
+	}
+	
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		FlurryAgent.onEndSession(this);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +149,12 @@ public class DetailActivity extends ActionBarActivity {
 		createChart(pintuair);
 
 		String nama = pintuair.getNama();
+		
+		//Flurry log
+		Map<String, String> pintuAirParams = new HashMap<String, String>();
+		pintuAirParams.put("Name", nama);
+		FlurryAgent.logEvent("View_PintuAir",pintuAirParams,true);
+		
 
 		String status = pintuair.getStatus()[0];
 		int waktu = pintuair.getWaktuTerakhir();
@@ -425,6 +443,10 @@ public class DetailActivity extends ActionBarActivity {
 		switch (item.getItemId()) {
 		case R.id.action_share:
 			captureMapScreen();
+			
+			//Flurry log
+			FlurryAgent.logEvent("Share");
+			
 			return true;
 		case R.id.action_about:
 			Intent ii = new Intent(this, AboutActivity.class);

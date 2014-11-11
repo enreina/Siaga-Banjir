@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,6 +22,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.view.ActionMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
@@ -37,12 +40,13 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -64,10 +68,16 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 
 	private HashMap<LatLng, String> myPlaces;
 	private boolean longClickEnable;
+	
+	//Initialize zoom value
+	private float previousZoomLevel = -1.0f;
 
 	public MyPlaceFragment(Context context) {
 		this.context = context;
 		myPlaces = new MyPlaces(context).getPlaces();
+		
+		//Flurry log
+		FlurryAgent.logEvent("View_MyPlace");
 
 	}
 
@@ -184,7 +194,24 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		
 	}
 
-
+	public OnCameraChangeListener getCameraChangeListener() {
+		return new OnCameraChangeListener() {
+			@Override
+			public void onCameraChange(CameraPosition position) {
+				
+				if (previousZoomLevel != position.zoom) {
+					//Flurry log					
+					Map<String, String> zoomParams = new HashMap<String, String>();
+					zoomParams.put("previous", "" + previousZoomLevel);
+					zoomParams.put("Current", "" + position.zoom);
+					FlurryAgent.logEvent("ZoomLevel", zoomParams, true);
+					
+					previousZoomLevel = position.zoom;
+				}
+			}
+		};
+	}
+	
 
 	private void initializeMap() {
 		if (peta == null) {
@@ -201,6 +228,9 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 
 				peta.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-6.2297465,106.829518), 11));
 				
+				previousZoomLevel = peta.getCameraPosition().zoom;
+				peta.setOnMapLongClickListener(this);
+				peta.setOnCameraChangeListener(getCameraChangeListener());
 			}
 
 		}
@@ -218,6 +248,15 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		// locationClient.setMockMode(true);
 		Location location = locationClient.getLastLocation();
 		if (location != null) {
+			//Flurry log
+			HashMap<String, String> locParams = new HashMap<String, String>();
+			locParams.put("Lat", "" + locationClient.getLastLocation().getLatitude());
+			locParams.put("Long", "" +  locationClient.getLastLocation().getLongitude());
+			
+			FlurryAgent.logEvent("User_Location", locParams, true);
+			
+			
+			
 			Geocoder geocoder = new Geocoder(context);
 			try {
 				List<Address> address = geocoder.getFromLocation(
@@ -393,6 +432,12 @@ public class MyPlaceFragment extends Fragment implements OnMapClickListener,
 		marker.icon(BitmapDescriptorFactory
 				.fromResource(R.drawable.ic_mylocation));
 		currentMarker = peta.addMarker(marker);
+		
+		//Flurry log
+		Map<String, String> newMarkerParams = new HashMap<String, String>();
+		newMarkerParams.put("ZoomLevel", "" + peta.getCameraPosition().zoom);
+		FlurryAgent.logEvent("NewMarker_ZoomLevel", newMarkerParams, true);
+		
 		final ArrayList<DataPintuAir> inArea = checkLocation(marker.getPosition());
 
 		if (addingMyPlace)

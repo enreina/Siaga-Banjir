@@ -3,28 +3,25 @@ package com.siagabanjir;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.siagabanjir.follow.FollowPintuAir;
-import com.siagabanjir.places.MyPlaces;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.flurry.android.FlurryAgent;
+import com.google.android.gms.maps.model.LatLng;
+import com.siagabanjir.follow.FollowPintuAir;
+import com.siagabanjir.places.MyPlaces;
 
 public class RekomendasiFollowActivity extends ActionBarActivity {
 	private ActionBar actionBar;
@@ -42,6 +39,22 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 	private ArrayList<String> followedRecommendation;
 	
 
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.setReportLocation(true);
+		FlurryAgent.setLogEnabled(true);
+		FlurryAgent.onStartSession(this, "CZWJXGNWJVHM35JYDTRC");
+	}
+	
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		FlurryAgent.onEndSession(this);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -162,6 +175,9 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		i.putExtra("lat", location.latitude);
 		i.putExtra("long", location.longitude);
 		this.setResult(Activity.RESULT_OK, i);
+		
+		//Flurry log
+		FlurryAgent.logEvent("Discard_Place");
 
 		finish();
 
@@ -191,6 +207,8 @@ public class RekomendasiFollowActivity extends ActionBarActivity {
 		i.putStringArrayListExtra("followed", followedRecommendation);
 		this.setResult(Activity.RESULT_OK, i);
 		
+		//Flurry log
+		FlurryAgent.logEvent("Create_NewPlace");
 		
 		finish();
 
