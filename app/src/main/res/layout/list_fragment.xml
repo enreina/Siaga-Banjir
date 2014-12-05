@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvWaktuUpdate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#acacac"
+        android:background="#f4f4f4"
+        android:textSize="14sp"
+        android:text="Loading"
+        android:padding="5dip"  />
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#f4f4f4"
+        android:dividerHeight="1dip"
+        android:visibility="visible" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Tidak ada pintu air di status ini."
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone" />
+
+</LinearLayout>

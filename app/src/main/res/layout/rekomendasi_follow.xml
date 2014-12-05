@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.dummy1.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <EditText
+        android:id="@+id/location_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/location_hint"
+        android:inputType="text"
+        android:textColor="#424242"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="15dp"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/dummy_location"
+        android:textColor="#424242"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/title1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="@string/title1"
+        android:textColor="#f1c40f"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+    
+    <ListView
+        android:id="@+id/rekomendasi_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#f4f4f4"
+        android:dividerHeight="1dp"
+        android:visibility="visible" >
+    </ListView>
+    
+    <TextView
+        android:id="@+id/rekomendasiEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/rekomendasiKosong"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone" />
+
+</LinearLayout>

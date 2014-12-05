@@ -1,0 +1,63 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitignore
+* AndroidManifest.xml.orig
+* LICENSE.md
+* README.md
+* data-fetcher\
+* data-fetcher\currentdata.json
+* data-fetcher\getdata.php
+* data-fetcher\index.php
+* data-fetcher\simple_html_dom.php
+* geocoder_data.txt
+* ic_launcher-web.png
+* keystore
+* logo-siaga-banjir.png
+* proguard-project.txt
+* project.properties.orig
+* stringsBahasa.xml
+* tutor_indo\
+* tutor_indo\image1.jpg
+* tutor_indo\image2.jpg
+* tutor_indo\image3.jpg
+* tutor_indo\image4.jpg
+* tutor_inggris\
+* tutor_inggris\image1en.jpg
+* tutor_inggris\image2en.jpg
+* tutor_inggris\image3en.jpg
+* tutor_inggris\image4en.jpg
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets\
+* libs\common.jar => app\libs\common.jar
+* libs\datachart.jar => app\libs\datachart.jar
+* lint.xml => app\lint.xml
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

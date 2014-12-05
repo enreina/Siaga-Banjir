@@ -1,0 +1,33 @@
+apply plugin: 'android'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "com.siagabanjir"
+        minSdkVersion 10
+        targetSdkVersion 18
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile files('libs/common.jar')
+    compile files('libs/datachart.jar')
+    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.android.support:support-v4:19.+'
+    compile 'com.google.android.gms:play-services:4.2.42'
+    repositories {
+        mavenCentral()
+    }
+    compile 'com.google.maps.android:android-maps-utils:0.3+'
+    compile files('libs/FlurryAnalytics-4.1.0.jar')
+
+}
