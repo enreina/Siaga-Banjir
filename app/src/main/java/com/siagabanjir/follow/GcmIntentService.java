@@ -1,25 +1,20 @@
 package com.siagabanjir.follow;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.siagabanjir.DataPintuAir;
-import com.siagabanjir.DetailActivity;
-import com.siagabanjir.MainActivity;
-import com.siagabanjir.R;
-
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.siagabanjir.DetailActivity;
+import com.siagabanjir.R;
 
 public class GcmIntentService extends IntentService {
     public static final int NOTIFICATION_ID = 1;
@@ -86,6 +81,10 @@ public class GcmIntentService extends IntentService {
                 if (extras.getString("changes").equals("increased")) {
                 	message = "Hati-hati! " + message;
                 }
+                String affectedArea = extras.getString("affected_area");
+                if (!affectedArea.isEmpty()) {
+                    message += " Daerah yang terpengaruh: " + affectedArea + ".";
+                }
                 sendNotification(message, extras);
                 Log.i(TAG, "Received: " + extras.toString());
             }
@@ -121,8 +120,11 @@ public class GcmIntentService extends IntentService {
 
         //mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-        
-        Vibrator v = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(1000);
+        AudioManager audio = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+
+        if (audio.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(250);
+        }
     }
 }

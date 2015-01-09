@@ -23,6 +23,7 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 	private String hari;
 	private LatLng location;
 	private boolean following;
+    private String affectedArea;
 	
 	public static HashMap<String, LatLng> locationPintuAir;
 	public static HashMap<String, DataPintuAir> mapsPintuAir;
@@ -67,6 +68,7 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		tanggal = "";
 		tanggalShort = "";
 		hari = "";
+        affectedArea = "";
 		
 		LatLng temp = locationPintuAir.get(nama);
 		if (temp != null)
@@ -85,6 +87,7 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		tanggal = "";
 		tanggalShort = "";
 		hari = "";
+        affectedArea = "";
 		location = new LatLng(0, 0);
 		readFromParcel(p);
 	}
@@ -222,6 +225,7 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		dest.writeString(tanggal);
 		dest.writeString(tanggalShort);
 		dest.writeString(hari);
+        dest.writeString(affectedArea);
 	}
 	
 	private void readFromParcel(Parcel in) {
@@ -233,6 +237,7 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 		this.tanggal = in.readString();
 		this.tanggalShort = in.readString();
 		this.hari = in.readString();
+        this.affectedArea = in.readString();
 		
 		LatLng temp = locationPintuAir.get(this.nama);
 		location = temp;
@@ -291,7 +296,12 @@ public class DataPintuAir implements Parcelable, Comparable<DataPintuAir> {
 	public void unfollow() {
 		
 	}
-	
-	
-	
+
+    public String getAffectedArea() {
+        return affectedArea;
+    }
+
+    public void setAffectedArea(String affectedArea) {
+        this.affectedArea = affectedArea;
+    }
 }

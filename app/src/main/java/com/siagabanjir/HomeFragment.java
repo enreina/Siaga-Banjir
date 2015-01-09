@@ -1,30 +1,5 @@
 package com.siagabanjir;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.siagabanjir.follow.FollowPintuAir;
-import com.siagabanjir.utility.JSONParser;
-
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -39,6 +14,27 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.siagabanjir.follow.FollowPintuAir;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeFragment extends ListFragment {
 	private ArrayList<DataPintuAir> pintuAir;
@@ -68,11 +64,84 @@ public class HomeFragment extends ListFragment {
 	}
 
 	public void refreshHome() {
-		new JSONParse().execute();
+        try {
+            JSONObject jObj = new JSONObject(readFromFile());
+            showData(jObj);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        new JSONParse().execute();
 		//((MainActivity) this.getActivity()).setRefreshActionButtonState(true);
 	}
 
-	@Override
+    private void showData(JSONObject json) {
+        pintuAir.clear();
+
+        JSONArray dataPintuAir;
+        try {
+            dataPintuAir = json.getJSONArray("datapintuair");
+            for (int ii = 0; ii < dataPintuAir.length(); ii++) {
+                JSONObject obj = dataPintuAir.getJSONObject(ii);
+                String nama = obj.getString("nama");
+                String tanggal = obj.getString("tanggal");
+                String affectedArea = obj.getString("affected_area");
+                JSONArray dataTinggi = obj.getJSONArray("tinggiair");
+
+                DataPintuAir dp = new DataPintuAir(nama);
+                dp.setAffectedArea(affectedArea);
+                dp.setTanggal(tanggal);
+
+                for (int jj = 0; jj < dataTinggi.length(); jj++) {
+                    int tinggi = 0;
+                    String status = dataTinggi.getJSONObject(jj).getString(
+                            "status");
+                    if (!dataTinggi.getJSONObject(jj).getString("tinggi")
+                            .split(" ")[0].equals("-")) {
+                        tinggi = Integer.parseInt(dataTinggi
+                                .getJSONObject(jj).getString("tinggi")
+                                .split(" ")[0]);
+                    } else {
+                        status = "N/A";
+                    }
+                    int waktu = dataTinggi.getJSONObject(jj)
+                            .getInt("waktu");
+                    dp.addTinggiAir(tinggi, status, waktu);
+                }
+
+                ArrayList<String> listFollowing = followPintuAir.getListFollowing();
+
+                String status = dp.getStatus()[0];
+                dp.setFollowing(followPintuAir.isFollowing(dp.getNama()));
+
+                pintuAir.add(dp);
+                DataPintuAir.mapsPintuAir.put(dp.getNama(), dp);
+
+            }
+            Collections.sort(pintuAir);
+            refresh();
+
+            //Toast.makeText(context, "Done!", Toast.LENGTH_LONG).show();
+            ((MainActivity) getActivity()).setRefreshActionButtonState(false);
+            /**
+             * if (pd != null) { pd.dismiss(); }
+             **/
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            //Toast.makeText(context, "Failed to connect",
+            //        Toast.LENGTH_LONG).show();
+            /**
+             * if (pd != null) { pd.dismiss(); }
+             **/
+        } catch (NullPointerException e) {
+            //Toast.makeText(context,"Error fetching data or no internet connection", Toast.LENGTH_LONG).show();
+            /**
+             * if (pd != null) { pd.dismiss(); }
+             **/
+        }
+    }
+
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		binder = new BinderData(getActivity(), pintuAir);
@@ -141,6 +210,38 @@ public class HomeFragment extends ListFragment {
 		lastUpdate.setText(getResources().getString(R.string.lastupdated) + " " + pintuPertama.getTanggal() + " " + waktu + ".00 WIB");
 	}
 
+    private String readFromFile() {
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = context
+                    .openFileInput("datapintuair.txt");
+
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(
+                        inputStream);
+                BufferedReader bufferedReader = new BufferedReader(
+                        inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((receiveString = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
+    }
+
 	private class JSONParse extends AsyncTask<String, String, JSONObject> {
 		private static final String url = "http://labs.pandagostudio.com/siaga-banjir/";
 
@@ -170,34 +271,32 @@ public class HomeFragment extends ListFragment {
 				HttpResponse httpResponse = httpClient.execute(httpPost);
 				HttpEntity httpEntity = httpResponse.getEntity();
 				is = httpEntity.getContent();
+
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(is, "iso-8859-1"), 8);
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                is.close();
+                json = sb.toString();
+                if (json.contains("{'error':1}")) {
+                    return null;
+                }
+                writeToFile(json);
+
+                jObj = new JSONObject(readFromFile());
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-
-			try {
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(is, "iso-8859-1"), 8);
-				StringBuilder sb = new StringBuilder();
-				String line = null;
-				while ((line = reader.readLine()) != null) {
-					sb.append(line + "\n");
-				}
-				is.close();
-				json = sb.toString();
-				writeToFile(json);
-			} catch (Exception e) {
-				Log.e("Buffer Error", "Error converting result " + e);
-			}
-
-			try {
-				jObj = new JSONObject(readFromFile());
 			} catch (JSONException e) {
-				Log.e("JSON Parser", "Error parsing data " + e.toString());
-			}
+                Log.e("JSON Parser", "Error parsing data " + e.toString());
+            }
+
 
 			return jObj;
 		}
@@ -214,38 +313,6 @@ public class HomeFragment extends ListFragment {
 			}
 		}
 
-		private String readFromFile() {
-
-			String ret = "";
-
-			try {
-				InputStream inputStream = context
-						.openFileInput("datapintuair.txt");
-
-				if (inputStream != null) {
-					InputStreamReader inputStreamReader = new InputStreamReader(
-							inputStream);
-					BufferedReader bufferedReader = new BufferedReader(
-							inputStreamReader);
-					String receiveString = "";
-					StringBuilder stringBuilder = new StringBuilder();
-
-					while ((receiveString = bufferedReader.readLine()) != null) {
-						stringBuilder.append(receiveString);
-					}
-
-					inputStream.close();
-					ret = stringBuilder.toString();
-				}
-			} catch (FileNotFoundException e) {
-				Log.e("login activity", "File not found: " + e.toString());
-			} catch (IOException e) {
-				Log.e("login activity", "Can not read file: " + e.toString());
-			}
-
-			return ret;
-		}
-
 		protected void onProgressUpdate(String... values) {
 			//Toast.makeText(context, "Updating data...", Toast.LENGTH_LONG)
 			//		.show();
@@ -253,70 +320,13 @@ public class HomeFragment extends ListFragment {
 		}
 
 		protected void onPostExecute(JSONObject json) {
-			pintuAir.clear();
-
-			JSONArray dataPintuAir;
-			try {
-				dataPintuAir = json.getJSONArray("datapintuair");
-				for (int ii = 0; ii < dataPintuAir.length(); ii++) {
-					JSONObject obj = dataPintuAir.getJSONObject(ii);
-					String nama = obj.getString("nama");
-					String tanggal = obj.getString("tanggal");
-					JSONArray dataTinggi = obj.getJSONArray("tinggiair");
-
-					DataPintuAir dp = new DataPintuAir(nama);
-					dp.setTanggal(tanggal);
-
-					for (int jj = 0; jj < dataTinggi.length(); jj++) {
-						int tinggi = 0;
-						String status = dataTinggi.getJSONObject(jj).getString(
-								"status");
-						if (!dataTinggi.getJSONObject(jj).getString("tinggi")
-								.split(" ")[0].equals("-")) {
-							tinggi = Integer.parseInt(dataTinggi
-									.getJSONObject(jj).getString("tinggi")
-									.split(" ")[0]);
-						} else {
-							status = "N/A";
-						}
-						int waktu = dataTinggi.getJSONObject(jj)
-								.getInt("waktu");
-						dp.addTinggiAir(tinggi, status, waktu);
-					}
-
-					ArrayList<String> listFollowing = followPintuAir.getListFollowing();
-					
-					String status = dp.getStatus()[0];
-					dp.setFollowing(followPintuAir.isFollowing(dp.getNama()));
-
-					pintuAir.add(dp);
-					DataPintuAir.mapsPintuAir.put(dp.getNama(), dp);
-
-				}
-				Collections.sort(pintuAir);
-				refresh();
-
-				//Toast.makeText(context, "Done!", Toast.LENGTH_LONG).show();
-				((MainActivity) HomeFragment.this.getActivity()).setRefreshActionButtonState(false);
-				/**
-				 * if (pd != null) { pd.dismiss(); }
-				 **/
-
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Toast.makeText(context, "No internet connection",
-						Toast.LENGTH_LONG).show();
-				/**
-				 * if (pd != null) { pd.dismiss(); }
-				 **/
-			} catch (NullPointerException e) {
-				Toast.makeText(context,
-						"Error fetching data or no internet connection",
-						Toast.LENGTH_LONG).show();
-				/**
-				 * if (pd != null) { pd.dismiss(); }
-				 **/
-			}
+            if (json == null) {
+                Toast.makeText(context, "Failed to update", Toast.LENGTH_SHORT).show();
+                ((MainActivity) HomeFragment.this.getActivity()).setRefreshActionButtonState(false);
+            } else {
+                showData(json);
+                Toast.makeText(context, "Data is updated", Toast.LENGTH_SHORT).show();
+            }
 
 		}
 

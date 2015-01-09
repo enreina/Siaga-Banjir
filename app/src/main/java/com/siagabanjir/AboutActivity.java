@@ -45,7 +45,6 @@ public class AboutActivity extends ActionBarActivity {
 		actionBar.setDisplayHomeAsUpEnabled(false);
 		
 		Intent i = getIntent();
-		
 		//Flurry log
 		FlurryAgent.logEvent("View_About");
 	}

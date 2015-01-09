@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.siagabanjir"
-    android:versionCode="9"
-    android:versionName="1.6.3.0" >
+    android:versionCode="11"
+    android:versionName="1.6.4.1" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -88,16 +88,16 @@
         -->
 
         <!--
-        release api key
+        release api key -->
         
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBNwWqfHHxaOtZebnZNLWdu6WxtcZMfT9Y" /> -->
+            android:value="AIzaSyBNwWqfHHxaOtZebnZNLWdu6WxtcZMfT9Y" />
 
-        <!-- debug api key -->
+        <!-- debug api key
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAt_Ne0RAw6ODUU8mz2QYLtHWyeTljZlrM" />
+            android:value="AIzaSyAt_Ne0RAw6ODUU8mz2QYLtHWyeTljZlrM" /> -->
              
         <meta-data
             android:name="com.google.android.gms.version"
@@ -111,7 +111,6 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
